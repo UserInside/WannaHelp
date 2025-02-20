@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.wannahelp"
-        minSdk = 26
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.core.splashscreen)
+
     implementation(libs.retrofit)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
