@@ -3,14 +3,18 @@ package com.example.wannahelp
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.wannahelp.databinding.ActivityProfileScreenBinding
 
 class ProfileScreenActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityProfileScreenBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_profile_screen)
 
+        binding = ActivityProfileScreenBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        //bottomNavigation.selectedItemId = R.id.page_2
+        binding.bottomNavView.bottomNavigationView.selectedItemId = R.id.action_profile
     }
 }
