@@ -2,14 +2,11 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.WannaHelp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
-    <style name="Theme.WannaHelp" parent="Base.Theme.WannaHelp" />
 
     <style name="Theme.WannaHelp.SplashScreen" parent="Theme.SplashScreen">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="postSplashScreenTheme">@style/Theme.WannaHelp</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.WannaHelp</item>
     </style>
 
 

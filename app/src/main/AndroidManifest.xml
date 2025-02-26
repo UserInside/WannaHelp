@@ -20,6 +20,6 @@
         </activity>
         <activity
             android:name=".ProfileScreenActivity"
-            android:theme="@style/Theme.WannaHelp" />
+            android:theme="@style/Base.Theme.WannaHelp" />
     </application>
 </manifest>
