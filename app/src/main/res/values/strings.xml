@@ -1,4 +1,29 @@
 <resources>
     <string name="app_name">Хочу помочь</string>
     <string name="loading">Загрузка…</string>
+    <string name="nav_search">Поиск</string>
+    <string name="nav_news">Новости</string>
+    <string name="nav_to_help">Помочь</string>
+    <string name="nav_history">История</string>
+    <string name="nav_profile">Профиль</string>
+    <string name="tv_your_lastname">Ваша фамилия</string>
+    <string name="tv_your_name">Ваше имя</string>
+    <string name="tv_receive_push_notifications">Получать push-уведомления</string>
+    <string name="tv_email">E-mail для уведомлений</string>
+    <string name="edit_text_hint_lastname">Введите фамилию</string>
+    <string name="edit_text_hint_name">Введите имя</string>
+    <string name="edit_text_hint_email">Введите e-mail</string>
+    <string name="tv_birthday">Дата рождения</string>
+    <string name="tv_title_circle_of_action">Сфера деятельности</string>
+    <string name="tv_title_your_friends">Ваши друзья</string>
+    <string name="tv_circle_of_action">Хирургия, травмотология</string>
+    <string name="tv_fulfill_circle_of_action">Заполните Вашу сферу деятельности,\nчтобы быть наиболее полезным</string>
+    <string name="tv_password">Пароль</string>
+    <string name="edit_text_hint_birthday">Введите дату рождения</string>
+    <string name="toolbar_action_confirm">Принять</string>
+    <string name="toolbar_action_edit">Редактировать</string>
+    <string name="title_edit_profile">Редактировать</string>
+    <string name="title_profile">Профиль</string>
+    <string name="btn_change_photo">Сменить\nфото</string>
+    <string name="btn_logout">Выйти из аккаунта</string>
 </resources>
