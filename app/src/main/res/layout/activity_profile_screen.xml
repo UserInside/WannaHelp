@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ProfileScreenActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/leaf"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/menu_toolbar_edit_profile"
+            app:navigationIcon="@drawable/icon_arrow_back_24"
+            app:navigationIconTint="@color/white"
+            app:title="@string/title_edit_profile"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/TextStyle2" />
+
+        <include layout="@layout/profile_edit_layout" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <include
+        android:id="@+id/bottom_nav_view"
+        layout="@layout/bottom_nav_view_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
