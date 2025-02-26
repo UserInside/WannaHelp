@@ -1,12 +1,10 @@
 package com.example.wannahelp
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.wannahelp.databinding.ActivityProfileScreenBinding
 
 class ProfileScreenActivity : AppCompatActivity() {
-
     lateinit var binding: ActivityProfileScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

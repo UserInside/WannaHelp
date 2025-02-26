@@ -4,6 +4,7 @@
     android:id="@+id/bottom_navigation_view"
     android:layout_width="match_parent"
     android:layout_height="54dp"
+    android:layout_gravity="bottom"
     android:background="@color/white"
     android:visibility="visible"
     app:itemActiveIndicatorStyle="@style/BottomNavigationItemActive"
