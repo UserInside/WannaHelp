@@ -11,6 +11,7 @@
     tools:context=".ChangePhotoDialogFragment">
 
     <LinearLayout
+        android:id="@+id/btn_choose_ptoho"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -31,6 +32,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/btn_make_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
@@ -53,6 +55,7 @@
 
 
     <LinearLayout
+        android:id="@+id/btn_delete_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"

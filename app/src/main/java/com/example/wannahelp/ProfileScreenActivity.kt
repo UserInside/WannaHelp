@@ -34,7 +34,7 @@ class ProfileScreenActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_edit_profile) {
-            startActivity(Intent(this@ProfileScreenActivity, ProfileEditScreen::class.java))
+            startActivity(Intent(this@ProfileScreenActivity, ProfileEditScreenActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
     }
