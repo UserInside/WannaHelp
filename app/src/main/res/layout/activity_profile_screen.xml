@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ProfileScreenActivity">
+    tools:context=".profileScreen.ProfileScreenActivity">
 
     <include layout="@layout/profile_screen_appbar" />
 
-    <include layout="@layout/profile_information" />
+    <include
+        android:id="@+id/profile_information"
+        layout="@layout/profile_information" />
 
     <include
         android:id="@+id/bottom_nav_view"
