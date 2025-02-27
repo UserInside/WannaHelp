@@ -9,7 +9,6 @@
         <item name="postSplashScreenTheme">@style/Base.Theme.WannaHelp</item>
     </style>
 
-
     <style name="BottomNavigationViewItemInactive" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">11sp</item>
         <item name="android:color">@color/black_40</item>

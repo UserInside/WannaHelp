@@ -12,6 +12,7 @@
         android:theme="@style/Theme.WannaHelp.SplashScreen">
         <activity
             android:name=".splashscreen.SplashScreenActivity"
+            android:theme="@style/Base.Theme.WannaHelp"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

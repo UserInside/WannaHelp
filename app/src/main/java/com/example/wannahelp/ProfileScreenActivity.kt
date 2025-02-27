@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.wannahelp.databinding.ActivityProfileScreenBinding
 
 class ProfileScreenActivity : AppCompatActivity() {
-    lateinit var binding: ActivityProfileScreenBinding
+    private lateinit var binding: ActivityProfileScreenBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
