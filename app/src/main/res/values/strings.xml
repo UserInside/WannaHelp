@@ -26,4 +26,9 @@
     <string name="title_profile">Профиль</string>
     <string name="btn_change_photo">Сменить\nфото</string>
     <string name="btn_logout">Выйти из аккаунта</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_delete">Удалить</string>
+    <string name="tv_make_photo">Сделать снимок</string>
+    <string name="tv_choose_photo">Выбрать фото</string>
 </resources>

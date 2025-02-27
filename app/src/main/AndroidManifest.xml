@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WannaHelp.SplashScreen">
         <activity
+            android:name=".ProfileEditScreen"
+            android:theme="@style/Base.Theme.WannaHelp" />
+        <activity
             android:name=".splashscreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>

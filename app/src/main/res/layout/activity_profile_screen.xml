@@ -7,7 +7,8 @@
     android:background="@color/white"
     tools:context=".ProfileScreenActivity">
 
-    <include layout="@layout/profile_screen_appbar" />
+    <include android:id="@+id/appBar"
+        layout="@layout/profile_screen_appbar" />
 
     <include layout="@layout/profile_information" />
 
