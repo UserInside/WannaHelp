@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
 
-class FriendsAdapter(private val friendCardsList: List<FriendCard>) : RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
+class FriendsRecyclerViewAdapter(private val friendCardsList: List<FriendCard>) : RecyclerView.Adapter<FriendsRecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val avatar: ImageView = itemView.findViewById(R.id.img_friend_avatar)
         val name: TextView = itemView.findViewById(R.id.tv_friend_name)

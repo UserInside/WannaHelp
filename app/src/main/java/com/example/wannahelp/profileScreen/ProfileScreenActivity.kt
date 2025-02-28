@@ -1,6 +1,7 @@
 package com.example.wannahelp.profileScreen
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
@@ -26,8 +27,12 @@ class ProfileScreenActivity : AppCompatActivity() {
                 FriendCard(R.drawable.avatar_1, "Виктор Кузнецов"),
             )
 
-        val adapter = FriendsAdapter(friendsList)
+        val adapter = FriendsRecyclerViewAdapter(friendsList)
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
+
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
+        }
     }
 }
