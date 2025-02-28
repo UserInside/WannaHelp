@@ -9,7 +9,6 @@
         <item name="postSplashScreenTheme">@style/Base.Theme.WannaHelp</item>
     </style>
 
-
     <style name="BottomNavigationViewItemInactive" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">11sp</item>
         <item name="android:color">@color/black_40</item>
@@ -21,6 +20,7 @@
 
     <style name="TextStyle8.EditTextBottomLine" parent="TextStyle8">
         <item name="colorControlNormal">@color/black_12</item>
+        <item name="android:lineHeight">48dp</item>
         <item name="colorControlActivated">@color/leaf</item>
     </style>
 

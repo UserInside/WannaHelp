@@ -100,7 +100,6 @@
             android:text="@string/tv_title_your_friends"
             app:layout_constraintTop_toBottomOf="@id/separation_view_1" />
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_your_friends"
             android:layout_width="match_parent"
@@ -110,9 +109,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title_your_friends">
 
-
         </androidx.recyclerview.widget.RecyclerView>
-
 
         <View
             android:id="@+id/separation_view_2"
