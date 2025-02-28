@@ -1,4 +1,4 @@
-package com.example.wannahelp
+package com.example.wannahelp.profileEditScreen
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,13 +12,13 @@ class ProfileEditScreenActivity : AppCompatActivity() {
         binding = ActivityProfileEditScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-// todo добавить меню
-
-
+        binding.profileEditLayout.btnChangePhoto.setOnClickListener {
+            showChangePhotoDialog()
+        }
     }
 
-    fun startDialog() {
+    private fun showChangePhotoDialog() {
         val dialog = ChangePhotoDialogFragment.newInstance()
-        dialog.show(supportFragmentManager, "viu viu")
+        dialog.show(supportFragmentManager, null)
     }
 }

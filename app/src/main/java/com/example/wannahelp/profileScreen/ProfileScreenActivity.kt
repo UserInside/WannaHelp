@@ -1,11 +1,15 @@
 package com.example.wannahelp.profileScreen
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.ActivityProfileScreenBinding
+import com.example.wannahelp.profileEditScreen.ProfileEditScreenActivity
 
 class ProfileScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileScreenBinding
@@ -31,8 +35,25 @@ class ProfileScreenActivity : AppCompatActivity() {
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
 
+
+        val toolbar = binding.appBar.toolbar
+        setSupportActionBar(toolbar)
+
         onBackPressedDispatcher.addCallback(this) {
-            finish()
+            finishAffinity()
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_toolbar_profile, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_edit_profile) {
+            startActivity(Intent(this@ProfileScreenActivity, ProfileEditScreenActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

@@ -8,7 +8,7 @@
     android:background="@drawable/dialog_layout_background"
     android:paddingHorizontal="@dimen/spacing_xl"
     android:paddingVertical="@dimen/spacing_xxl"
-    tools:context=".ChangePhotoDialogFragment">
+    tools:context=".profileEditScreen.ChangePhotoDialogFragment">
 
     <LinearLayout
         android:id="@+id/btn_choose_ptoho"

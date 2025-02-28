@@ -11,10 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WannaHelp.SplashScreen">
         <activity
-            android:name=".ProfileEditScreenActivity"
-            android:theme="@style/Base.Theme.WannaHelp" />
-        <activity
-            android:name=".splashscreen.SplashScreenActivity"
+            android:name=".splashScreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +19,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileScreenActivity"
+            android:name=".profileScreen.ProfileScreenActivity"
+            android:theme="@style/Base.Theme.WannaHelp" />
+        <activity
+            android:name=".profileEditScreen.ProfileEditScreenActivity"
             android:theme="@style/Base.Theme.WannaHelp" />
     </application>
 </manifest>
