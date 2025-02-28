@@ -28,7 +28,7 @@ class ChangePhotoDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_dialog, container, false)
+        return inflater.inflate(R.layout.fragment_change_photo_dialog, container, false)
     }
 
     companion object {

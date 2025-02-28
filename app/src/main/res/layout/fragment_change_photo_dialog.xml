@@ -1,79 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:clipToOutline="true"
     android:background="@drawable/dialog_layout_background"
+    android:clipToOutline="true"
+    android:orientation="vertical"
     android:paddingHorizontal="@dimen/spacing_xl"
-    android:paddingVertical="@dimen/spacing_xxl"
-    tools:context=".profileEditScreen.ChangePhotoDialogFragment">
+    android:paddingTop="@dimen/spacing_xxl_2"
+    android:paddingBottom="@dimen/spacing_xxl">
 
-    <LinearLayout
-        android:id="@+id/btn_choose_ptoho"
+    <TextView
+        android:id="@+id/tv_choose_photo"
+        style="@style/TextStyle14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:drawablePadding="@dimen/spacing_xl"
+        android:text="@string/tv_choose_photo"
+        app:drawableStartCompat="@drawable/upload"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/upload" />
-
-        <TextView
-            style="@style/TextStyle14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_xl"
-            android:text="@string/tv_choose_photo" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/btn_make_photo"
+    <TextView
+        android:id="@+id/tv_make_photo"
+        style="@style/TextStyle14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:drawablePadding="@dimen/spacing_xl"
+        android:text="@string/tv_make_photo"
+        app:drawableStartCompat="@drawable/camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_choose_photo" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/camera" />
-
-        <TextView
-            style="@style/TextStyle14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_xl"
-            android:text="@string/tv_make_photo" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/btn_delete_photo"
+    <TextView
+        android:id="@+id/tv_delete"
+        style="@style/TextStyle14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:drawablePadding="@dimen/spacing_xl"
+        android:text="@string/tv_delete"
+        app:drawableStartCompat="@drawable/delete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_make_photo" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/delete" />
-
-        <TextView
-            style="@style/TextStyle14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_xl"
-            android:text="@string/tv_delete" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
