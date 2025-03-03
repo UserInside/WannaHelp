@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentEditProfileScreenBinding
+
 
 class EditProfileScreenFragment : Fragment() {
     lateinit var binding: FragmentEditProfileScreenBinding
@@ -27,9 +29,11 @@ class EditProfileScreenFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_confirm -> {
-                    NavHostFragment.findNavController(this).navigate(R.id.navigateToEditProfileScreen)
+                    NavHostFragment.findNavController(this)
+                        .navigate(R.id.navigateToEditProfileScreen)
                     true
                 }
+
                 else -> false
             }
         }
@@ -39,7 +43,7 @@ class EditProfileScreenFragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            "photoPath",
+            "makePhoto",
             viewLifecycleOwner
         ) { requestKey, bundle ->
             val photoPath = bundle.getString("photoPath")
@@ -48,11 +52,24 @@ class EditProfileScreenFragment : Fragment() {
                 binding.profileEditLayout.imgAvatar.setImageBitmap(bitmap)
 //                File(it).delete()
             }
+
+        }
+
+        parentFragmentManager.setFragmentResultListener(
+            "deletePhoto",
+            viewLifecycleOwner
+        ) { requestKey, bundle ->
+            binding.profileEditLayout.imgAvatar.setImageResource(R.drawable.avatar_placeholder)
+
         }
     }
 
     private fun showChangePhotoDialog() {
-        val dialog = ChangePhotoDialogFragment.newInstance()
-        dialog.show(parentFragmentManager, null)
+        val dialog = ChangeAvatarDialogFragment.newInstance()
+        dialog.show(parentFragmentManager, "ChangeAvatarDialogFragment")
     }
+
+//    private fun onDeleteAvatar() {
+//        binding.profileEditLayout.imgAvatar.setImageResource(R.drawable.avatar_placeholder)
+//    }
 }

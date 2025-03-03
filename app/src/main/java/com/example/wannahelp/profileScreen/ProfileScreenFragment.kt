@@ -28,7 +28,7 @@ class ProfileScreenFragment : Fragment() {
 
         binding.bottomNavView.bottomNavigationView.selectedItemId = R.id.action_profile
 
-        val recycler = binding.profileInformation.recyclerViewYourFriends
+        val recyclerView = binding.profileInformation.recyclerViewYourFriends
 
         val friendsList =
             listOf(
@@ -38,12 +38,10 @@ class ProfileScreenFragment : Fragment() {
             )
 
         val adapter = FriendsRecyclerViewAdapter(friendsList)
-        recycler.layoutManager = LinearLayoutManager(requireContext())
-        recycler.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
 
-        val navController = findNavController()
-
-        binding.appBar.toolbar.setupWithNavController(navController)
+        binding.appBar.toolbar.setupWithNavController(findNavController())
 
         val toolbar = binding.appBar.toolbar
 

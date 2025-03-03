@@ -16,12 +16,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
-import com.example.wannahelp.databinding.FragmentChangePhotoDialogBinding
+import com.example.wannahelp.databinding.FragmentChangeAvatarDialogBinding
 import java.io.File
 import java.io.IOException
 
-class ChangePhotoDialogFragment : DialogFragment() {
-    private lateinit var binding: FragmentChangePhotoDialogBinding
+class ChangeAvatarDialogFragment : DialogFragment() {
+    private lateinit var binding: FragmentChangeAvatarDialogBinding
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private lateinit var photoImagePath: String
 
@@ -29,7 +29,7 @@ class ChangePhotoDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentChangePhotoDialogBinding.inflate(inflater, container, false)
+        binding = FragmentChangeAvatarDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -41,21 +41,30 @@ class ChangePhotoDialogFragment : DialogFragment() {
                 if (result.resultCode == Activity.RESULT_OK) {
                     val bundle = Bundle()
                     bundle.putString("photoPath", photoImagePath)
-                    parentFragmentManager.setFragmentResult("photoPath", bundle)
+                    parentFragmentManager.setFragmentResult("makePhoto", bundle)
                 }
             }
 
         binding.tvMakePhoto.setOnClickListener {
             if (checkCameraPermission()) {
                 createMakePhotoIntent()
+                dismiss()
             }
+        }
+
+        binding.tvDelete.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("deletePhoto", null)
+            }
+            parentFragmentManager.setFragmentResult("deletePhoto", bundle)
+            dismiss()
         }
     }
 
     companion object {
         @JvmStatic
         fun newInstance() =
-            ChangePhotoDialogFragment()
+            ChangeAvatarDialogFragment()
     }
 
     private fun checkCameraPermission(): Boolean {

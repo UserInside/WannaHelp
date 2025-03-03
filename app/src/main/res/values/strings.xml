@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Хочу помочь</string>
     <string name="loading">Загрузка…</string>
-    <string name="nav_search">Поиск</string>
-    <string name="nav_news">Новости</string>
-    <string name="nav_to_help">Помочь</string>
-    <string name="nav_history">История</string>
-    <string name="nav_profile">Профиль</string>
+    <string name="tv_search">Поиск</string>
+    <string name="tv_news">Новости</string>
+    <string name="tv_wanna_help">Помочь</string>
+    <string name="tv_history">История</string>
+    <string name="tv_profile">Профиль</string>
     <string name="tv_your_lastname">Ваша фамилия</string>
     <string name="tv_your_name">Ваше имя</string>
     <string name="tv_receive_push_notifications">Получать push-уведомления</string>
@@ -26,9 +26,14 @@
     <string name="title_profile">Профиль</string>
     <string name="btn_change_photo">Сменить\nфото</string>
     <string name="btn_logout">Выйти из аккаунта</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_delete">Удалить</string>
     <string name="tv_make_photo">Сделать снимок</string>
     <string name="tv_choose_photo">Выбрать фото</string>
+
+    <string name="tv_cat_kids">Дети</string>
+    <string name="tv_cat_adults">Взрослые</string>
+    <string name="tv_cat_aged">Пожилые</string>
+    <string name="tv_cat_animals">Животные</string>
+    <string name="tv_cat_events">Мероприятия</string>
+    <string name="tv_title_choose_category">Выберите катеригорию помощи</string>
 </resources>

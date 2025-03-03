@@ -14,7 +14,7 @@
         android:background="@color/transparent"
         android:cropToPadding="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/image_profile_photo"
+        android:src="@drawable/image_man"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +60,7 @@
         style="@style/TextStyle13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_s"
+        android:layout_marginTop="10dp"
         android:text="@string/tv_your_name"
         app:layout_constraintStart_toStartOf="@id/edit_text_lastname"
         app:layout_constraintTop_toBottomOf="@id/edit_text_lastname" />

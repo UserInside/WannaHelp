@@ -8,7 +8,7 @@
     android:background="@color/white"
     app:itemActiveIndicatorStyle="@style/BottomNavigationItemActive"
     app:itemIconTint="@color/bottom_nav_item_color"
-    app:itemPaddingBottom="@dimen/spacing_s"
+    app:itemPaddingBottom="10dp"
     app:itemPaddingTop="9dp"
     app:itemTextAppearanceInactive="@style/BottomNavigationViewItemInactive"
     app:itemTextColor="@color/bottom_nav_item_color"

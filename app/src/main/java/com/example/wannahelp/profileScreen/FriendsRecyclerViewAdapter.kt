@@ -20,7 +20,7 @@ class FriendsRecyclerViewAdapter(private val friendCardsList: List<FriendCard>) 
     ): ViewHolder {
         val view =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.recycler_view_friends_card, parent, false)
+                .inflate(R.layout.recycler_view_card_friends, parent, false)
         return ViewHolder(view)
     }
 

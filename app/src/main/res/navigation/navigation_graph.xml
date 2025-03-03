@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_host_fragment"
-    app:startDestination="@id/profileScreenFragment">
+    app:startDestination="@id/wannaHelpScreenFragment">
 
     <fragment
         android:id="@+id/profileScreenFragment"
@@ -18,6 +18,14 @@
         android:id="@+id/profileEditScreenFragment"
         android:name="com.example.wannahelp.profileEditScreen.EditProfileScreenFragment"
         android:label="ProfileEditScreenFragment" >
+        <action
+            android:id="@+id/navigateToProfileScreen"
+            app:destination="@id/profileScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wannaHelpScreenFragment"
+        android:name="com.example.wannahelp.wannaHelpScreen.WannaHelpScreenFragment"
+        android:label="WannaHelpScreenFragment" >
         <action
             android:id="@+id/navigateToProfileScreen"
             app:destination="@id/profileScreenFragment" />
