@@ -1,39 +1,96 @@
 package com.example.wannahelp.profileEditScreen
 
-import android.app.Dialog
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
-import com.example.wannahelp.R
+import com.example.wannahelp.databinding.FragmentChangePhotoDialogBinding
+import java.io.File
+import java.io.IOException
 
 class ChangePhotoDialogFragment : DialogFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
+    private lateinit var binding: FragmentChangePhotoDialogBinding
+    private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
+    private lateinit var photoImagePath: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_change_photo_dialog, container, false)
+    ): View {
+        binding = FragmentChangePhotoDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        cameraLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val bundle = Bundle()
+                    bundle.putString("photoPath", photoImagePath)
+                    parentFragmentManager.setFragmentResult("photoPath", bundle)
+                }
+            }
+
+        binding.tvMakePhoto.setOnClickListener {
+            if (checkCameraPermission()) {
+                createMakePhotoIntent()
+            }
+        }
     }
 
     companion object {
-         @JvmStatic
+        @JvmStatic
         fun newInstance() =
-             ChangePhotoDialogFragment()
+            ChangePhotoDialogFragment()
+    }
+
+    private fun checkCameraPermission(): Boolean {
+        return (ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.CAMERA
+        )
+                != PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun createMakePhotoIntent() {
+        val makePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (makePhotoIntent.resolveActivity(requireActivity().packageManager) != null) {
+            val photoFile: File? = try {
+                createPhotoTempFile()
+            } catch (ex: IOException) {
+                Toast.makeText(requireContext(), "Ошибка создания файла", Toast.LENGTH_SHORT).show()
+                null
+            }
+            photoFile?.let {
+                val photoURI: Uri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "${requireContext().packageName}.fileprovider",
+                    it
+                )
+                makePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                cameraLauncher.launch(makePhotoIntent)
+            }
+        }
+    }
+
+    private fun createPhotoTempFile(): File {
+        val storageDir = requireContext().cacheDir
+        val file = File.createTempFile("tmpPhoto", ".jpg", storageDir)
+        photoImagePath = file.absolutePath
+        return file
     }
 }
