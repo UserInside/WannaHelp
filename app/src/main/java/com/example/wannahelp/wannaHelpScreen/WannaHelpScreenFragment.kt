@@ -2,17 +2,12 @@ package com.example.wannahelp.wannaHelpScreen
 
 import android.graphics.Rect
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentWannaHelpScreenBinding
 
@@ -47,24 +42,11 @@ class WannaHelpScreenFragment : Fragment() {
             GridLayoutManager(requireContext(), spanCount)
 
         // Добавление отступов
-        val spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs) // 16dp
+        val spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs)
         val includeEdge = true // Включать отступы по краям
         recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
 
-
         recyclerView.adapter = adapter
-
-        val bottomBar = binding.bottomNavView.bottomNavigationView
-        bottomBar.setupWithNavController(findNavController())
-
-        bottomBar.setOnClickListener {
-            when (it.id) {
-                R.id.action_profile -> NavHostFragment.findNavController(this)
-                    .navigate(R.id.navigateToProfileScreen)
-            }
-        }
-
-
     }
 
     companion object {

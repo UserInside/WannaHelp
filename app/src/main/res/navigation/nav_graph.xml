@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_host_fragment"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/wannaHelpScreenFragment">
 
     <fragment
@@ -25,9 +25,5 @@
     <fragment
         android:id="@+id/wannaHelpScreenFragment"
         android:name="com.example.wannahelp.wannaHelpScreen.WannaHelpScreenFragment"
-        android:label="WannaHelpScreenFragment" >
-        <action
-            android:id="@+id/navigateToProfileScreen"
-            app:destination="@id/profileScreenFragment" />
-    </fragment>
+        android:label="WannaHelpScreenFragment" />
 </navigation>

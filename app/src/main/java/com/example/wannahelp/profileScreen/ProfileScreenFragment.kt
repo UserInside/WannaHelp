@@ -26,8 +26,6 @@ class ProfileScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.bottomNavView.bottomNavigationView.selectedItemId = R.id.action_profile
-
         val recyclerView = binding.profileInformation.recyclerViewYourFriends
 
         val friendsList =

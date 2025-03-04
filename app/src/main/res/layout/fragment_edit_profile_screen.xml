@@ -19,16 +19,10 @@
         app:titleTextAppearance="@style/TextStyle2" />
 
     <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/profile_edit_layout"
         layout="@layout/edit_profile_screen"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        />
-
-
-    <include
-        android:id="@+id/bottom_nav_view"
-        layout="@layout/bottom_nav_view_layout" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

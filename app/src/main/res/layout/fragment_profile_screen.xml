@@ -15,8 +15,4 @@
         android:id="@+id/profile_information"
         layout="@layout/profile_information" />
 
-    <include
-        android:id="@+id/bottom_nav_view"
-        layout="@layout/bottom_nav_view_layout" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
