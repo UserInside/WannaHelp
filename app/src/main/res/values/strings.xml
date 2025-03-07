@@ -29,11 +29,11 @@
     <string name="tv_delete">Удалить</string>
     <string name="tv_make_photo">Сделать снимок</string>
     <string name="tv_choose_photo">Выбрать фото</string>
-
     <string name="tv_cat_kids">Дети</string>
     <string name="tv_cat_adults">Взрослые</string>
     <string name="tv_cat_aged">Пожилые</string>
     <string name="tv_cat_animals">Животные</string>
     <string name="tv_cat_events">Мероприятия</string>
     <string name="tv_title_choose_category">Выберите катеригорию помощи</string>
+    <string name="search_view_input_organization_name">Введите название организации</string>
 </resources>

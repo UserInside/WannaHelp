@@ -16,14 +16,18 @@ class ProfileScreenFragment : Fragment() {
     private lateinit var binding: FragmentProfileScreenBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentProfileScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = binding.profileInformation.recyclerViewYourFriends
@@ -39,16 +43,16 @@ class ProfileScreenFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        binding.appBar.toolbar.setupWithNavController(findNavController())
-
         val toolbar = binding.appBar.toolbar
-
+        toolbar.setupWithNavController(findNavController())
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_confirm -> {
-                NavHostFragment.findNavController(this).navigate(R.id.navigateToEditProfileScreen)
+                R.id.action_edit_profile -> {
+                    NavHostFragment.findNavController(this)
+                        .navigate(R.id.navigateToEditProfileScreen)
                     true
                 }
+
                 else -> false
             }
         }

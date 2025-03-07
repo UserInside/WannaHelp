@@ -31,4 +31,5 @@
     <color name="transparent">#00000000</color>
     <color name="splash_screen_background">#eff3f6</color>
     <color name="leaf_opacity_50">#8066a636</color>
+    <color name="leaf_w_black_20">#51842B</color>
 </resources>

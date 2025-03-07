@@ -26,4 +26,9 @@
         android:id="@+id/wannaHelpScreenFragment"
         android:name="com.example.wannahelp.wannaHelpScreen.WannaHelpScreenFragment"
         android:label="WannaHelpScreenFragment" />
+    <fragment
+        android:id="@+id/searchScreenFragment"
+        android:name="com.example.wannahelp.searchScreen.SearchScreenFragment"
+        android:label="fragment_search_screen"
+        tools:layout="@layout/fragment_search_screen" />
 </navigation>

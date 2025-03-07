@@ -10,19 +10,25 @@ import com.example.wannahelp.R
 
 class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryCard>) :
     RecyclerView.Adapter<CategoriesRecyclerViewAdapter.ViewHolder>() {
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.img_card_help_category)
         val title: TextView = itemView.findViewById(R.id.tv_title_category)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_view_card_help_category, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.recycler_view_card_help_category, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         val currentCard = categoriesList[position]
         holder.image.setImageResource(currentCard.image)
         holder.title.text = currentCard.title

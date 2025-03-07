@@ -11,13 +11,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WannaHelp.SplashScreen">
+        android:theme="@style/Base.Theme.WannaHelp" >
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Base.Theme.WannaHelp" />
+            android:theme="@style/Base.Theme.WannaHelp"/>
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+
         <activity
             android:name=".splashScreen.SplashScreenActivity"
+            android:theme="@style/Theme.WannaHelp.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

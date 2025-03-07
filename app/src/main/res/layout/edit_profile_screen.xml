@@ -4,25 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_avatar"
         android:layout_width="136dp"
         android:layout_height="136dp"
-        android:contentDescription="@null"
         android:layout_marginStart="@dimen/spacing_l"
         android:layout_marginTop="@dimen/spacing_l"
-        android:background="@color/transparent"
-        android:cropToPadding="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/image_man"
+        android:src="@drawable/avatar_placeholder"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedImageView" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_change_photo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
+        android:background="@color/black_54"
         android:paddingTop="6dp"
         android:text="@string/btn_change_photo"
         android:textAlignment="center"
@@ -53,7 +51,6 @@
         android:paddingStart="0dp"
         app:layout_constraintStart_toStartOf="@id/tv_title_lastname"
         app:layout_constraintTop_toBottomOf="@id/tv_title_lastname" />
-
 
     <TextView
         android:id="@+id/tv_title_name"

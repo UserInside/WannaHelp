@@ -5,8 +5,8 @@
         android:icon="@drawable/nav_format_list_bulleted_24"
         android:title="@string/tv_news" />
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/nav_search_24"
+        android:id="@+id/searchScreenFragment"
+        android:icon="@drawable/icon_search_24"
         android:title="@string/tv_search" />
     <item
         android:id="@+id/wannaHelpScreenFragment"
