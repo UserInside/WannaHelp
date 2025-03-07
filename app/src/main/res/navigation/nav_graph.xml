@@ -31,4 +31,9 @@
         android:name="com.example.wannahelp.searchScreen.SearchScreenFragment"
         android:label="fragment_search_screen"
         tools:layout="@layout/fragment_search_screen" />
+    <fragment
+        android:id="@+id/newsScreenFragment"
+        android:name="com.example.wannahelp.newsScreen.NewsScreenFragment"
+        android:label="fragment_news_screen"
+        tools:layout="@layout/fragment_news_screen" />
 </navigation>

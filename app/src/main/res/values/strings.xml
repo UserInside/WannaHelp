@@ -36,4 +36,6 @@
     <string name="tv_cat_events">Мероприятия</string>
     <string name="tv_title_choose_category">Выберите катеригорию помощи</string>
     <string name="search_view_input_organization_name">Введите название организации</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

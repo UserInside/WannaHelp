@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/news_image_fade"
+            android:layout_width="match_parent"
+            android:layout_height="222dp"
+            android:layout_margin="@dimen/spacing_xxs"
+            android:background="@drawable/news_card_img1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/news_card_image_fade"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/news_card_title"
+            style="@style/TextStyle16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Спонсоры отремонтируют школу-интернат"
+            app:layout_constraintBottom_toBottomOf="@id/news_image_fade"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/news_image_fade" />
+
+        <ImageView
+            android:id="@+id/news_card_divider_decor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:src="@drawable/news_card_divider_decor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/news_card_title" />
+
+        <TextView
+            android:id="@+id/tv_news_card_description"
+            style="@style/TextStyle10"
+            android:layout_width="292dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/spacing_m"
+            android:text="Дубовская школа-интернат для детей
+\nс ограниченными возможностями здоровья стала первой в области …"
+            app:layout_constraintBottom_toTopOf="@id/news_card_bottomBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/news_card_divider_decor" />
+
+        <View
+            android:id="@+id/news_card_bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:background="@color/turtle_green"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_news_card_remains"
+            style="@style/TextStyle19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="Осталось 13 дней (21.09 - 20.10)"
+            app:drawableStartCompat="@drawable/icon_calendar"
+            app:drawableTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/news_card_bottomBar"
+            app:layout_constraintEnd_toEndOf="@id/news_card_bottomBar"
+            app:layout_constraintStart_toStartOf="@id/news_card_bottomBar"
+            app:layout_constraintTop_toTopOf="@id/news_card_bottomBar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
