@@ -2,10 +2,10 @@
     <string name="app_name">Хочу помочь</string>
     <string name="loading">Загрузка…</string>
     <string name="tv_search">Поиск</string>
-    <string name="tv_news">Новости</string>
-    <string name="tv_wanna_help">Помочь</string>
+    <string name="tv_title_news">Новости</string>
+    <string name="tv_title_wanna_help">Помочь</string>
     <string name="tv_history">История</string>
-    <string name="tv_profile">Профиль</string>
+    <string name="tv_title_profile">Профиль</string>
     <string name="tv_your_lastname">Ваша фамилия</string>
     <string name="tv_your_name">Ваше имя</string>
     <string name="tv_receive_push_notifications">Получать push-уведомления</string>
@@ -22,8 +22,8 @@
     <string name="edit_text_hint_birthday">Введите дату рождения</string>
     <string name="toolbar_action_confirm">Принять</string>
     <string name="toolbar_action_edit">Редактировать</string>
-    <string name="title_edit_profile">Редактировать</string>
-    <string name="title_profile">Профиль</string>
+    <string name="toolbar_action_filter">Фильтр</string>
+    <string name="tv_title_edit_profile">Редактировать</string>
     <string name="btn_change_photo">Сменить\nфото</string>
     <string name="btn_logout">Выйти из аккаунта</string>
     <string name="tv_delete">Удалить</string>

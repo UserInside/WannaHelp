@@ -3,9 +3,14 @@ package com.example.wannahelp.profileEditScreen
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentEditProfileScreenBinding
@@ -28,21 +33,29 @@ class EditProfileScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding
-
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_confirm -> {
-                    NavHostFragment.findNavController(this)
-                        .navigate(R.id.navigateToProfileScreen)
-                    true
+        requireActivity().apply {
+            title = getString(R.string.tv_title_edit_profile)
+            addMenuProvider(object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.menu_toolbar_edit_profile, menu)
                 }
 
-                else -> false
-            }
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.action_confirm -> {
+                            NavHostFragment.findNavController(this@EditProfileScreenFragment)
+                                .navigate(R.id.navigateToProfileScreen)
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+            }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         }
 
-        binding.profileEditLayout.btnChangePhoto.setOnClickListener {
+
+        binding.btnChangePhoto.setOnClickListener {
             showChangePhotoDialog()
         }
 
@@ -53,7 +66,7 @@ class EditProfileScreenFragment : Fragment() {
             val photoPath = bundle.getString("photoPath")
             photoPath?.let {
                 val bitmap = BitmapFactory.decodeFile(it)
-                binding.profileEditLayout.imgAvatar.setImageBitmap(bitmap)
+                binding.imgAvatar.setImageBitmap(bitmap)
             }
         }
 
@@ -61,7 +74,7 @@ class EditProfileScreenFragment : Fragment() {
             "deletePhoto",
             viewLifecycleOwner,
         ) { _, _ ->
-            binding.profileEditLayout.imgAvatar.setImageResource(R.drawable.avatar_placeholder)
+            binding.imgAvatar.setImageResource(R.drawable.avatar_placeholder)
         }
     }
 

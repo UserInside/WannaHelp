@@ -1,0 +1,35 @@
+package com.example.wannahelp.newsScreen
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.wannahelp.R
+
+class NewsRecyclerViewAdapter(private val newsList: List<NewsItem>) :
+    RecyclerView.Adapter<NewsRecyclerViewAdapter.ViewHolder>() {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val image: ImageView = itemView.findViewById(R.id.news_image)
+        val title: TextView = itemView.findViewById(R.id.news_card_title)
+        val description: TextView = itemView.findViewById(R.id.tv_news_card_description)
+        val remains: TextView = itemView.findViewById(R.id.tv_news_card_remains)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recycler_view_card_news, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int = newsList.size
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = newsList[position]
+        holder.image.setBackgroundResource(item.imageRes)
+        holder.title.text = item.title
+        holder.description.text = item.description
+        holder.remains.text = item.remains
+    }
+}

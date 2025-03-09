@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentSearchScreenBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -16,6 +18,8 @@ class SearchScreenFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        (activity as AppCompatActivity).supportActionBar?.hide()
+
         binding = FragmentSearchScreenBinding.inflate(inflater)
         return binding.root
     }
@@ -53,5 +57,10 @@ class SearchScreenFragment : Fragment() {
                     else -> null
                 }
         }.attach()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as AppCompatActivity).supportActionBar?.show()
     }
 }

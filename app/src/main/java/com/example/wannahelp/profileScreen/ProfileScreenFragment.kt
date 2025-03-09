@@ -1,10 +1,17 @@
 package com.example.wannahelp.profileScreen
 
+import android.app.ActionBar.DISPLAY_SHOW_CUSTOM
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -20,6 +27,7 @@ class ProfileScreenFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        (activity as AppCompatActivity).supportActionBar?.hide()
         binding = FragmentProfileScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -29,6 +37,12 @@ class ProfileScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        requireActivity().apply {
+            actionBar?.setCustomView(R.layout.profile_screen_appbar)
+            //todo click on menu
+        }
 
         val recyclerView = binding.profileInformation.recyclerViewYourFriends
 
@@ -43,18 +57,10 @@ class ProfileScreenFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        val toolbar = binding.appBar.toolbar
-        toolbar.setupWithNavController(findNavController())
-        toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_edit_profile -> {
-                    NavHostFragment.findNavController(this)
-                        .navigate(R.id.navigateToEditProfileScreen)
-                    true
-                }
+    }
 
-                else -> false
-            }
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as AppCompatActivity).supportActionBar?.show()
     }
 }

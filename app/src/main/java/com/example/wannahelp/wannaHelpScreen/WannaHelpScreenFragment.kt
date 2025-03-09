@@ -27,6 +27,8 @@ class WannaHelpScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+       requireActivity().title = getString(R.string.tv_title_wanna_help)
+
         val categoriesList =
             listOf(
                 CategoryCard(R.drawable.icon_cat_kids, resources.getString(R.string.tv_cat_kids)),

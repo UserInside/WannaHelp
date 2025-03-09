@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:cardCornerRadius="2dp">
@@ -11,15 +12,15 @@
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/news_image_fade"
+            android:id="@+id/news_image"
             android:layout_width="match_parent"
             android:layout_height="222dp"
             android:layout_margin="@dimen/spacing_xxs"
-            android:background="@drawable/news_card_img1"
             android:scaleType="centerCrop"
             android:src="@drawable/news_card_image_fade"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/news_card_img1" />
 
         <TextView
             android:id="@+id/news_card_title"
@@ -27,14 +28,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Спонсоры отремонтируют школу-интернат"
-            app:layout_constraintBottom_toBottomOf="@id/news_image_fade"
+            app:layout_constraintBottom_toBottomOf="@id/news_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/news_image_fade" />
+            app:layout_constraintTop_toBottomOf="@+id/news_image"
+            tools:text="Спонсоры отремонтируют школу-интернат" />
 
         <ImageView
-            android:id="@+id/news_card_divider_decor"
+            android:id="@+id/news_card_decor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xs"
@@ -50,19 +51,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="@dimen/spacing_m"
-            android:text="Дубовская школа-интернат для детей
-\nс ограниченными возможностями здоровья стала первой в области …"
             app:layout_constraintBottom_toTopOf="@id/news_card_bottomBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/news_card_divider_decor" />
+            app:layout_constraintTop_toBottomOf="@id/news_card_decor"
+            tools:text="Дубовская школа-интернат для детей
+\nс ограниченными возможностями здоровья стала первой в области …" />
 
         <View
             android:id="@+id/news_card_bottomBar"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:background="@color/turtle_green"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/news_card_divider" />
 
         <TextView
             android:id="@+id/tv_news_card_remains"
@@ -71,14 +72,20 @@
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
             android:gravity="center"
-            android:text="Осталось 13 дней (21.09 - 20.10)"
             app:drawableStartCompat="@drawable/icon_calendar"
             app:drawableTint="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/news_card_bottomBar"
             app:layout_constraintEnd_toEndOf="@id/news_card_bottomBar"
             app:layout_constraintStart_toStartOf="@id/news_card_bottomBar"
-            app:layout_constraintTop_toTopOf="@id/news_card_bottomBar" />
+            app:layout_constraintTop_toTopOf="@id/news_card_bottomBar"
+            tools:text="Осталось 13 дней (21.09 - 20.10)" />
 
+        <View
+            android:id="@+id/news_card_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_xs"
+            android:background="@color/light_grey_two"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
