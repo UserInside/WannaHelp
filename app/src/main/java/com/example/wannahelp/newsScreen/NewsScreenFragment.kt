@@ -31,7 +31,7 @@ class NewsScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().apply {
-            title = getString(R.string.tv_title_news)
+            title = getString(R.string.news)
             addMenuProvider(object : MenuProvider {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                     menuInflater.inflate(R.menu.menu_toolbar_news, menu)
@@ -41,7 +41,7 @@ class NewsScreenFragment : Fragment() {
                     return when (menuItem.itemId) {
                         R.id.action_filter -> {
                             NavHostFragment.findNavController(this@NewsScreenFragment)
-                                .navigate(R.id.navigateToEditProfileScreen) //todo change navigation
+                                .navigate(R.id.navigateToNewsFilterScreen)
                             true
                         }
 

@@ -30,7 +30,7 @@
             android:gravity="center"
             app:drawableStartCompat="@drawable/icon_calendar"
             app:drawableTint="@color/grey"
-            app:layout_constraintStart_toStartOf="tv_title_event_details"
+            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
             app:layout_constraintTop_toBottomOf="@id/tv_title_event_details"
             tools:text="Осталось 13 дней (21.09 - 20.10)" />
 
@@ -148,8 +148,7 @@
             android:layout_marginTop="@dimen/spacing_l"
             app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
             app:layout_constraintTop_toBottomOf="@id/img_primary"
-            tools:text="Участники и болельщики смогли весело и активно провести время на «Петербургском благотворительном марафоне» и при этом финансово поучаствовать в помощи детям."
-            />
+            tools:text="Участники и болельщики смогли весело и активно провести время на «Петербургском благотворительном марафоне» и при этом финансово поучаствовать в помощи детям." />
 
         <TextView
             android:id="@+id/tv_event_details_description2"
@@ -158,8 +157,7 @@
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
             app:layout_constraintTop_toBottomOf="@id/tv_event_details_description1"
-            tools:text="При этом финансово поучаствовать в помощи детям. При этом финансово поучаствовать в помощи детям."
-            />
+            tools:text="При этом финансово поучаствовать в помощи детям. При этом финансово поучаствовать в помощи детям." />
 
         <TextView
             android:id="@+id/tv_event_details_go_to_fond_site"

@@ -29,7 +29,7 @@
             app:contentInsetStart="0dp"
             app:layout_collapseMode="pin"
             app:menu="@menu/menu_toolbar_profile"
-            app:title="@string/tv_title_profile"
+            app:title="@string/profile"
             app:titleCentered="true"
             app:titleTextAppearance="@style/TextStyle2" />
 

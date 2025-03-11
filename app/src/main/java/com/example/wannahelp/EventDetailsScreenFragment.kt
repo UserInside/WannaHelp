@@ -19,7 +19,7 @@ class EventDetailsScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().apply{
-            title = getString(R.string.tv_title_event_details)
+            title = getString(R.string.event_details)
             actionBar?.setDisplayShowHomeEnabled(true)
         }
     }

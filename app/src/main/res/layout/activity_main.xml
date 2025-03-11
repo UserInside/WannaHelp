@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleCentered="true"
         app:titleTextAppearance="@style/TextStyle2"
-        tools:title="@string/tv_title_profile" />
+        tools:title="@string/profile" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

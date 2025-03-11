@@ -27,7 +27,7 @@ class WannaHelpScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-       requireActivity().title = getString(R.string.tv_title_wanna_help)
+       requireActivity().title = getString(R.string.wanna_help)
 
         val categoriesList =
             listOf(

@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_l"
         android:layout_marginTop="@dimen/spacing_xxs"
-        android:text="@string/tv_your_lastname"
+        android:text="@string/your_lastname"
         app:layout_constraintStart_toEndOf="@id/img_avatar"
         app:layout_constraintTop_toTopOf="@id/img_avatar" />
 
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/tv_your_name"
+        android:text="@string/your_name"
         app:layout_constraintStart_toStartOf="@id/edit_text_lastname"
         app:layout_constraintTop_toBottomOf="@id/edit_text_lastname" />
 
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_l"
         android:layout_marginTop="@dimen/spacing_l"
-        android:text="@string/tv_birthday"
+        android:text="@string/birthday"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/separation_line_1" />
 
@@ -159,7 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_l"
-        android:text="@string/tv_email"
+        android:text="@string/email"
         app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
         app:layout_constraintTop_toBottomOf="@id/edit_text_password" />
 
