@@ -111,6 +111,7 @@ class ChangeAvatarDialogFragment : DialogFragment() {
             ".jpg",
             storageDir,
         ).apply {
+            avatarPath = this.absolutePath
             avatarFile = this
         }
     }
