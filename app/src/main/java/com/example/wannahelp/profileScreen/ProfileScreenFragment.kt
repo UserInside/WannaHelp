@@ -1,6 +1,5 @@
 package com.example.wannahelp.profileScreen
 
-import android.app.ActionBar.DISPLAY_SHOW_CUSTOM
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,8 +12,6 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentProfileScreenBinding
@@ -27,7 +24,7 @@ class ProfileScreenFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.hide()
+//        (activity as AppCompatActivity).supportActionBar?.hide()
         binding = FragmentProfileScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,9 +36,30 @@ class ProfileScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+//        requireActivity().apply {
+//            actionBar?.setCustomView(R.layout.profile_screen_appbar)
+//            //todo click on menu
+//        }
+
         requireActivity().apply {
-            actionBar?.setCustomView(R.layout.profile_screen_appbar)
-            //todo click on menu
+            title = getString(R.string.news)
+            addMenuProvider(object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.menu_toolbar_profile, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.action_edit_profile -> {
+                            NavHostFragment.findNavController(this@ProfileScreenFragment)
+                                .navigate(R.id.navigateToEditProfileScreen)
+                            true
+                        }
+
+                        else -> false
+                    }
+                }
+            }, viewLifecycleOwner, Lifecycle.State.STARTED)
         }
 
         val recyclerView = binding.profileInformation.recyclerViewYourFriends
@@ -61,6 +79,6 @@ class ProfileScreenFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (activity as AppCompatActivity).supportActionBar?.show()
+//        (activity as AppCompatActivity).supportActionBar?.show()
     }
 }
