@@ -1,0 +1,29 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "title": "KIDS",
+      "image": "R.drawable.icon_cat_kids"
+    },
+    {
+      "id": 2,
+      "title": "ADULTS",
+      "image": "R.drawable.icon_cat_adults"
+    },
+    {
+      "id": 3,
+      "title": "AGED",
+      "image": "R.drawable.icon_cat_aged"
+    },
+    {
+      "id": 4,
+      "title": "ANIMALS",
+      "image": "R.drawable.icon_cat_animals"
+    },
+    {
+      "id": 5,
+      "title": "EVENTS",
+      "image": "R.drawable.icon_cat_events"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 package com.example.wannahelp.newsScreen
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,9 +28,9 @@ class NewsRecyclerViewAdapter(private val newsList: List<NewsItem>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = newsList[position]
-        holder.image.setBackgroundResource(item.imageRes)
+//        holder.image.setBackgroundResource("/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png")
         holder.title.text = item.title
         holder.description.text = item.description
-        holder.remains.text = item.remains
+        holder.remains.text = item.date
     }
 }

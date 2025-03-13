@@ -1,0 +1,44 @@
+{
+  "news": [
+    {
+      "id": 1,
+      "image": "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png",
+      "title": "Первое благотворительное событие",
+      "description": "Подробное описание первого благотворительного события с некоторыми деталями",
+      "date": "20/10/2016",
+      "category": "KIDS"
+    },
+    {
+      "id": 2,
+      "image": "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png",
+      "title": "Второе благотворительное событие",
+      "description": "Второе описание для второго благотворительного события с некоторыми деталями",
+      "date": "06/04/2024",
+      "category": "ADULTS"
+    },
+    {
+      "id": 3,
+      "image": "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png",
+      "title": "Третье благотворительное событие",
+      "description": "Что-то тут еще одно описание благотворительного события с некоторыми деталями",
+      "date": "17/12/2025",
+      "category": "AGED"
+    },
+    {
+      "id": 4,
+      "image": "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png",
+      "title": "Четвертое благотворительное событие",
+      "description": "Подробное описание очередного благотворительного события с некоторыми деталями",
+      "date": "15/06/2025",
+      "category": "ANIMALS"
+    },
+    {
+      "id": 5,
+      "image": "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png",
+      "title": "Пятое и не последнее",
+      "description": "Подробное описание пятого благотворительного события с некоторыми деталями",
+      "date": "31/03/2025",
+      "category": "EVENTS"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 package com.example.wannahelp.newsScreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,7 +14,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
+import com.example.wannahelp.common.extentions.readFile
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
+import kotlinx.serialization.json.Json
 
 
 class NewsScreenFragment : Fragment() {
@@ -51,9 +54,11 @@ class NewsScreenFragment : Fragment() {
             }, viewLifecycleOwner, Lifecycle.State.STARTED)
         }
 
-        val newsList = listOf<NewsItem>(NewsItem(), NewsItem(), NewsItem())
+        val jsonString = requireContext().assets.readFile("news.json")
+        val newsItemList = Json.decodeFromString<News>(jsonString)
+
         val recyclerView = binding.recyclerViewNews
-        val adapter = NewsRecyclerViewAdapter(newsList)
+        val adapter = NewsRecyclerViewAdapter(newsItemList.news)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }

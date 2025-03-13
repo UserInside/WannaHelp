@@ -17,7 +17,6 @@ class EventDetailsScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         requireActivity().apply{
             title = getString(R.string.event_details)
             actionBar?.setDisplayShowHomeEnabled(true)
