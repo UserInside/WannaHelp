@@ -46,4 +46,7 @@
     <string name="file_name_avatar">avatar.jpg</string>
     <string name="by_events">По мероприятиям</string>
     <string name="by_organization">По НКО</string>
+    <string name="error_file_not_created">Ошибка создания файла</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

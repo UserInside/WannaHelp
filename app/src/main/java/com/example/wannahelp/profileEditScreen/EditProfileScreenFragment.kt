@@ -13,8 +13,10 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
+import com.example.wannahelp.MainActivity
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentEditProfileScreenBinding
+import com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment
 import java.io.File
 
 class EditProfileScreenFragment : Fragment() {
@@ -44,6 +46,7 @@ class EditProfileScreenFragment : Fragment() {
 
         requireActivity().apply {
             title = getString(R.string.tv_title_edit_profile)
+            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
             addMenuProvider(
                 object : MenuProvider {
                     override fun onCreateMenu(
@@ -57,7 +60,13 @@ class EditProfileScreenFragment : Fragment() {
                         return when (menuItem.itemId) {
                             R.id.action_confirm -> {
                                 NavHostFragment.findNavController(this@EditProfileScreenFragment)
-                                    .navigate(R.id.navigateToProfileScreen)
+                                    .popBackStack() // add save fields values
+                                true
+                            }
+
+                            android.R.id.home -> {
+                                NavHostFragment.findNavController(this@EditProfileScreenFragment)
+                                    .popBackStack()
                                 true
                             }
 
@@ -106,6 +115,10 @@ class EditProfileScreenFragment : Fragment() {
 
     private fun showChangePhotoDialog() {
         val dialog = ChangeAvatarDialogFragment.newInstance()
-        dialog.show(parentFragmentManager, "ChangeAvatarDialogFragment")
+        dialog.show(parentFragmentManager, CHANGE_AVATAR_DIALOG)
+    }
+
+    private companion object {
+        const val CHANGE_AVATAR_DIALOG = "ChangeAvatarDialogFragment"
     }
 }

@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wannahelp.MainActivity
 import com.example.wannahelp.R
 import com.example.wannahelp.common.Category
 
@@ -40,7 +41,7 @@ class NewsFilterFragment : Fragment() {
 
         requireActivity().apply {
             title = getString(R.string.filter)
-            // todo добавить кнопку назад
+            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
             addMenuProvider(
                 object : MenuProvider {
                     override fun onCreateMenu(
@@ -58,7 +59,13 @@ class NewsFilterFragment : Fragment() {
                                     apply()
                                 }
                                 NavHostFragment.findNavController(this@NewsFilterFragment)
-                                    .navigate(R.id.navigateToNewsScreen)
+                                    .popBackStack()
+                                true
+                            }
+
+                            android.R.id.home -> {
+                                NavHostFragment.findNavController(this@NewsFilterFragment)
+                                    .popBackStack()
                                 true
                             }
 
@@ -74,17 +81,30 @@ class NewsFilterFragment : Fragment() {
         val filterCategoriesList =
             mutableListOf(
                 FilterCategoryCard(resources.getString(R.string.tv_cat_kids), Category.KIDS, true),
-                FilterCategoryCard(resources.getString(R.string.tv_cat_adults), Category.ADULTS, true),
+                FilterCategoryCard(
+                    resources.getString(R.string.tv_cat_adults),
+                    Category.ADULTS,
+                    true
+                ),
                 FilterCategoryCard(resources.getString(R.string.tv_cat_aged), Category.AGED, true),
-                FilterCategoryCard(resources.getString(R.string.tv_cat_animals), Category.ANIMALS, true),
-                FilterCategoryCard(resources.getString(R.string.tv_cat_events), Category.EVENTS, true),
+                FilterCategoryCard(
+                    resources.getString(R.string.tv_cat_animals),
+                    Category.ANIMALS,
+                    true
+                ),
+                FilterCategoryCard(
+                    resources.getString(R.string.tv_cat_events),
+                    Category.EVENTS,
+                    true
+                ),
             )
 
         val setOfChosenCategories = sharedPref.getStringSet(CHOSEN_CATEGORIES, null)
 
         val listToShow =
             filterCategoriesList.map { categoryCard ->
-                val isChecked = setOfChosenCategories?.contains(categoryCard.category.toString()) == true
+                val isChecked =
+                    setOfChosenCategories?.contains(categoryCard.category.toString()) == true
                 categoryCard.copy(isChecked = isChecked)
             }
 

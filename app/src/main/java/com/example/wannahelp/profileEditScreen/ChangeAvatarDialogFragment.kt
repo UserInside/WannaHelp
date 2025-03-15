@@ -23,7 +23,6 @@ import com.example.wannahelp.databinding.FragmentChangeAvatarDialogBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
 
 const val DELETE_AVATAR_KEY = "deletePhoto"
 const val CHOOSE_AVATAR_KEY = "choosePhoto"
@@ -49,12 +48,13 @@ class ChangeAvatarDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        val context = requireContext()
 
         cameraLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     saveAvatarToInternalStorage(
-                        context = requireContext(),
+                        context = context,
                         imageUri = avatarFile.toUri(),
                     )
                     val bundle = Bundle()
@@ -70,7 +70,7 @@ class ChangeAvatarDialogFragment : DialogFragment() {
                     val imageURI = result.data?.data
                     imageURI?.let {
                         saveAvatarToInternalStorage(
-                            context = requireContext(),
+                            context = context,
                             imageUri = imageURI,
                         )
                     }
@@ -105,12 +105,12 @@ class ChangeAvatarDialogFragment : DialogFragment() {
 
     private fun checkCameraPermission(): Boolean =
         (
-            ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.CAMERA,
-            )
-                != PackageManager.PERMISSION_GRANTED
-        )
+                ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.CAMERA,
+                )
+                        != PackageManager.PERMISSION_GRANTED
+                )
 
     private fun makeAvatarPhoto() {
         val makeAvatarIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -119,15 +119,17 @@ class ChangeAvatarDialogFragment : DialogFragment() {
                 try {
                     createAvatarFile()
                 } catch (ex: IOException) {
-                    Toast.makeText(requireContext(), "Ошибка создания файла", Toast.LENGTH_SHORT) // todo
-                        .show()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.error_file_not_created), Toast.LENGTH_SHORT
+                    ).show()
                     null
                 }
             photoFile?.let { file ->
                 val photoURI: Uri =
                     FileProvider.getUriForFile(
                         requireContext(),
-                        "${requireContext().packageName}.fileprovider",
+                        "${context?.packageName}.fileprovider",
                         file,
                     )
                 makeAvatarIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -155,15 +157,18 @@ class ChangeAvatarDialogFragment : DialogFragment() {
                 try {
                     createAvatarFile()
                 } catch (ex: IOException) {
-                    Toast.makeText(requireContext(), "Ошибка создания файла", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        context,
+                        getString(R.string.error_file_not_created),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     null
                 }
             avatarFile?.let { file ->
                 val avatarURI: Uri =
                     FileProvider.getUriForFile(
                         requireContext(),
-                        "${requireContext().packageName}.fileprovider",
+                        "${context?.packageName}.fileprovider",
                         file,
                     )
                 takeFromGalleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, avatarURI)
@@ -176,20 +181,17 @@ class ChangeAvatarDialogFragment : DialogFragment() {
         context: Context,
         imageUri: Uri,
     ): File? {
-        val inputStream: InputStream =
-            context.contentResolver.openInputStream(imageUri) ?: return null
-
         val file = File(context.filesDir, getString(R.string.file_name_avatar))
-// todo refactor try-w-res
-        try {
-            val outputStream = FileOutputStream(file)
-            inputStream.copyTo(outputStream)
-            inputStream.close()
-            outputStream.close()
-            return file
+        return try {
+            context.contentResolver.openInputStream(imageUri).use { inputStream ->
+                FileOutputStream(file).use { outputStream ->
+                    inputStream?.copyTo(outputStream)
+                }
+            }
+            file
         } catch (e: Exception) {
             e.printStackTrace()
-            return null
+            null
         }
     }
 

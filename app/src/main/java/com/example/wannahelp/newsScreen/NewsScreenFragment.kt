@@ -15,12 +15,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.wannahelp.MainActivity
 import com.example.wannahelp.R
 import com.example.wannahelp.common.extentions.readFile
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
 import kotlinx.serialization.json.Json
 
 private const val CHOSEN_CATEGORIES = "chosenCategories"
+private const val NEWS_FILE_NAME = "news.json"
 
 class NewsScreenFragment : Fragment() {
     private lateinit var binding: FragmentNewsScreenBinding
@@ -45,6 +47,7 @@ class NewsScreenFragment : Fragment() {
 
         requireActivity().apply {
             title = getString(R.string.news)
+            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
             addMenuProvider(
                 object : MenuProvider {
                     override fun onCreateMenu(
@@ -71,7 +74,7 @@ class NewsScreenFragment : Fragment() {
             )
         }
 
-        val jsonString = requireContext().assets.readFile("news.json")
+        val jsonString = requireContext().assets.readFile(NEWS_FILE_NAME)
         val newsItemList = Json.decodeFromString<List<NewsItem>>(jsonString)
         val listToShow =
             newsItemList.filter { setOfChosenCategories?.contains(it.category.toString()) == true }

@@ -25,8 +25,4 @@ class EventDetailsScreenFragment : Fragment() {
             actionBar?.setDisplayShowHomeEnabled(true)
         }
     }
-
-    companion object {
-        fun newInstance() = EventDetailsScreenFragment()
-    }
 }
