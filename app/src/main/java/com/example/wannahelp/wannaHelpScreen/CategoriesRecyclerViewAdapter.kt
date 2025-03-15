@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
 
-class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryCard>) :
+class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryItem>) :
     RecyclerView.Adapter<CategoriesRecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.img_card_help_category)
@@ -30,11 +30,9 @@ class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryCar
         position: Int,
     ) {
         val currentCard = categoriesList[position]
-        holder.image.setImageResource(currentCard.image)
+//   заглушка     holder.image.setImageResource(currentCard.image)
         holder.title.text = currentCard.title
     }
 
-    override fun getItemCount(): Int {
-        return categoriesList.size
-    }
+    override fun getItemCount(): Int = categoriesList.size
 }

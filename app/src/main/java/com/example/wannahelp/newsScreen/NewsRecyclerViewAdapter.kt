@@ -1,16 +1,17 @@
 package com.example.wannahelp.newsScreen
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
+import com.example.wannahelp.newsScreen.NewsRecyclerViewAdapter.ViewHolder
 
-class NewsRecyclerViewAdapter(private val newsList: List<NewsItem>) :
-    RecyclerView.Adapter<NewsRecyclerViewAdapter.ViewHolder>() {
+class NewsRecyclerViewAdapter :
+    ListAdapter<NewsItem, ViewHolder>(NewsItemDiffCallback()) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.news_image)
         val title: TextView = itemView.findViewById(R.id.news_card_title)
@@ -18,16 +19,21 @@ class NewsRecyclerViewAdapter(private val newsList: List<NewsItem>) :
         val remains: TextView = itemView.findViewById(R.id.tv_news_card_remains)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_view_card_news, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.recycler_view_card_news, parent, false)
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = newsList.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = newsList[position]
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
+        val item = getItem(position)
 //        holder.image.setBackgroundResource("/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png")
         holder.title.text = item.title
         holder.description.text = item.description

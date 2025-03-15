@@ -1,5 +1,9 @@
 package com.example.wannahelp.common
 
 enum class Category {
-    KIDS, ADULTS, AGED, ANIMALS, EVENTS
+    KIDS,
+    ADULTS,
+    AGED,
+    ANIMALS,
+    EVENTS,
 }

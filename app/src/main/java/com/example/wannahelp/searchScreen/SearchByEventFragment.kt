@@ -12,9 +12,7 @@ class SearchByEventFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_search_by_event, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_search_by_event, container, false)
 
     companion object {
         fun newInstance() = SearchByEventFragment()

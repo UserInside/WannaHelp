@@ -1,13 +1,15 @@
 package com.example.wannahelp.newsScreen
 
+import android.content.Context.MODE_PRIVATE
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -18,52 +20,68 @@ import com.example.wannahelp.common.extentions.readFile
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
 import kotlinx.serialization.json.Json
 
+private const val CHOSEN_CATEGORIES = "chosenCategories"
 
 class NewsScreenFragment : Fragment() {
     private lateinit var binding: FragmentNewsScreenBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentNewsScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
+        val sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
+        val setOfChosenCategories = sharedPref?.getStringSet(CHOSEN_CATEGORIES, null)
 
         requireActivity().apply {
             title = getString(R.string.news)
-            addMenuProvider(object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.menu_toolbar_news, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.action_filter -> {
-                            NavHostFragment.findNavController(this@NewsScreenFragment)
-                                .navigate(R.id.navigateToNewsFilterScreen)
-                            true
-                        }
-
-                        else -> false
+            addMenuProvider(
+                object : MenuProvider {
+                    override fun onCreateMenu(
+                        menu: Menu,
+                        menuInflater: MenuInflater,
+                    ) {
+                        menuInflater.inflate(R.menu.menu_toolbar_news, menu)
                     }
-                }
-            }, viewLifecycleOwner, Lifecycle.State.STARTED)
+
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                        return when (menuItem.itemId) {
+                            R.id.action_filter -> {
+                                NavHostFragment.findNavController(this@NewsScreenFragment)
+                                    .navigate(R.id.navigateToNewsFilterScreen)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                },
+                viewLifecycleOwner,
+                Lifecycle.State.STARTED,
+            )
         }
 
         val jsonString = requireContext().assets.readFile("news.json")
-        val newsItemList = Json.decodeFromString<News>(jsonString)
+        val newsItemList = Json.decodeFromString<List<NewsItem>>(jsonString)
+        val listToShow =
+            newsItemList.filter { setOfChosenCategories?.contains(it.category.toString()) == true }
 
         val recyclerView = binding.recyclerViewNews
-        val adapter = NewsRecyclerViewAdapter(newsItemList.news)
+        val adapter =
+            NewsRecyclerViewAdapter().apply {
+                submitList(listToShow)
+            }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-    }
-
-    companion object {
-        fun newInstance() = NewsScreenFragment()
     }
 }

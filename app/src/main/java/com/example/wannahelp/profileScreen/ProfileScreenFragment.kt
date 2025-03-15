@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -35,7 +34,6 @@ class ProfileScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-
 //        requireActivity().apply {
 //            actionBar?.setCustomView(R.layout.profile_screen_appbar)
 //            //todo click on menu
@@ -43,23 +41,30 @@ class ProfileScreenFragment : Fragment() {
 
         requireActivity().apply {
             title = getString(R.string.news)
-            addMenuProvider(object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.menu_toolbar_profile, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.action_edit_profile -> {
-                            NavHostFragment.findNavController(this@ProfileScreenFragment)
-                                .navigate(R.id.navigateToEditProfileScreen)
-                            true
-                        }
-
-                        else -> false
+            addMenuProvider(
+                object : MenuProvider {
+                    override fun onCreateMenu(
+                        menu: Menu,
+                        menuInflater: MenuInflater,
+                    ) {
+                        menuInflater.inflate(R.menu.menu_toolbar_profile, menu)
                     }
-                }
-            }, viewLifecycleOwner, Lifecycle.State.STARTED)
+
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                        return when (menuItem.itemId) {
+                            R.id.action_edit_profile -> {
+                                NavHostFragment.findNavController(this@ProfileScreenFragment)
+                                    .navigate(R.id.navigateToEditProfileScreen)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                },
+                viewLifecycleOwner,
+                Lifecycle.State.STARTED,
+            )
         }
 
         val recyclerView = binding.profileInformation.recyclerViewYourFriends
@@ -71,10 +76,14 @@ class ProfileScreenFragment : Fragment() {
                 FriendCard(R.drawable.avatar_1, "Виктор Кузнецов"),
             )
 
-        val adapter = FriendsRecyclerViewAdapter(friendsList)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-
+        val rvAdapter = FriendsRecyclerViewAdapter(friendsList)
+        with(recyclerView) {
+            layoutManager =
+                object : LinearLayoutManager(requireContext()) {
+                    override fun canScrollVertically(): Boolean = false
+                }
+            adapter = rvAdapter
+        }
     }
 
     override fun onDestroyView() {

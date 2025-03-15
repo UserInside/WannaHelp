@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +18,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.DialogFragment
+import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentChangeAvatarDialogBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+
+const val DELETE_AVATAR_KEY = "deletePhoto"
+const val CHOOSE_AVATAR_KEY = "choosePhoto"
+const val PHOTO_PATH_KEY = "photoPath"
 
 class ChangeAvatarDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentChangeAvatarDialogBinding
@@ -54,8 +58,8 @@ class ChangeAvatarDialogFragment : DialogFragment() {
                         imageUri = avatarFile.toUri(),
                     )
                     val bundle = Bundle()
-                    bundle.putString("photoPath", avatarFile.path)
-                    parentFragmentManager.setFragmentResult("photoPath", bundle)
+                    bundle.putString(PHOTO_PATH_KEY, avatarFile.path)
+                    parentFragmentManager.setFragmentResult(PHOTO_PATH_KEY, bundle)
                     dismiss()
                 }
             }
@@ -70,10 +74,11 @@ class ChangeAvatarDialogFragment : DialogFragment() {
                             imageUri = imageURI,
                         )
                     }
-                    val bundle = Bundle().apply {
-                        putString("choosePhoto", imageURI.toString())
-                    }
-                    parentFragmentManager.setFragmentResult("choosePhoto", bundle)
+                    val bundle =
+                        Bundle().apply {
+                            putString(CHOOSE_AVATAR_KEY, imageURI.toString())
+                        }
+                    parentFragmentManager.setFragmentResult(CHOOSE_AVATAR_KEY, bundle)
                     dismiss()
                 }
             }
@@ -91,43 +96,34 @@ class ChangeAvatarDialogFragment : DialogFragment() {
         binding.tvDelete.setOnClickListener {
             val bundle =
                 Bundle().apply {
-                    putString("deletePhoto", null)
+                    putString(DELETE_AVATAR_KEY, null)
                 }
-            parentFragmentManager.setFragmentResult("deletePhoto", bundle)
+            parentFragmentManager.setFragmentResult(DELETE_AVATAR_KEY, bundle)
             dismiss()
         }
     }
 
-    companion object {
-        fun newInstance() = ChangeAvatarDialogFragment()
-    }
-
     private fun checkCameraPermission(): Boolean =
         (
-                ContextCompat.checkSelfPermission(
-                    requireActivity(),
-                    Manifest.permission.CAMERA,
-                )
-                        != PackageManager.PERMISSION_GRANTED
-                )
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.CAMERA,
+            )
+                != PackageManager.PERMISSION_GRANTED
+        )
 
     private fun makeAvatarPhoto() {
         val makeAvatarIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (makeAvatarIntent.resolveActivity(requireActivity().packageManager) != null) {
-            Log.e("AVATAR", "1")
-
             val photoFile: File? =
                 try {
                     createAvatarFile()
-
                 } catch (ex: IOException) {
-                    Toast.makeText(requireContext(), "Ошибка создания файла", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Ошибка создания файла", Toast.LENGTH_SHORT) // todo
                         .show()
                     null
                 }
             photoFile?.let { file ->
-                Log.e("AVATAR", "2")
-
                 val photoURI: Uri =
                     FileProvider.getUriForFile(
                         requireContext(),
@@ -143,8 +139,8 @@ class ChangeAvatarDialogFragment : DialogFragment() {
     private fun createAvatarFile(): File {
         val storageDir = requireActivity().filesDir
         return File.createTempFile(
-            "avatar",
-            ".jpg",
+            getString(R.string.prefix_file_avatar),
+            getString(R.string.suffix_file_avatar),
             storageDir,
         ).apply {
             avatarFile = this
@@ -183,8 +179,8 @@ class ChangeAvatarDialogFragment : DialogFragment() {
         val inputStream: InputStream =
             context.contentResolver.openInputStream(imageUri) ?: return null
 
-        val file = File(context.filesDir, "avatar.jpg")
-//todo refactor try-w-res
+        val file = File(context.filesDir, getString(R.string.file_name_avatar))
+// todo refactor try-w-res
         try {
             val outputStream = FileOutputStream(file)
             inputStream.copyTo(outputStream)
@@ -195,5 +191,9 @@ class ChangeAvatarDialogFragment : DialogFragment() {
             e.printStackTrace()
             return null
         }
+    }
+
+    companion object {
+        fun newInstance() = ChangeAvatarDialogFragment()
     }
 }

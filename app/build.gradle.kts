@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ktlint)
     kotlin("plugin.serialization") version "1.9.0"
+    id("kotlin-parcelize")
 }
 android {
     namespace = "com.example.wannahelp"

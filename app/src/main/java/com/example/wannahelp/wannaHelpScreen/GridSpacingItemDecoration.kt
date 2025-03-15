@@ -18,20 +18,18 @@ class GridSpacingItemDecoration(
         val position = parent.getChildAdapterPosition(view)
         val column = position % spanCount
 
-        if (includeEdge) {
-            outRect.left = spacing - column * spacing / spanCount
-            outRect.right = (column + 1) * spacing / spanCount
+        val left = spacing * column / spanCount
+        val right = spacing * (spanCount - 1 - column) / spanCount
 
-            if (position < spanCount) {
-                outRect.top = spacing
-            }
+        if (includeEdge) {
+            outRect.left = spacing - left
+            outRect.right = spacing - right
+            outRect.top = if (position < spanCount) spacing else 0
             outRect.bottom = spacing
         } else {
-            outRect.left = column * spacing / spanCount
-            outRect.right = spacing - (column + 1) * spacing / spanCount
-            if (position >= spanCount) {
-                outRect.top = spacing
-            }
+            outRect.left = left
+            outRect.right = right
+            outRect.top = if (position >= spanCount) spacing else 0
         }
     }
 }

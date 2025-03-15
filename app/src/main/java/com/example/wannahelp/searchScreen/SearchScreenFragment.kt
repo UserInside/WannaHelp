@@ -52,8 +52,8 @@ class SearchScreenFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text =
                 when (position) {
-                    0 -> "По мероприятиям"
-                    1 -> "По НКО"
+                    0 -> getString(R.string.by_events)
+                    1 -> getString(R.string.by_organization)
                     else -> null
                 }
         }.attach()

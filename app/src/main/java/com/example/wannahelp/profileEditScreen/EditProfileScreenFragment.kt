@@ -1,7 +1,6 @@
 package com.example.wannahelp.profileEditScreen
 
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,7 +8,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -37,8 +35,8 @@ class EditProfileScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val avatarFile = File(requireContext().filesDir, "avatar.jpg")
-        if(avatarFile.exists()) {
+        val avatarFile = File(requireContext().filesDir, getString(R.string.file_name_avatar))
+        if (avatarFile.exists()) {
             binding.imgAvatar.setImageURI(avatarFile.toUri())
         } else {
             binding.imgAvatar.setImageResource(R.drawable.avatar_placeholder)
@@ -46,23 +44,30 @@ class EditProfileScreenFragment : Fragment() {
 
         requireActivity().apply {
             title = getString(R.string.tv_title_edit_profile)
-            addMenuProvider(object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.menu_toolbar_edit_profile, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.action_confirm -> {
-                            NavHostFragment.findNavController(this@EditProfileScreenFragment)
-                                .navigate(R.id.navigateToProfileScreen)
-                            true
-                        }
-
-                        else -> false
+            addMenuProvider(
+                object : MenuProvider {
+                    override fun onCreateMenu(
+                        menu: Menu,
+                        menuInflater: MenuInflater,
+                    ) {
+                        menuInflater.inflate(R.menu.menu_toolbar_edit_profile, menu)
                     }
-                }
-            }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                        return when (menuItem.itemId) {
+                            R.id.action_confirm -> {
+                                NavHostFragment.findNavController(this@EditProfileScreenFragment)
+                                    .navigate(R.id.navigateToProfileScreen)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                },
+                viewLifecycleOwner,
+                Lifecycle.State.RESUMED,
+            )
         }
 
         binding.btnChangePhoto.setOnClickListener {
@@ -70,20 +75,20 @@ class EditProfileScreenFragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            "choosePhoto",
+            CHOOSE_AVATAR_KEY,
             viewLifecycleOwner,
-        ) {_, bundle ->
-            val photoPath = bundle.getString("choosePhoto")
+        ) { _, bundle ->
+            val photoPath = bundle.getString(CHOOSE_AVATAR_KEY)
             photoPath?.let {
                 binding.imgAvatar.setImageURI(photoPath.toUri())
             }
         }
 
         parentFragmentManager.setFragmentResultListener(
-            "photoPath",
+            PHOTO_PATH_KEY,
             viewLifecycleOwner,
         ) { _, bundle ->
-            val photoPath = bundle.getString("photoPath")
+            val photoPath = bundle.getString(PHOTO_PATH_KEY)
             photoPath?.let {
                 val bitmap = BitmapFactory.decodeFile(it)
                 binding.imgAvatar.setImageBitmap(bitmap)
@@ -91,7 +96,7 @@ class EditProfileScreenFragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            "deletePhoto",
+            DELETE_AVATAR_KEY,
             viewLifecycleOwner,
         ) { _, _ ->
             binding.imgAvatar.setImageResource(R.drawable.avatar_placeholder)

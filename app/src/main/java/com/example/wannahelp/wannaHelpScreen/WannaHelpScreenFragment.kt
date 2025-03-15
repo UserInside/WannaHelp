@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wannahelp.R
+import com.example.wannahelp.common.extentions.readFile
 import com.example.wannahelp.databinding.FragmentWannaHelpScreenBinding
+import kotlinx.serialization.json.Json
 
 class WannaHelpScreenFragment : Fragment() {
     private lateinit var binding: FragmentWannaHelpScreenBinding
@@ -27,20 +29,14 @@ class WannaHelpScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-       requireActivity().title = getString(R.string.wanna_help)
+        requireActivity().title = getString(R.string.wanna_help)
 
-        val categoriesList =
-            listOf(
-                CategoryCard(R.drawable.icon_cat_kids, resources.getString(R.string.tv_cat_kids)),
-                CategoryCard(R.drawable.icon_cat_adults, resources.getString(R.string.tv_cat_adults)),
-                CategoryCard(R.drawable.icon_cat_aged, resources.getString(R.string.tv_cat_aged)),
-                CategoryCard(R.drawable.icon_cat_animals, resources.getString(R.string.tv_cat_animals)),
-                CategoryCard(R.drawable.icon_cat_events, resources.getString(R.string.tv_cat_events)),
-            )
+        val jsonString = requireContext().assets.readFile("categories.json")
+        val categoriesItemList = Json.decodeFromString<List<CategoryItem>>(jsonString)
 
         val recyclerView = binding.recyclerViewCategories
 
-        val adapter = CategoriesRecyclerViewAdapter(categoriesList)
+        val adapter = CategoriesRecyclerViewAdapter(categoriesItemList)
         val spanCount = 2
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
 
