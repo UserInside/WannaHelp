@@ -28,23 +28,36 @@ private const val CHOSEN_CATEGORIES = "chosenCategories"
 private const val NEWS_FILE_NAME = "news.json"
 
 class NewsScreenFragment : ToolbarFragment() {
-    private lateinit var binding: FragmentNewsScreenBinding
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?,
-//    ): View {
-//        binding = FragmentNewsScreenBinding.inflate(inflater, container, false)
-//        return binding.root
-//    }
 
     override fun getFragmentContent(): Int = R.layout.fragment_news_screen
 
     override fun setupToolbar() {
         toolbar.apply {
             title = getString(R.string.news)
-            inflateMenu(R.menu.menu_toolbar_news)
+            addMenuProvider(
+                object : MenuProvider {
+                    override fun onCreateMenu(
+                        menu: Menu,
+                        menuInflater: MenuInflater,
+                    ) {
+                        menuInflater.inflate(R.menu.menu_toolbar_news, menu)
+                    }
+
+                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                        return when (menuItem.itemId) {
+                            R.id.action_filter -> {
+                                NavHostFragment.findNavController(this@NewsScreenFragment)
+                                    .navigate(R.id.navigateToNewsFilterScreen)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                },
+                viewLifecycleOwner,
+                Lifecycle.State.STARTED,
+            )
         }
     }
 
@@ -57,42 +70,12 @@ class NewsScreenFragment : ToolbarFragment() {
         val sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
         val setOfChosenCategories = sharedPref?.getStringSet(CHOSEN_CATEGORIES, null)
 
-//        requireActivity().apply {
-//            title = getString(R.string.news)
-//            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-//            addMenuProvider(
-//                object : MenuProvider {
-//                    override fun onCreateMenu(
-//                        menu: Menu,
-//                        menuInflater: MenuInflater,
-//                    ) {
-//                        menuInflater.inflate(R.menu.menu_toolbar_news, menu)
-//                    }
-//
-//                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-//                        return when (menuItem.itemId) {
-//                            R.id.action_filter -> {
-//                                NavHostFragment.findNavController(this@NewsScreenFragment)
-//                                    .navigate(R.id.navigateToNewsFilterScreen)
-//                                true
-//                            }
-//
-//                            else -> false
-//                        }
-//                    }
-//                },
-//                viewLifecycleOwner,
-//                Lifecycle.State.STARTED,
-//            )
-//        }
-
         val jsonString = requireContext().assets.readFile(NEWS_FILE_NAME)
         val newsItemList = Json.decodeFromString<List<NewsItem>>(jsonString)
         val listToShow =
             newsItemList.filter { setOfChosenCategories?.contains(it.category.toString()) == true }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_news)
-//            binding.recyclerViewNews
         val adapter =
             NewsRecyclerViewAdapter().apply {
                 submitList(listToShow)

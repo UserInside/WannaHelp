@@ -16,9 +16,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-//        val toolbar = findViewById<MaterialToolbar>(R.id.main_toolbar)
-//        setSupportActionBar(toolbar)
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
 
         bottomNavigationView.setupWithNavController(navController)

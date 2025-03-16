@@ -1,6 +1,7 @@
 package com.example.wannahelp.newsScreen.newsFilterScreen
 
 import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,39 +10,36 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wannahelp.MainActivity
 import com.example.wannahelp.R
 import com.example.wannahelp.common.Category
+import com.example.wannahelp.common.ToolbarFragment
 
 private const val CHOSEN_CATEGORIES = "chosenCategories"
 
-class NewsFilterFragment : Fragment() {
+class NewsFilterFragment : ToolbarFragment() {
     private lateinit var setOfChosenCategoriesToSave: MutableSet<String>
+    private lateinit var sharedPref: SharedPreferences
+    private lateinit var sharedPrefEditor: SharedPreferences.Editor
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_new_filter, container, false)
+        savedInstanceState: Bundle?
+    ): View {
+        sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
+        sharedPrefEditor = sharedPref.edit()
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-        val sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
-        val sharedPrefEditor = sharedPref.edit()
+    override fun getFragmentContent(): Int = R.layout.fragment_new_filter
 
-        requireActivity().apply {
+    override fun setupToolbar() {
+        toolbar.apply {
             title = getString(R.string.filter)
-            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
             addMenuProvider(
                 object : MenuProvider {
                     override fun onCreateMenu(
@@ -63,11 +61,11 @@ class NewsFilterFragment : Fragment() {
                                 true
                             }
 
-                            android.R.id.home -> {
-                                NavHostFragment.findNavController(this@NewsFilterFragment)
-                                    .popBackStack()
-                                true
-                            }
+//                            android.R.id.home -> {
+//                                NavHostFragment.findNavController(this@NewsFilterFragment)
+//                                    .popBackStack()
+//                                true
+//                            } //todo сделать кнопку назад
 
                             else -> false
                         }
@@ -77,6 +75,14 @@ class NewsFilterFragment : Fragment() {
                 Lifecycle.State.STARTED,
             )
         }
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         val filterCategoriesList =
             mutableListOf(
