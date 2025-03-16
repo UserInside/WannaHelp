@@ -1,30 +1,22 @@
 package com.example.wannahelp.wannaHelpScreen
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.wannahelp.MainActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
+import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.common.extentions.readFile
-import com.example.wannahelp.databinding.FragmentWannaHelpScreenBinding
 import kotlinx.serialization.json.Json
 
 private const val CATEGORIES_FILE_NAME = "categories.json"
 
-class WannaHelpScreenFragment : Fragment() {
-    private lateinit var binding: FragmentWannaHelpScreenBinding
+class WannaHelpScreenFragment : ToolbarFragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        binding = FragmentWannaHelpScreenBinding.inflate(inflater)
-        return binding.root
+    override fun setupToolbar() {
+        toolbar.title = getString(R.string.wanna_help)
     }
+    override fun getFragmentContent(): Int = R.layout.fragment_wanna_help_screen
 
     override fun onViewCreated(
         view: View,
@@ -32,13 +24,10 @@ class WannaHelpScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().title = getString(R.string.wanna_help)
-        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
         val jsonString = requireContext().assets.readFile(CATEGORIES_FILE_NAME)
         val categoriesItemList = Json.decodeFromString<List<CategoryItem>>(jsonString)
 
-        val recyclerView = binding.recyclerViewCategories
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_categories)
 
         val adapter = CategoriesRecyclerViewAdapter(categoriesItemList)
         val spanCount = 2
@@ -46,7 +35,13 @@ class WannaHelpScreenFragment : Fragment() {
 
         val spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs)
         val includeEdge = true
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
+        recyclerView.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount,
+                spacing,
+                includeEdge
+            )
+        )
 
         recyclerView.adapter = adapter
     }
