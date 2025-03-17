@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
-import com.example.wannahelp.common.extentions.readFile
-import kotlinx.serialization.json.Json
+import com.example.wannahelp.common.extentions.JsonParser
 
 private const val CATEGORIES_FILE_NAME = "categories.json"
 
@@ -23,8 +22,8 @@ class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_scr
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val jsonString = requireContext().assets.readFile(CATEGORIES_FILE_NAME)
-        val categoriesItemList = Json.decodeFromString<List<CategoryItem>>(jsonString)
+        val categoriesItemList =
+            JsonParser(requireContext(), CATEGORIES_FILE_NAME).parseToList<CategoryItem>()
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_categories)
 

@@ -13,4 +13,4 @@ data class NewsItem(
     val description: String = "",
     val date: String = "",
     val category: Category = Category.KIDS,
-)
+) : java.io.Serializable

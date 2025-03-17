@@ -15,7 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
-import com.example.wannahelp.common.extentions.readFile
+import com.example.wannahelp.common.extentions.parseToList
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
 import kotlinx.serialization.json.Json
 
@@ -64,14 +64,18 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         val sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
         val setOfChosenCategories = sharedPref?.getStringSet(CHOSEN_CATEGORIES, null)
 
-        val jsonString = requireContext().assets.readFile(NEWS_FILE_NAME)
-        val newsItemList = Json.decodeFromString<List<NewsItem>>(jsonString)
+        val newsItemList = Json.parseToList<NewsItem>(requireContext(), NEWS_FILE_NAME)
+
         val listToShow =
             newsItemList.filter { setOfChosenCategories?.contains(it.category.toString()) == true }
 
         val recyclerView = binding.recyclerViewNews
         val adapter =
-            NewsRecyclerViewAdapter().apply {
+            NewsRecyclerViewAdapter { position ->
+                val action =
+                    NewsScreenFragmentDirections.navigateToEventDetailsScreen(listToShow[position])
+                NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
+            }.apply {
                 submitList(listToShow)
             }
         recyclerView.adapter = adapter

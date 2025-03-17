@@ -1,175 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/spacing_l"
-        android:paddingTop="@dimen/spacing_m">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_title_event_details"
-            style="@style/TextStyle21"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Спонсоры отремонтируют школу-интернат" />
-
-        <TextView
-            android:id="@+id/tv_event_detail_remains"
-            style="@style/TextStyle18"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            app:drawableStartCompat="@drawable/icon_calendar"
-            app:drawableTint="@color/grey"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/tv_title_event_details"
-            tools:text="Осталось 13 дней (21.09 - 20.10)" />
+            android:paddingHorizontal="@dimen/spacing_l"
+            android:paddingTop="@dimen/spacing_m">
 
-        <TextView
-            android:id="@+id/tv_event_details_fond_name"
-            style="@style/TextStyle9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/tv_event_detail_remains"
-            tools:text="Благотворительный Фонд Счастлиый Мир" />
+            <TextView
+                android:id="@+id/tv_title_event_details"
+                style="@style/TextStyle21"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Спонсоры отремонтируют школу-интернат" />
 
-        <ImageView
-            android:id="@+id/img_event_details_nav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/icon_nav"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/tv_event_details_fond_name" />
+            <TextView
+                android:id="@+id/tv_event_detail_remains"
+                style="@style/TextStyle18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                app:drawableStartCompat="@drawable/icon_calendar"
+                app:drawableTint="@color/grey"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_event_details"
+                android:text="Осталось 13 дней (21.09 - 20.10)" />
 
-        <TextView
-            android:id="@+id/tv_event_details_address"
-            style="@style/TextStyle20"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toEndOf="@id/img_event_details_nav"
-            app:layout_constraintTop_toTopOf="@id/img_event_details_nav"
-            tools:text="Санкт-Петербург, Кирочная улица, \nд. 50А, каб. 208" />
+            <TextView
+                android:id="@+id/tv_event_details_fond_name"
+                style="@style/TextStyle9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_event_detail_remains"
+                android:text="Благотворительный Фонд Счастлиый Мир" />
 
-        <ImageView
-            android:id="@+id/img_event_details_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/icon_phone"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/tv_event_details_address" />
+            <ImageView
+                android:id="@+id/img_event_details_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/icon_nav"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_event_details_fond_name" />
 
-        <TextView
-            android:id="@+id/tv_event_details_phone"
-            style="@style/TextStyle20"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toEndOf="@id/img_event_details_phone"
-            app:layout_constraintTop_toTopOf="@id/img_event_details_phone"
-            tools:text="+7 (937) 037-37-73 \n+7 (937) 016 16-16" />
+            <TextView
+                android:id="@+id/tv_event_details_address"
+                style="@style/TextStyle20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/img_event_details_nav"
+                app:layout_constraintTop_toTopOf="@id/img_event_details_nav"
+                android:text="Санкт-Петербург, Кирочная улица, \nд. 50А, каб. 208" />
 
-        <ImageView
-            android:id="@+id/img_event_details_mail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/icon_mail"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/tv_event_details_phone" />
+            <ImageView
+                android:id="@+id/img_event_details_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/icon_phone"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_event_details_address" />
 
-        <TextView
-            android:id="@+id/tv_event_details_mail"
-            style="@style/TextStyle20"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:text="@string/have_some_questions"
-            app:layout_constraintStart_toEndOf="@id/img_event_details_mail"
-            app:layout_constraintTop_toTopOf="@id/img_event_details_mail" />
+            <TextView
+                android:id="@+id/tv_event_details_phone"
+                style="@style/TextStyle20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/img_event_details_phone"
+                app:layout_constraintTop_toTopOf="@id/img_event_details_phone"
+                android:text="+7 (937) 037-37-73 \n+7 (937) 016 16-16" />
 
-        <TextView
-            style="@style/TextStyle7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:text="@string/write_us"
-            app:layout_constraintStart_toEndOf="@id/tv_event_details_mail"
-            app:layout_constraintTop_toTopOf="@id/tv_event_details_mail" />
+            <ImageView
+                android:id="@+id/img_event_details_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/icon_mail"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_event_details_phone" />
 
-        <ImageView
-            android:id="@+id/img_primary"
-            android:layout_width="205dp"
-            android:layout_height="158dp"
-            android:layout_marginTop="@dimen/spacing_l"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/img_event_details_mail"
-            tools:src="@drawable/cardimage_1" />
+            <TextView
+                android:id="@+id/tv_event_details_mail"
+                style="@style/TextStyle20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/have_some_questions"
+                app:layout_constraintStart_toEndOf="@id/img_event_details_mail"
+                app:layout_constraintTop_toTopOf="@id/img_event_details_mail" />
 
-        <ImageView
-            android:id="@+id/img_secondary1"
-            android:layout_width="105dp"
-            android:layout_height="74dp"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toEndOf="@id/img_primary"
-            app:layout_constraintTop_toTopOf="@id/img_primary"
-            tools:src="@drawable/cardimage_2" />
+            <TextView
+                style="@style/TextStyle7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="@string/write_us"
+                app:layout_constraintStart_toEndOf="@id/tv_event_details_mail"
+                app:layout_constraintTop_toTopOf="@id/tv_event_details_mail" />
 
-        <ImageView
-            android:id="@+id/img_secondary2"
-            android:layout_width="105dp"
-            android:layout_height="74dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintBottom_toBottomOf="@id/img_primary"
-            app:layout_constraintStart_toEndOf="@id/img_primary"
-            tools:src="@drawable/cardimage_3" />
+            <ImageView
+                android:id="@+id/img_primary"
+                android:layout_width="205dp"
+                android:layout_height="158dp"
+                android:layout_marginTop="@dimen/spacing_l"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/img_event_details_mail"
+                android:src="@drawable/cardimage_1" />
 
-        <TextView
-            android:id="@+id/tv_event_details_description1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_l"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/img_primary"
-            tools:text="Участники и болельщики смогли весело и активно провести время на «Петербургском благотворительном марафоне» и при этом финансово поучаствовать в помощи детям." />
+            <ImageView
+                android:id="@+id/img_secondary1"
+                android:layout_width="105dp"
+                android:layout_height="74dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/img_primary"
+                app:layout_constraintTop_toTopOf="@id/img_primary"
+                android:src="@drawable/cardimage_2" />
 
-        <TextView
-            android:id="@+id/tv_event_details_description2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/tv_event_details_description1"
-            tools:text="При этом финансово поучаствовать в помощи детям. При этом финансово поучаствовать в помощи детям." />
+            <ImageView
+                android:id="@+id/img_secondary2"
+                android:layout_width="105dp"
+                android:layout_height="74dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/img_primary"
+                app:layout_constraintStart_toEndOf="@id/img_primary"
+                android:src="@drawable/cardimage_3" />
 
-        <TextView
-            android:id="@+id/tv_event_details_go_to_fond_site"
-            style="@style/TextStyle7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_l"
-            android:text="@string/go_to_organisation_site"
-            app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
-            app:layout_constraintTop_toBottomOf="@id/tv_event_details_description2" />
+            <TextView
+                android:id="@+id/tv_event_details_description1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/img_primary"
+                android:text="Участники и болельщики смогли весело и активно провести время на «Петербургском благотворительном марафоне» и при этом финансово поучаствовать в помощи детям." />
+
+            <TextView
+                android:id="@+id/tv_event_details_description2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_event_details_description1"
+                android:text="При этом финансово поучаствовать в помощи детям. При этом финансово поучаствовать в помощи детям." />
+
+            <TextView
+                android:id="@+id/tv_event_details_go_to_fond_site"
+                style="@style/TextStyle7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/go_to_organisation_site"
+                app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
+                app:layout_constraintTop_toBottomOf="@id/tv_event_details_description2" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+    </ScrollView>
+
+</FrameLayout>

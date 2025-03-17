@@ -4,7 +4,9 @@ plugins {
     alias(libs.plugins.ktlint)
     kotlin("plugin.serialization") version "1.9.0"
     id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 }
+
 android {
     namespace = "com.example.wannahelp"
     compileSdk = 35

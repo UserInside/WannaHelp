@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
 import com.example.wannahelp.newsScreen.NewsRecyclerViewAdapter.ViewHolder
 
-class NewsRecyclerViewAdapter :
+class NewsRecyclerViewAdapter(
+    private val onItemClicked: (Int) -> Unit,
+) :
     ListAdapter<NewsItem, ViewHolder>(NewsItemDiffCallback()) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.news_image)
@@ -38,5 +40,10 @@ class NewsRecyclerViewAdapter :
         holder.title.text = item.title
         holder.description.text = item.description
         holder.remains.text = item.date
+
+        holder.itemView.setOnClickListener {
+            val position = position
+            onItemClicked(position)
+        }
     }
 }

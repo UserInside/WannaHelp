@@ -35,7 +35,6 @@
         app:tabIndicatorColor="@color/macaroni_and_cheese"
         app:tabIndicatorFullWidth="true"
         app:tabIndicatorGravity="bottom"
-        app:tabTextColor="@color/white_70"
         app:tabIndicatorHeight="2dp"
         app:tabTextColor="@color/white_70"
         app:tabSelectedTextColor="@color/white" />

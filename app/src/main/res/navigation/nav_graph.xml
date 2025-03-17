@@ -39,11 +39,23 @@
         <action
             android:id="@+id/navigateToNewsFilterScreen"
             app:destination="@id/newsFilterFragment" />
+        <action
+            android:id="@+id/navigateToEventDetailsScreen"
+            app:destination="@id/eventDetailsScreenFragment" >
+            <argument
+                android:name="clickedNewsItem"
+                app:argType="com.example.wannahelp.newsScreen.NewsItem"
+                app:nullable="false" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/eventDetailsScreenFragment"
-        android:name="com.example.wannahelp.EventDetailsScreenFragment"
-        android:label="EventDetailsScreenFragment" />
+        android:name="com.example.wannahelp.eventDetailsScreen.EventDetailsScreenFragment"
+        android:label="EventDetailsScreenFragment" >
+        <argument
+            android:name="clickedNewsItem"
+            app:argType="com.example.wannahelp.newsScreen.NewsItem" />
+    </fragment>
     <fragment
         android:id="@+id/newsFilterFragment"
         android:name="com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment"
