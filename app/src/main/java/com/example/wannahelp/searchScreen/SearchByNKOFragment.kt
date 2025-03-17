@@ -38,10 +38,9 @@ class SearchByNKOFragment : Fragment() {
 
         fun newInstance(searchResult: ArrayList<String>): SearchByNKOFragment {
             return SearchByNKOFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putStringArrayList(SEARCH_RESULT, searchResult)
-                    }
+                arguments = Bundle().apply {
+                    putStringArrayList(SEARCH_RESULT, searchResult)
+                }
             }
         }
     }
