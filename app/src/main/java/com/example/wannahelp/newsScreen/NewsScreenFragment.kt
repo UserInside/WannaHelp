@@ -3,21 +3,16 @@ package com.example.wannahelp.newsScreen
 import android.content.Context.MODE_PRIVATE
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.wannahelp.MainActivity
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.common.extentions.readFile
@@ -27,11 +22,8 @@ import kotlinx.serialization.json.Json
 private const val CHOSEN_CATEGORIES = "chosenCategories"
 private const val NEWS_FILE_NAME = "news.json"
 
-class NewsScreenFragment : ToolbarFragment() {
-
-    override fun getFragmentContent(): Int = R.layout.fragment_news_screen
-
-    override fun setupToolbar() {
+class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
+    override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
             title = getString(R.string.news)
             addMenuProvider(
@@ -67,6 +59,8 @@ class NewsScreenFragment : ToolbarFragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentNewsScreenBinding.bind(content!!)
+
         val sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
         val setOfChosenCategories = sharedPref?.getStringSet(CHOSEN_CATEGORIES, null)
 
@@ -75,7 +69,7 @@ class NewsScreenFragment : ToolbarFragment() {
         val listToShow =
             newsItemList.filter { setOfChosenCategories?.contains(it.category.toString()) == true }
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_news)
+        val recyclerView = binding.recyclerViewNews
         val adapter =
             NewsRecyclerViewAdapter().apply {
                 submitList(listToShow)

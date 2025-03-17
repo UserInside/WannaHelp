@@ -9,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
@@ -20,7 +21,7 @@ import com.example.wannahelp.common.ToolbarFragment
 
 private const val CHOSEN_CATEGORIES = "chosenCategories"
 
-class NewsFilterFragment : ToolbarFragment() {
+class NewsFilterFragment : ToolbarFragment(R.layout.fragment_new_filter) {
     private lateinit var setOfChosenCategoriesToSave: MutableSet<String>
     private lateinit var sharedPref: SharedPreferences
     private lateinit var sharedPrefEditor: SharedPreferences.Editor
@@ -28,16 +29,14 @@ class NewsFilterFragment : ToolbarFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
         sharedPrefEditor = sharedPref.edit()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun getFragmentContent(): Int = R.layout.fragment_new_filter
-
-    override fun setupToolbar() {
+    override fun setupToolbar(toolbar: Toolbar) {
         toolbar.apply {
             title = getString(R.string.filter)
             addMenuProvider(
@@ -83,25 +82,24 @@ class NewsFilterFragment : ToolbarFragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val filterCategoriesList =
             mutableListOf(
                 FilterCategoryCard(resources.getString(R.string.tv_cat_kids), Category.KIDS, true),
                 FilterCategoryCard(
                     resources.getString(R.string.tv_cat_adults),
                     Category.ADULTS,
-                    true
+                    true,
                 ),
                 FilterCategoryCard(resources.getString(R.string.tv_cat_aged), Category.AGED, true),
                 FilterCategoryCard(
                     resources.getString(R.string.tv_cat_animals),
                     Category.ANIMALS,
-                    true
+                    true,
                 ),
                 FilterCategoryCard(
                     resources.getString(R.string.tv_cat_events),
                     Category.EVENTS,
-                    true
+                    true,
                 ),
             )
 

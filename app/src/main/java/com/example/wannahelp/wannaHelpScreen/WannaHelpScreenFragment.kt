@@ -2,6 +2,7 @@ package com.example.wannahelp.wannaHelpScreen
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
@@ -11,12 +12,10 @@ import kotlinx.serialization.json.Json
 
 private const val CATEGORIES_FILE_NAME = "categories.json"
 
-class WannaHelpScreenFragment : ToolbarFragment() {
-
-    override fun setupToolbar() {
+class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_screen) {
+    override fun setupToolbar(toolbar: Toolbar) {
         toolbar.title = getString(R.string.wanna_help)
     }
-    override fun getFragmentContent(): Int = R.layout.fragment_wanna_help_screen
 
     override fun onViewCreated(
         view: View,
@@ -39,8 +38,8 @@ class WannaHelpScreenFragment : ToolbarFragment() {
             GridSpacingItemDecoration(
                 spanCount,
                 spacing,
-                includeEdge
-            )
+                includeEdge,
+            ),
         )
 
         recyclerView.adapter = adapter

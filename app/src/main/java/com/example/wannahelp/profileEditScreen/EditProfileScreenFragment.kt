@@ -2,51 +2,24 @@ package com.example.wannahelp.profileEditScreen
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
-import com.example.wannahelp.MainActivity
 import com.example.wannahelp.R
+import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentEditProfileScreenBinding
-import com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment
 import java.io.File
 
-class EditProfileScreenFragment : Fragment() {
-    private lateinit var binding: FragmentEditProfileScreenBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        binding = FragmentEditProfileScreenBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?,
-    ) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val avatarFile = File(requireContext().filesDir, getString(R.string.file_name_avatar))
-        if (avatarFile.exists()) {
-            binding.imgAvatar.setImageURI(avatarFile.toUri())
-        } else {
-            binding.imgAvatar.setImageResource(R.drawable.avatar_placeholder)
-        }
-
-        requireActivity().apply {
+class EditProfileScreenFragment : ToolbarFragment(R.layout.fragment_edit_profile_screen) {
+    override fun setupToolbar(toolbar: Toolbar) {
+        toolbar.apply {
             title = getString(R.string.tv_title_edit_profile)
-            (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
             addMenuProvider(
                 object : MenuProvider {
                     override fun onCreateMenu(
@@ -60,13 +33,7 @@ class EditProfileScreenFragment : Fragment() {
                         return when (menuItem.itemId) {
                             R.id.action_confirm -> {
                                 NavHostFragment.findNavController(this@EditProfileScreenFragment)
-                                    .popBackStack() // add save fields values
-                                true
-                            }
-
-                            android.R.id.home -> {
-                                NavHostFragment.findNavController(this@EditProfileScreenFragment)
-                                    .popBackStack()
+                                    .navigate(R.id.navigateToProfileScreen)
                                 true
                             }
 
@@ -75,8 +42,23 @@ class EditProfileScreenFragment : Fragment() {
                     }
                 },
                 viewLifecycleOwner,
-                Lifecycle.State.RESUMED,
+                Lifecycle.State.STARTED,
             )
+        }
+    }
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentEditProfileScreenBinding.bind(content!!)
+
+        val avatarFile = File(requireContext().filesDir, getString(R.string.file_name_avatar))
+        if (avatarFile.exists()) {
+            binding.imgAvatar.setImageURI(avatarFile.toUri())
+        } else {
+            binding.imgAvatar.setImageResource(R.drawable.avatar_placeholder)
         }
 
         binding.btnChangePhoto.setOnClickListener {

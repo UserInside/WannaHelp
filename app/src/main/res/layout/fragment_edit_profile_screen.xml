@@ -1,179 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/img_avatar"
-        android:layout_width="136dp"
-        android:layout_height="136dp"
-        android:layout_marginStart="@dimen/spacing_l"
-        android:layout_marginTop="@dimen/spacing_l"
-        android:scaleType="centerCrop"
-        android:src="@drawable/avatar_placeholder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/roundedImageView" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_change_photo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/black_54"
-        android:paddingTop="6dp"
-        android:text="@string/btn_change_photo"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/img_avatar"
-        app:layout_constraintEnd_toEndOf="@+id/img_avatar"
-        app:layout_constraintStart_toStartOf="@+id/img_avatar" />
-
-    <TextView
-        android:id="@+id/tv_title_lastname"
-        style="@style/TextStyle13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_l"
-        android:layout_marginTop="@dimen/spacing_xxs"
-        android:text="@string/your_lastname"
-        app:layout_constraintStart_toEndOf="@id/img_avatar"
-        app:layout_constraintTop_toTopOf="@id/img_avatar" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit_text_lastname"
-        style="@style/TextStyle8.EditTextBottomLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/edit_text_hint_lastname"
-        android:paddingStart="0dp"
-        app:layout_constraintStart_toStartOf="@id/tv_title_lastname"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_lastname" />
-
-    <TextView
-        android:id="@+id/tv_title_name"
-        style="@style/TextStyle13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/your_name"
-        app:layout_constraintStart_toStartOf="@id/edit_text_lastname"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_lastname" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit_text_name"
-        style="@style/TextStyle8.EditTextBottomLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/edit_text_hint_name"
-        android:paddingStart="0dp"
-        android:text="Денис"
-        app:layout_constraintBottom_toBottomOf="@id/img_avatar"
-        app:layout_constraintStart_toStartOf="@id/tv_title_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_name" />
-
-    <View
-        android:id="@+id/separation_line_1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/spacing_l"
-        android:background="@color/cool_grey"
-        app:layout_constraintTop_toBottomOf="@id/img_avatar" />
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-    <TextView
-        android:id="@+id/tv_title_your_birthday"
-        style="@style/TextStyle13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_l"
-        android:layout_marginTop="@dimen/spacing_l"
-        android:text="@string/birthday"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/separation_line_1" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="136dp"
+            android:layout_height="136dp"
+            android:layout_marginStart="@dimen/spacing_l"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar_placeholder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/roundedImageView" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit_text_birthday"
-        style="@style/TextStyle8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_l"
-        android:drawableEnd="@drawable/icon_calendar"
-        android:hint="@string/edit_text_hint_birthday"
-        android:paddingStart="0dp"
-        android:paddingTop="13dp"
-        android:text="01 февраля 1980"
-        app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_your_birthday" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_change_photo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/black_54"
+            android:paddingTop="6dp"
+            android:text="@string/btn_change_photo"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_avatar"
+            app:layout_constraintEnd_toEndOf="@+id/img_avatar"
+            app:layout_constraintStart_toStartOf="@+id/img_avatar" />
 
-    <TextView
-        android:id="@+id/tv_title_circle_of_action"
-        style="@style/TextStyle13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:text="@string/tv_fulfill_circle_of_action"
-        app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_birthday" />
+        <TextView
+            android:id="@+id/tv_title_lastname"
+            style="@style/TextStyle13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_l"
+            android:layout_marginTop="@dimen/spacing_xxs"
+            android:text="@string/your_lastname"
+            app:layout_constraintStart_toEndOf="@id/img_avatar"
+            app:layout_constraintTop_toTopOf="@id/img_avatar" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit_text_circle_of_action"
-        style="@style/TextStyle8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_l"
-        android:fontFamily="sans-serif"
-        android:paddingStart="0dp"
-        android:paddingTop="13dp"
-        android:text="01 февраля 1980"
-        app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_circle_of_action" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_text_lastname"
+            style="@style/TextStyle8.EditTextBottomLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_text_hint_lastname"
+            android:paddingStart="0dp"
+            app:layout_constraintStart_toStartOf="@id/tv_title_lastname"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_lastname" />
 
-    <TextView
-        android:id="@+id/tv_title_password"
-        style="@style/TextStyle13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/spacing_l"
-        android:text="@string/tv_password"
-        app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_circle_of_action" />
+        <TextView
+            android:id="@+id/tv_title_name"
+            style="@style/TextStyle13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/your_name"
+            app:layout_constraintStart_toStartOf="@id/edit_text_lastname"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_lastname" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit_text_password"
-        style="@style/TextStyle8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_l"
-        android:drawableEnd="@drawable/icon_eye_open"
-        android:inputType="textPassword"
-        android:paddingStart="0dp"
-        android:paddingTop="13dp"
-        android:text="12345678"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_password" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_text_name"
+            style="@style/TextStyle8.EditTextBottomLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_text_hint_name"
+            android:paddingStart="0dp"
+            android:text="Денис"
+            app:layout_constraintBottom_toBottomOf="@id/img_avatar"
+            app:layout_constraintStart_toStartOf="@id/tv_title_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_name" />
 
-    <TextView
-        android:id="@+id/tv_title_email"
-        style="@style/TextStyle13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_l"
-        android:text="@string/email"
-        app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_password" />
+        <View
+            android:id="@+id/separation_line_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:background="@color/cool_grey"
+            app:layout_constraintTop_toBottomOf="@id/img_avatar" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit_text_email"
-        style="@style/TextStyle8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_l"
-        android:hint="@string/edit_text_hint_email"
-        android:paddingStart="0dp"
-        android:paddingTop="13dp"
-        android:text="d.konstantinov@dk.com"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_email" />
+        <TextView
+            android:id="@+id/tv_title_your_birthday"
+            style="@style/TextStyle13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_l"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:text="@string/birthday"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separation_line_1" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_text_birthday"
+            style="@style/TextStyle8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_l"
+            android:drawableEnd="@drawable/icon_calendar"
+            android:hint="@string/edit_text_hint_birthday"
+            android:paddingStart="0dp"
+            android:paddingTop="13dp"
+            android:text="01 февраля 1980"
+            app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_your_birthday" />
+
+        <TextView
+            android:id="@+id/tv_title_circle_of_action"
+            style="@style/TextStyle13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:text="@string/tv_fulfill_circle_of_action"
+            app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_birthday" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_text_circle_of_action"
+            style="@style/TextStyle8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_l"
+            android:fontFamily="sans-serif"
+            android:paddingStart="0dp"
+            android:paddingTop="13dp"
+            android:text="01 февраля 1980"
+            app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_circle_of_action" />
+
+        <TextView
+            android:id="@+id/tv_title_password"
+            style="@style/TextStyle13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacing_l"
+            android:text="@string/tv_password"
+            app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_circle_of_action" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_text_password"
+            style="@style/TextStyle8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_l"
+            android:drawableEnd="@drawable/icon_eye_open"
+            android:inputType="textPassword"
+            android:paddingStart="0dp"
+            android:paddingTop="13dp"
+            android:text="12345678"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_password" />
+
+        <TextView
+            android:id="@+id/tv_title_email"
+            style="@style/TextStyle13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:text="@string/email"
+            app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
+            app:layout_constraintTop_toBottomOf="@id/edit_text_password" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_text_email"
+            style="@style/TextStyle8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_l"
+            android:hint="@string/edit_text_hint_email"
+            android:paddingStart="0dp"
+            android:paddingTop="13dp"
+            android:text="d.konstantinov@dk.com"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_email" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

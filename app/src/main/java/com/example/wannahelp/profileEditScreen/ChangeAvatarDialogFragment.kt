@@ -105,12 +105,12 @@ class ChangeAvatarDialogFragment : DialogFragment() {
 
     private fun checkCameraPermission(): Boolean =
         (
-                ContextCompat.checkSelfPermission(
-                    requireActivity(),
-                    Manifest.permission.CAMERA,
-                )
-                        != PackageManager.PERMISSION_GRANTED
-                )
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.CAMERA,
+            )
+                != PackageManager.PERMISSION_GRANTED
+        )
 
     private fun makeAvatarPhoto() {
         val makeAvatarIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -121,7 +121,8 @@ class ChangeAvatarDialogFragment : DialogFragment() {
                 } catch (ex: IOException) {
                     Toast.makeText(
                         context,
-                        getString(R.string.error_file_not_created), Toast.LENGTH_SHORT
+                        getString(R.string.error_file_not_created),
+                        Toast.LENGTH_SHORT,
                     ).show()
                     null
                 }
@@ -160,7 +161,7 @@ class ChangeAvatarDialogFragment : DialogFragment() {
                     Toast.makeText(
                         context,
                         getString(R.string.error_file_not_created),
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
                     ).show()
                     null
                 }
