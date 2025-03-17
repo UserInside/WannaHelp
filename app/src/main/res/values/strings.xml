@@ -36,4 +36,9 @@
     <string name="tv_cat_events">Мероприятия</string>
     <string name="tv_title_choose_category">Выберите катеригорию помощи</string>
     <string name="search_view_input_organization_name">Введите название организации</string>
+    <string name="avatar_file_prefix">avatar</string>
+    <string name="avatar_file_sufix">.jpg</string>
+    <string name="file_creation_error">Ошибка создания файла</string>
+    <string name="by_event">По мероприятиям</string>
+    <string name="by_nko">По НКО</string>
 </resources>

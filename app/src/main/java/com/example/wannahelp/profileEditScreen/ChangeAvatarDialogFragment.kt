@@ -16,9 +16,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
+import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentChangeAvatarDialogBinding
 import java.io.File
 import java.io.IOException
+
+const val AVATAR_FILE_PATH_KEY = "photoPath"
+const val AVATAR_DELETE_FILE_KEY = "deletePhoto"
 
 class ChangeAvatarDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentChangeAvatarDialogBinding
@@ -45,8 +49,8 @@ class ChangeAvatarDialogFragment : DialogFragment() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     val bundle = Bundle()
-                    bundle.putString("photoPath", avatarPath)
-                    parentFragmentManager.setFragmentResult("photoPath", bundle)
+                    bundle.putString(AVATAR_FILE_PATH_KEY, avatarPath)
+                    parentFragmentManager.setFragmentResult(AVATAR_FILE_PATH_KEY, bundle)
                     dismiss()
                 }
             }
@@ -60,25 +64,21 @@ class ChangeAvatarDialogFragment : DialogFragment() {
         binding.tvDelete.setOnClickListener {
             val bundle =
                 Bundle().apply {
-                    putString("deletePhoto", null)
+                    putString(AVATAR_DELETE_FILE_KEY, null)
                 }
-            parentFragmentManager.setFragmentResult("deletePhoto", bundle)
+            parentFragmentManager.setFragmentResult(AVATAR_DELETE_FILE_KEY, bundle)
             dismiss()
         }
     }
 
-    companion object {
-        fun newInstance() = ChangeAvatarDialogFragment()
-    }
-
     private fun checkCameraPermission(): Boolean =
         (
-            ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.CAMERA,
-            )
-                != PackageManager.PERMISSION_GRANTED
-        )
+                ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.CAMERA,
+                )
+                        != PackageManager.PERMISSION_GRANTED
+                )
 
     private fun createMakeAvatarIntent() {
         val makeAvatarIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -87,7 +87,8 @@ class ChangeAvatarDialogFragment : DialogFragment() {
                 try {
                     createAvatarFile()
                 } catch (ex: IOException) {
-                    Toast.makeText(requireContext(), "Ошибка создания файла", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(),
+                        getString(R.string.file_creation_error), Toast.LENGTH_SHORT)
                         .show()
                     null
                 }
@@ -107,12 +108,16 @@ class ChangeAvatarDialogFragment : DialogFragment() {
     private fun createAvatarFile(): File {
         val storageDir = requireActivity().cacheDir
         return File.createTempFile(
-            "avatar",
-            ".jpg",
+            getString(R.string.avatar_file_prefix),
+            getString(R.string.avatar_file_sufix),
             storageDir,
         ).apply {
             avatarPath = this.absolutePath
             avatarFile = this
         }
+    }
+
+    companion object {
+        fun newInstance() = ChangeAvatarDialogFragment()
     }
 }

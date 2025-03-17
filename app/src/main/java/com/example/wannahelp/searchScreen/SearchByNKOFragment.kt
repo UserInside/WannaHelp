@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.wannahelp.databinding.FragmentSearchByNKOBinding
+import com.example.wannahelp.databinding.FragmentSearchByNkoBinding
 
 class SearchByNKOFragment : Fragment() {
-    private lateinit var binding: FragmentSearchByNKOBinding
+    private lateinit var binding: FragmentSearchByNkoBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSearchByNKOBinding.inflate(inflater)
+        binding = FragmentSearchByNkoBinding.inflate(inflater)
         return binding.root
     }
 
@@ -38,10 +38,9 @@ class SearchByNKOFragment : Fragment() {
 
         fun newInstance(searchResult: ArrayList<String>): SearchByNKOFragment {
             return SearchByNKOFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putStringArrayList(SEARCH_RESULT, searchResult)
-                    }
+                arguments = Bundle().apply {
+                    putStringArrayList(SEARCH_RESULT, searchResult)
+                }
             }
         }
     }

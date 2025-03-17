@@ -39,9 +39,14 @@ class ProfileScreenFragment : Fragment() {
                 FriendCard(R.drawable.avatar_1, "Виктор Кузнецов"),
             )
 
-        val adapter = FriendsRecyclerViewAdapter(friendsList)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
+        val rvAdapter = FriendsRecyclerViewAdapter(friendsList)
+        with(recyclerView) {
+            layoutManager =
+                object : LinearLayoutManager(requireContext()) {
+                    override fun canScrollVertically(): Boolean = false
+                }
+            adapter = rvAdapter
+        }
 
         val toolbar = binding.appBar.toolbar
         toolbar.setupWithNavController(findNavController())

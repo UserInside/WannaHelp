@@ -34,7 +34,5 @@ class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryCar
         holder.title.text = currentCard.title
     }
 
-    override fun getItemCount(): Int {
-        return categoriesList.size
-    }
+    override fun getItemCount(): Int = categoriesList.size
 }

@@ -10,6 +10,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentEditProfileScreenBinding
 
+const val CHANGE_AVATAR_DIALOG_FRAGMENT = "ChangeAvatarDialogFragment"
+
 class EditProfileScreenFragment : Fragment() {
     private lateinit var binding: FragmentEditProfileScreenBinding
 
@@ -28,8 +30,6 @@ class EditProfileScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding
-
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_confirm -> {
@@ -47,10 +47,10 @@ class EditProfileScreenFragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            "photoPath",
+            AVATAR_FILE_PATH_KEY,
             viewLifecycleOwner,
         ) { _, bundle ->
-            val photoPath = bundle.getString("photoPath")
+            val photoPath = bundle.getString(AVATAR_FILE_PATH_KEY)
             photoPath?.let {
                 val bitmap = BitmapFactory.decodeFile(it)
                 binding.profileEditLayout.imgAvatar.setImageBitmap(bitmap)
@@ -58,7 +58,7 @@ class EditProfileScreenFragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener(
-            "deletePhoto",
+            AVATAR_DELETE_FILE_KEY,
             viewLifecycleOwner,
         ) { _, _ ->
             binding.profileEditLayout.imgAvatar.setImageResource(R.drawable.avatar_placeholder)
@@ -67,6 +67,6 @@ class EditProfileScreenFragment : Fragment() {
 
     private fun showChangePhotoDialog() {
         val dialog = ChangeAvatarDialogFragment.newInstance()
-        dialog.show(parentFragmentManager, "ChangeAvatarDialogFragment")
+        dialog.show(parentFragmentManager, CHANGE_AVATAR_DIALOG_FRAGMENT)
     }
 }
