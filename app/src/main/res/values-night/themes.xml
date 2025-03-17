@@ -2,5 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.WannaHelp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/leaf</item>
+        <item name="android:statusBarColor">@color/leaf_w_black_20</item>
     </style>
 </resources>

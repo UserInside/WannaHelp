@@ -3,21 +3,21 @@
     <item
         android:id="@+id/action_news"
         android:icon="@drawable/nav_format_list_bulleted_24"
-        android:title="@string/nav_news" />
+        android:title="@string/tv_news" />
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/nav_search_24"
-        android:title="@string/nav_search" />
+        android:id="@+id/searchScreenFragment"
+        android:icon="@drawable/icon_search_24"
+        android:title="@string/tv_search" />
     <item
-        android:id="@+id/action_to_help"
+        android:id="@+id/wannaHelpScreenFragment"
         android:icon="@drawable/nav_heart_24"
-        android:title="@string/nav_to_help" />
+        android:title="@string/tv_wanna_help" />
     <item
         android:id="@+id/action_history"
         android:icon="@drawable/nav_history_24"
-        android:title="@string/nav_history" />
+        android:title="@string/tv_history" />
     <item
-        android:id="@+id/action_profile"
+        android:id="@+id/profileScreenFragment"
         android:icon="@drawable/nav_profile_circle_24"
-        android:title="@string/nav_profile" />
+        android:title="@string/tv_profile" />
 </menu>

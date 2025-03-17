@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_l"
-            android:layout_marginTop="@dimen/spacing_s"
+            android:layout_marginTop="10dp"
             android:text="@string/tv_title_circle_of_action"
             app:layout_constraintTop_toBottomOf="@+id/tv_value_birthday" />
 
@@ -115,7 +115,7 @@
             android:id="@+id/separation_view_2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="@dimen/spacing_s"
+            android:layout_marginTop="10dp"
             android:background="@color/cool_grey"
             app:layout_constraintTop_toBottomOf="@id/recycler_view_your_friends" />
 

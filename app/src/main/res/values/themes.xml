@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.WannaHelp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/leaf</item>
+        <item name="android:statusBarColor">@color/leaf_w_black_20</item>
     </style>
 
     <style name="Theme.WannaHelp.SplashScreen" parent="Theme.SplashScreen">
