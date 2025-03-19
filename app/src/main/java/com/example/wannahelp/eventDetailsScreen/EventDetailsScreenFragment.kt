@@ -1,13 +1,9 @@
 package com.example.wannahelp.eventDetailsScreen
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
+import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
@@ -16,34 +12,17 @@ import com.example.wannahelp.databinding.FragmentEventDetailsScreenBinding
 class EventDetailsScreenFragment : ToolbarFragment(R.layout.fragment_event_details_screen) {
     val args: EventDetailsScreenFragmentArgs by navArgs()
 
-    override fun setupToolbar(toolbar: Toolbar) {
-        toolbar.apply {
-            title = getString(R.string.event_details)
-            addMenuProvider(
-                object : MenuProvider {
-                    override fun onCreateMenu(
-                        menu: Menu,
-                        menuInflater: MenuInflater,
-                    ) {
-                        menuInflater.inflate(R.menu.menu_toolbar_event_details, menu)
-                    }
-
-                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                        return when (menuItem.itemId) {
-                            R.id.action_share -> {
-//                                Заглушка
-//                                NavHostFragment.findNavController(this@EventDetailsScreenFragment)
-//                                    .navigate(R.id.navigateToNewsFilterScreen)
-                                true
-                            }
-
-                            else -> false
-                        }
-                    }
-                },
-                viewLifecycleOwner,
-                Lifecycle.State.STARTED,
-            )
+    override fun setupToolbar(
+        toolbar: Toolbar,
+        actionBtn: ImageButton,
+    ) {
+        toolbar.title = getString(R.string.event_details)
+        actionBtn.apply {
+            visibility = View.VISIBLE
+            setImageResource(R.drawable.icon_share_24)
+            setOnClickListener {
+                // переход на след экран "Поделиться"
+            }
         }
     }
 
@@ -52,7 +31,7 @@ class EventDetailsScreenFragment : ToolbarFragment(R.layout.fragment_event_detai
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentEventDetailsScreenBinding.bind(content!!)
+        val binding = FragmentEventDetailsScreenBinding.bind(content ?: view)
         val newsItem = args.clickedNewsItem
 
         binding.apply {

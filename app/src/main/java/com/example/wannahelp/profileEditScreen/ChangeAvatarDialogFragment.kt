@@ -142,8 +142,8 @@ class ChangeAvatarDialogFragment : DialogFragment() {
     private fun createAvatarFile(): File {
         val storageDir = requireActivity().filesDir
         return File.createTempFile(
-            getString(R.string.prefix_file_avatar),
-            getString(R.string.suffix_file_avatar),
+            AVATAR_FILE_PREFIX,
+            AVATAR_FILE_SUFFIX,
             storageDir,
         ).apply {
             avatarFile = this
@@ -197,6 +197,9 @@ class ChangeAvatarDialogFragment : DialogFragment() {
     }
 
     companion object {
+        private const val AVATAR_FILE_PREFIX = "avatar"
+        private const val AVATAR_FILE_SUFFIX = ".jpg"
+
         fun newInstance() = ChangeAvatarDialogFragment()
     }
 }

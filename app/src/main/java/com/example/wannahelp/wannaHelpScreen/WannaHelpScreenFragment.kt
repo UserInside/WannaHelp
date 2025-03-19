@@ -2,6 +2,7 @@ package com.example.wannahelp.wannaHelpScreen
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,10 +10,11 @@ import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.common.extentions.JsonParser
 
-private const val CATEGORIES_FILE_NAME = "categories.json"
-
 class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_screen) {
-    override fun setupToolbar(toolbar: Toolbar) {
+    override fun setupToolbar(
+        toolbar: Toolbar,
+        actionButton: ImageButton,
+    ) {
         toolbar.title = getString(R.string.wanna_help)
     }
 
@@ -28,19 +30,18 @@ class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_scr
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_categories)
 
         val adapter = CategoriesRecyclerViewAdapter(categoriesItemList)
-        val spanCount = 2
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), COLUMNS_AMOUNT)
 
         val spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs)
-        val includeEdge = true
         recyclerView.addItemDecoration(
-            GridSpacingItemDecoration(
-                spanCount,
-                spacing,
-                includeEdge,
-            ),
+            GridSpacingItemDecoration(COLUMNS_AMOUNT, spacing, true),
         )
 
         recyclerView.adapter = adapter
+    }
+
+    private companion object {
+        const val CATEGORIES_FILE_NAME = "categories.json"
+        const val COLUMNS_AMOUNT = 2
     }
 }

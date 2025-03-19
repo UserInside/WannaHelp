@@ -3,53 +3,32 @@ package com.example.wannahelp.newsScreen
 import android.content.Context.MODE_PRIVATE
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
+import android.widget.ImageButton
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.common.extentions.parseToList
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
+import com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment
 import kotlinx.serialization.json.Json
 
-private const val CHOSEN_CATEGORIES = "chosenCategories"
-private const val NEWS_FILE_NAME = "news.json"
-
 class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
-    override fun setupToolbar(toolbar: Toolbar) {
-        toolbar.apply {
-            title = getString(R.string.news)
-            addMenuProvider(
-                object : MenuProvider {
-                    override fun onCreateMenu(
-                        menu: Menu,
-                        menuInflater: MenuInflater,
-                    ) {
-                        menuInflater.inflate(R.menu.menu_toolbar_news, menu)
-                    }
-
-                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                        return when (menuItem.itemId) {
-                            R.id.action_filter -> {
-                                NavHostFragment.findNavController(this@NewsScreenFragment)
-                                    .navigate(R.id.navigateToNewsFilterScreen)
-                                true
-                            }
-
-                            else -> false
-                        }
-                    }
-                },
-                viewLifecycleOwner,
-                Lifecycle.State.STARTED,
-            )
+    override fun setupToolbar(
+        toolbar: Toolbar,
+        actionButton: ImageButton,
+    ) {
+        toolbar.title = getString(R.string.news)
+        actionButton.apply {
+            visibility = View.VISIBLE
+            setImageResource(R.drawable.icon_filter)
+            setOnClickListener {
+                NavHostFragment.findNavController(this@NewsScreenFragment)
+                    .navigate(R.id.navigateToNewsFilterScreen)
+            }
         }
     }
 
@@ -59,10 +38,10 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentNewsScreenBinding.bind(content!!)
+        val binding = FragmentNewsScreenBinding.bind(content ?: view)
 
-        val sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
-        val setOfChosenCategories = sharedPref?.getStringSet(CHOSEN_CATEGORIES, null)
+        val sharedPref = requireContext().getSharedPreferences(NewsFilterFragment.CHOSEN_CATEGORIES, MODE_PRIVATE)
+        val setOfChosenCategories = sharedPref?.getStringSet(NewsFilterFragment.CHOSEN_CATEGORIES, null)
 
         val newsItemList = Json.parseToList<NewsItem>(requireContext(), NEWS_FILE_NAME)
 
@@ -70,7 +49,7 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
             newsItemList.filter { setOfChosenCategories?.contains(it.category.toString()) == true }
 
         val recyclerView = binding.recyclerViewNews
-        val adapter =
+        val rvAdapter =
             NewsRecyclerViewAdapter { position ->
                 val action =
                     NewsScreenFragmentDirections.navigateToEventDetailsScreen(listToShow[position])
@@ -78,7 +57,14 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
             }.apply {
                 submitList(listToShow)
             }
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        recyclerView.apply {
+            adapter = rvAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private companion object {
+        private const val NEWS_FILE_NAME = "news.json"
     }
 }

@@ -2,14 +2,10 @@ package com.example.wannahelp.profileEditScreen
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
+import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.net.toUri
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
@@ -17,33 +13,24 @@ import com.example.wannahelp.databinding.FragmentEditProfileScreenBinding
 import java.io.File
 
 class EditProfileScreenFragment : ToolbarFragment(R.layout.fragment_edit_profile_screen) {
-    override fun setupToolbar(toolbar: Toolbar) {
+    override fun setupToolbar(
+        toolbar: Toolbar,
+        actionButton: ImageButton,
+    ) {
         toolbar.apply {
             title = getString(R.string.tv_title_edit_profile)
-            addMenuProvider(
-                object : MenuProvider {
-                    override fun onCreateMenu(
-                        menu: Menu,
-                        menuInflater: MenuInflater,
-                    ) {
-                        menuInflater.inflate(R.menu.menu_toolbar_edit_profile, menu)
-                    }
-
-                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                        return when (menuItem.itemId) {
-                            R.id.action_confirm -> {
-                                NavHostFragment.findNavController(this@EditProfileScreenFragment)
-                                    .navigate(R.id.navigateToProfileScreen)
-                                true
-                            }
-
-                            else -> false
-                        }
-                    }
-                },
-                viewLifecycleOwner,
-                Lifecycle.State.STARTED,
-            )
+            setNavigationOnClickListener {
+                NavHostFragment.findNavController(this@EditProfileScreenFragment)
+                    .popBackStack()
+            }
+        }
+        actionButton.apply {
+            visibility = View.VISIBLE
+            setImageResource(R.drawable.icon_check_24)
+            setOnClickListener {
+                NavHostFragment.findNavController(this@EditProfileScreenFragment)
+                    .navigate(R.id.navigateToProfileScreen)
+            }
         }
     }
 
@@ -52,7 +39,7 @@ class EditProfileScreenFragment : ToolbarFragment(R.layout.fragment_edit_profile
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentEditProfileScreenBinding.bind(content!!)
+        val binding = FragmentEditProfileScreenBinding.bind(content ?: view)
 
         val avatarFile = File(requireContext().filesDir, getString(R.string.file_name_avatar))
         if (avatarFile.exists()) {

@@ -4,14 +4,10 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,9 +15,7 @@ import com.example.wannahelp.R
 import com.example.wannahelp.common.Category
 import com.example.wannahelp.common.ToolbarFragment
 
-private const val CHOSEN_CATEGORIES = "chosenCategories"
-
-class NewsFilterFragment : ToolbarFragment(R.layout.fragment_new_filter) {
+class NewsFilterFragment : ToolbarFragment(R.layout.fragment_new_filter, showBackButton = true) {
     private lateinit var setOfChosenCategoriesToSave: MutableSet<String>
     private lateinit var sharedPref: SharedPreferences
     private lateinit var sharedPrefEditor: SharedPreferences.Editor
@@ -36,43 +30,28 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_new_filter) {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun setupToolbar(toolbar: Toolbar) {
+    override fun setupToolbar(
+        toolbar: Toolbar,
+        actionButton: ImageButton,
+    ) {
         toolbar.apply {
             title = getString(R.string.filter)
-            addMenuProvider(
-                object : MenuProvider {
-                    override fun onCreateMenu(
-                        menu: Menu,
-                        menuInflater: MenuInflater,
-                    ) {
-                        menuInflater.inflate(R.menu.menu_toolbar_edit_profile, menu)
-                    }
-
-                    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                        return when (menuItem.itemId) {
-                            R.id.action_confirm -> {
-                                sharedPrefEditor.apply {
-                                    putStringSet(CHOSEN_CATEGORIES, setOfChosenCategoriesToSave)
-                                    apply()
-                                }
-                                NavHostFragment.findNavController(this@NewsFilterFragment)
-                                    .popBackStack()
-                                true
-                            }
-
-//                            android.R.id.home -> {
-//                                NavHostFragment.findNavController(this@NewsFilterFragment)
-//                                    .popBackStack()
-//                                true
-//                            } //todo сделать кнопку назад
-
-                            else -> false
-                        }
-                    }
-                },
-                viewLifecycleOwner,
-                Lifecycle.State.STARTED,
-            )
+            setNavigationOnClickListener {
+                NavHostFragment.findNavController(this@NewsFilterFragment)
+                    .popBackStack()
+            }
+        }
+        actionButton.apply {
+            visibility = View.VISIBLE
+            setImageResource(R.drawable.icon_check_24)
+            setOnClickListener {
+                sharedPrefEditor.apply {
+                    putStringSet(CHOSEN_CATEGORIES, setOfChosenCategoriesToSave)
+                    apply()
+                }
+                NavHostFragment.findNavController(this@NewsFilterFragment)
+                    .popBackStack()
+            }
         }
     }
 
@@ -84,23 +63,11 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_new_filter) {
 
         val filterCategoriesList =
             mutableListOf(
-                FilterCategoryCard(resources.getString(R.string.tv_cat_kids), Category.KIDS, true),
-                FilterCategoryCard(
-                    resources.getString(R.string.tv_cat_adults),
-                    Category.ADULTS,
-                    true,
-                ),
-                FilterCategoryCard(resources.getString(R.string.tv_cat_aged), Category.AGED, true),
-                FilterCategoryCard(
-                    resources.getString(R.string.tv_cat_animals),
-                    Category.ANIMALS,
-                    true,
-                ),
-                FilterCategoryCard(
-                    resources.getString(R.string.tv_cat_events),
-                    Category.EVENTS,
-                    true,
-                ),
+                FilterCategoryCard(resources.getString(R.string.tv_cat_kids), Category.KIDS),
+                FilterCategoryCard(resources.getString(R.string.tv_cat_adults), Category.ADULTS),
+                FilterCategoryCard(resources.getString(R.string.tv_cat_aged), Category.AGED),
+                FilterCategoryCard(resources.getString(R.string.tv_cat_animals), Category.ANIMALS),
+                FilterCategoryCard(resources.getString(R.string.tv_cat_events), Category.EVENTS),
             )
 
         val setOfChosenCategories = sharedPref.getStringSet(CHOSEN_CATEGORIES, null)
@@ -127,5 +94,9 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_new_filter) {
             }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    companion object {
+        internal const val CHOSEN_CATEGORIES = "chosenCategories"
     }
 }
