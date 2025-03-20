@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_news"
+        android:id="@+id/newsScreenFragment"
         android:icon="@drawable/nav_format_list_bulleted_24"
-        android:title="@string/tv_news" />
+        android:title="@string/news" />
     <item
         android:id="@+id/searchScreenFragment"
         android:icon="@drawable/icon_search_24"
-        android:title="@string/tv_search" />
+        android:title="@string/search" />
     <item
         android:id="@+id/wannaHelpScreenFragment"
         android:icon="@drawable/nav_heart_24"
-        android:title="@string/tv_wanna_help" />
+        android:title="@string/wanna_help" />
     <item
         android:id="@+id/action_history"
         android:icon="@drawable/nav_history_24"
-        android:title="@string/tv_history" />
+        android:title="@string/history" />
     <item
         android:id="@+id/profileScreenFragment"
         android:icon="@drawable/nav_profile_circle_24"
-        android:title="@string/tv_profile" />
+        android:title="@string/profile" />
 </menu>

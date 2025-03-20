@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Дети",
+    "image": "R.drawable.icon_cat_kids",
+    "category": "KIDS"
+  },
+  {
+    "id": 2,
+    "title": "Взрослые",
+    "image": "R.drawable.icon_cat_adults",
+    "category": "ADULTS"
+  },
+  {
+    "id": 3,
+    "title": "Пожилые",
+    "image": "R.drawable.icon_cat_aged",
+    "category": "AGED"
+  },
+  {
+    "id": 4,
+    "title": "Животные",
+    "image": "R.drawable.icon_cat_animals",
+    "category": "ANIMALS"
+  },
+  {
+    "id": 5,
+    "title": "Мероприятия",
+    "image": "R.drawable.icon_cat_events",
+    "category": "EVENTS"
+  }
+]

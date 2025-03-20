@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/light_grey_two">
 
     <TextView
-        android:id="@+id/tv_choose_help_category"
-        style="@style/TextStyle5"
+        android:id="@+id/tv_categories_of_help"
+        style="@style/TextStyle20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_l"
         android:layout_marginTop="@dimen/spacing_l"
-        android:gravity="center"
-        android:text="@string/tv_title_choose_category"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/categories_of_help"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_categories"
+        android:id="@+id/recycler_view_filter_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_l"
-        app:layout_constraintTop_toBottomOf="@id/tv_choose_help_category" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_categories_of_help" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

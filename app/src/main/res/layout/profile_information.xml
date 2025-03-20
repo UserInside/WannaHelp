@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_l"
             android:paddingTop="@dimen/spacing_m"
-            android:text="@string/tv_birthday"
+            android:text="@string/birthday"
             app:layout_constraintTop_toBottomOf="@id/tv_title_name" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_l"
             android:layout_marginTop="10dp"
-            android:text="@string/tv_title_circle_of_action"
+            android:text="@string/circle_of_action"
             app:layout_constraintTop_toBottomOf="@+id/tv_value_birthday" />
 
         <TextView
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_l"
             android:layout_marginTop="@dimen/spacing_xxl"
-            android:text="@string/tv_receive_push_notifications"
+            android:text="@string/receive_push_notifications"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_value_circle_of_action" />
 
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_l"
             android:layout_marginTop="@dimen/spacing_l"
-            android:text="@string/tv_title_your_friends"
+            android:text="@string/your_friends"
             app:layout_constraintTop_toBottomOf="@id/separation_view_1" />
 
         <androidx.recyclerview.widget.RecyclerView

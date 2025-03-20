@@ -22,6 +22,6 @@ class SplashScreenActivity : AppCompatActivity() {
                     MainActivity::class.java,
                 ),
             )
-        }, 1000)
+        }, 200)
     }
 }

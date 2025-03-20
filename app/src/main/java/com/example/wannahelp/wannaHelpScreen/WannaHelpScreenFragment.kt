@@ -1,24 +1,21 @@
 package com.example.wannahelp.wannaHelpScreen
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.ImageButton
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
-import com.example.wannahelp.databinding.FragmentWannaHelpScreenBinding
+import com.example.wannahelp.common.ToolbarFragment
+import com.example.wannahelp.common.extentions.JsonParser
 
-class WannaHelpScreenFragment : Fragment() {
-    private lateinit var binding: FragmentWannaHelpScreenBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        binding = FragmentWannaHelpScreenBinding.inflate(inflater)
-        return binding.root
+class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_screen) {
+    override fun setupToolbar(
+        toolbar: Toolbar,
+        actionButton: ImageButton,
+    ) {
+        toolbar.title = getString(R.string.wanna_help)
     }
 
     override fun onViewCreated(
@@ -27,25 +24,24 @@ class WannaHelpScreenFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val categoriesList =
-            listOf(
-                CategoryCard(R.drawable.icon_cat_kids, resources.getString(R.string.tv_cat_kids)),
-                CategoryCard(R.drawable.icon_cat_adults, resources.getString(R.string.tv_cat_adults)),
-                CategoryCard(R.drawable.icon_cat_aged, resources.getString(R.string.tv_cat_aged)),
-                CategoryCard(R.drawable.icon_cat_animals, resources.getString(R.string.tv_cat_animals)),
-                CategoryCard(R.drawable.icon_cat_events, resources.getString(R.string.tv_cat_events)),
-            )
+        val categoriesItemList =
+            JsonParser(requireContext(), CATEGORIES_FILE_NAME).parseToList<CategoryItem>()
 
-        val recyclerView = binding.recyclerViewCategories
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_categories)
 
-        val adapter = CategoriesRecyclerViewAdapter(categoriesList)
-        val spanCount = 2
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
+        val adapter = CategoriesRecyclerViewAdapter(categoriesItemList)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), COLUMNS_AMOUNT)
 
         val spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs)
-        val includeEdge = true
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing, includeEdge))
+        recyclerView.addItemDecoration(
+            GridSpacingItemDecoration(COLUMNS_AMOUNT, spacing, true),
+        )
 
         recyclerView.adapter = adapter
+    }
+
+    private companion object {
+        const val CATEGORIES_FILE_NAME = "categories.json"
+        const val COLUMNS_AMOUNT = 2
     }
 }

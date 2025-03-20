@@ -14,7 +14,6 @@ class SearchByEventFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? = inflater.inflate(R.layout.fragment_search_by_event, container, false)
 
-
     companion object {
         fun newInstance() = SearchByEventFragment()
     }
