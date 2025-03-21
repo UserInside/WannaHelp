@@ -11,16 +11,6 @@ fun AssetManager.readFile(fileName: String) =
             it.readText()
         }
 
-class JsonParser(
-    val context: Context,
-    val fileName: String,
-) {
-    inline fun <reified T> parseToList(): List<T> {
-        val jsonString = context.assets.readFile(fileName)
-        return Json.decodeFromString<List<T>>(jsonString)
-    }
-}
-
 inline fun <reified T> Json.parseToList(
     context: Context,
     fileName: String,

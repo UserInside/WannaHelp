@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
-import com.example.wannahelp.common.extentions.JsonParser
+import com.example.wannahelp.common.extentions.parseToList
+import kotlinx.serialization.json.Json
 
 class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_screen) {
     override fun setupToolbar(
@@ -25,7 +26,7 @@ class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_scr
         super.onViewCreated(view, savedInstanceState)
 
         val categoriesItemList =
-            JsonParser(requireContext(), CATEGORIES_FILE_NAME).parseToList<CategoryItem>()
+            Json.parseToList<CategoryItem>(requireContext(), CATEGORIES_FILE_NAME)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_categories)
 
