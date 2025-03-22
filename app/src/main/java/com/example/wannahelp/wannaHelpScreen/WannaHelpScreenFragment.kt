@@ -3,13 +3,16 @@ package com.example.wannahelp.wannaHelpScreen
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.wannahelp.R
+import com.example.wannahelp.backgroundWork.workmanager.ReadNewsFileWorker
 import com.example.wannahelp.common.ToolbarFragment
-import com.example.wannahelp.common.extentions.parseToList
-import kotlinx.serialization.json.Json
 
 class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_screen) {
     override fun setupToolbar(
@@ -24,25 +27,46 @@ class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_scr
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        val categoriesItemList =
-            Json.parseToList<CategoryItem>(requireContext(), CATEGORIES_FILE_NAME)
+        if (savedInstanceState == null) startReadFileWorkManager()
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_categories)
+        val progressBar = view.findViewById<ProgressBar>(R.id.wannahelp_progressBar)
 
-        val adapter = CategoriesRecyclerViewAdapter(categoriesItemList)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), COLUMNS_AMOUNT)
-
-        val spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs)
-        recyclerView.addItemDecoration(
-            GridSpacingItemDecoration(COLUMNS_AMOUNT, spacing, true),
-        )
-
-        recyclerView.adapter = adapter
+        ReadNewsFileWorker.resultLiveData.observe(viewLifecycleOwner) {
+            progressBar.visibility = View.GONE
+            val rvAdapter = CategoriesRecyclerViewAdapter(it)
+            recyclerView.apply {
+                layoutManager = GridLayoutManager(requireContext(), COLUMNS_AMOUNT)
+                addItemDecoration(
+                    GridSpacingItemDecoration(
+                        spanCount = COLUMNS_AMOUNT,
+                        spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs),
+                        includeEdge = true,
+                    ),
+                )
+                adapter = rvAdapter
+            }
+        }
     }
 
-    private companion object {
-        const val CATEGORIES_FILE_NAME = "categories.json"
-        const val COLUMNS_AMOUNT = 2
+    private fun startReadFileWorkManager() {
+        val progressBar = view?.findViewById<ProgressBar>(R.id.wannahelp_progressBar)
+        progressBar?.visibility = View.VISIBLE
+        val parseFileWorkRequest =
+            OneTimeWorkRequestBuilder<ReadNewsFileWorker>()
+                .setInputData(
+                    Data.Builder()
+                        .putString(CATEGORIES_FILE_NAME_KEY, CATEGORIES_FILE_NAME)
+                        .build(),
+                )
+                .build()
+
+        WorkManager.getInstance(requireContext()).enqueue(parseFileWorkRequest)
+    }
+
+    companion object {
+        private const val CATEGORIES_FILE_NAME = "categories.json"
+        const val CATEGORIES_FILE_NAME_KEY = "categoryFileName"
+        private const val COLUMNS_AMOUNT = 2
     }
 }

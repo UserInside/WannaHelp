@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.wokrmanager)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.livedata.core)
     implementation(libs.kotlinx.datetime)

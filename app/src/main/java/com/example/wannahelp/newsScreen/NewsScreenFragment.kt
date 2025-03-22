@@ -42,17 +42,17 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
             startReadNewsFileService()
         }
 
-        val sharedPref = requireContext().getSharedPreferences(
-            NewsFilterFragment.CHOSEN_CATEGORIES,
-            MODE_PRIVATE
-        )
+        val sharedPref =
+            requireContext().getSharedPreferences(
+                NewsFilterFragment.CHOSEN_CATEGORIES,
+                MODE_PRIVATE,
+            )
         val setOfChosenCategories =
             sharedPref?.getStringSet(NewsFilterFragment.CHOSEN_CATEGORIES, null)
 
         var newsItemList: List<NewsItem>? = null
 
         ReadNewsFileService.resultLiveData.observe(viewLifecycleOwner) {
-
             binding.newsProgressBar.visibility = View.GONE
             newsItemList = it
 
@@ -65,8 +65,8 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
                     val action =
                         NewsScreenFragmentDirections.navigateToEventDetailsScreen(
                             listToShow?.get(
-                                position
-                            ) ?: NewsItem()
+                                position,
+                            ) ?: NewsItem(),
                         )
                     NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
                 }.apply {

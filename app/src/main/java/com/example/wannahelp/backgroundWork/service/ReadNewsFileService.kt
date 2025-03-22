@@ -12,8 +12,11 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class ReadNewsFileService : Service() {
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
         val fileName: String = intent?.getStringExtra(NewsScreenFragment.NEWS_FILE_NAME_KEY) ?: ""
 
         val executor: ExecutorService = Executors.newSingleThreadExecutor()
