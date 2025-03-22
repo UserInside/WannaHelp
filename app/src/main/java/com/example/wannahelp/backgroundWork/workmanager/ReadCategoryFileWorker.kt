@@ -9,19 +9,23 @@ import com.example.wannahelp.wannaHelpScreen.CategoryItem
 import com.example.wannahelp.wannaHelpScreen.WannaHelpScreenFragment
 import kotlinx.serialization.json.Json
 
-class ReadNewsFileWorker(val context: Context, workerParams: WorkerParameters) :
+class ReadCategoryFileWorker(val context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
     override fun doWork(): Result {
         val fileName: String =
             inputData.getString(WannaHelpScreenFragment.CATEGORIES_FILE_NAME_KEY) ?: ""
 
-        Thread.sleep(5000)
+        for (i in 0..100) {
+            Thread.sleep(50)
+            progress.postValue(i)
+        }
         resultLiveData.postValue(Json.parseToList<CategoryItem>(context, fileName))
 
         return Result.success()
     }
 
     companion object {
+        val progress = MutableLiveData<Int>()
         val resultLiveData = MutableLiveData<List<CategoryItem>>()
     }
 }

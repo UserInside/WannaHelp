@@ -21,7 +21,10 @@ class ReadNewsFileService : Service() {
 
         val executor: ExecutorService = Executors.newSingleThreadExecutor()
         executor.submit {
-            Thread.sleep(5000)
+            for (i in 0..100) {
+                Thread.sleep(50)
+                progress.postValue(i)
+            }
             resultLiveData.postValue(Json.parseToList<NewsItem>(this, fileName))
         }
 
@@ -31,6 +34,7 @@ class ReadNewsFileService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     companion object {
+        val progress = MutableLiveData<Int>()
         val resultLiveData = MutableLiveData<List<NewsItem>>()
     }
 }

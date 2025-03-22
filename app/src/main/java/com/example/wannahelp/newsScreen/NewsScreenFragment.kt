@@ -38,9 +38,7 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
 
-        if (savedInstanceState == null) {
-            startReadNewsFileService()
-        }
+        if (savedInstanceState == null) startReadNewsFileService()
 
         val sharedPref =
             requireContext().getSharedPreferences(
@@ -52,30 +50,39 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
 
         var newsItemList: List<NewsItem>? = null
 
-        ReadNewsFileService.resultLiveData.observe(viewLifecycleOwner) {
-            binding.newsProgressBar.visibility = View.GONE
-            newsItemList = it
+        ReadNewsFileService.apply {
+            progress.observe(viewLifecycleOwner) {
+                binding.newsProgressBar.progress = it
+            }
+            resultLiveData.observe(viewLifecycleOwner) {
+                binding.newsProgressBar.visibility = View.GONE
+                newsItemList = it
 
-            val listToShow =
-                newsItemList?.filter { setOfChosenCategories?.contains(it.category.toString()) == true }
+                val listToShow =
+                    (
+                        newsItemList?.filter {
+                            setOfChosenCategories?.contains(it.category.toString()) == true
+                        }
+                    ) ?: listOf()
 
-            val recyclerView = binding.recyclerViewNews
-            val rvAdapter =
-                NewsRecyclerViewAdapter { position ->
-                    val action =
-                        NewsScreenFragmentDirections.navigateToEventDetailsScreen(
-                            listToShow?.get(
-                                position,
-                            ) ?: NewsItem(),
-                        )
-                    NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
-                }.apply {
-                    submitList(listToShow)
+                val recyclerView = binding.recyclerViewNews
+                val rvAdapter =
+                    NewsRecyclerViewAdapter { position ->
+                        val action =
+                            NewsScreenFragmentDirections.navigateToEventDetailsScreen(
+                                listToShow.get(
+                                    position,
+                                ),
+                            )
+                        NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
+                    }.apply {
+                        submitList(listToShow)
+                    }
+
+                recyclerView.apply {
+                    adapter = rvAdapter
+                    layoutManager = LinearLayoutManager(requireContext())
                 }
-
-            recyclerView.apply {
-                adapter = rvAdapter
-                layoutManager = LinearLayoutManager(requireContext())
             }
         }
     }

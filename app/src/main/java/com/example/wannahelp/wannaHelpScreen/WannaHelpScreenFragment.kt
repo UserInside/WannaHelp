@@ -11,7 +11,7 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.wannahelp.R
-import com.example.wannahelp.backgroundWork.workmanager.ReadNewsFileWorker
+import com.example.wannahelp.backgroundWork.workmanager.ReadCategoryFileWorker
 import com.example.wannahelp.common.ToolbarFragment
 
 class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_screen) {
@@ -32,19 +32,24 @@ class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_scr
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_categories)
         val progressBar = view.findViewById<ProgressBar>(R.id.wannahelp_progressBar)
 
-        ReadNewsFileWorker.resultLiveData.observe(viewLifecycleOwner) {
-            progressBar.visibility = View.GONE
-            val rvAdapter = CategoriesRecyclerViewAdapter(it)
-            recyclerView.apply {
-                layoutManager = GridLayoutManager(requireContext(), COLUMNS_AMOUNT)
-                addItemDecoration(
-                    GridSpacingItemDecoration(
-                        spanCount = COLUMNS_AMOUNT,
-                        spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs),
-                        includeEdge = true,
-                    ),
-                )
-                adapter = rvAdapter
+        ReadCategoryFileWorker.apply {
+            progress.observe(viewLifecycleOwner) {
+                progressBar.progress = it
+            }
+            resultLiveData.observe(viewLifecycleOwner) {
+                progressBar.visibility = View.GONE
+                val rvAdapter = CategoriesRecyclerViewAdapter(it)
+                recyclerView.apply {
+                    layoutManager = GridLayoutManager(requireContext(), COLUMNS_AMOUNT)
+                    addItemDecoration(
+                        GridSpacingItemDecoration(
+                            spanCount = COLUMNS_AMOUNT,
+                            spacing = resources.getDimensionPixelSize(R.dimen.spacing_xs),
+                            includeEdge = true,
+                        ),
+                    )
+                    adapter = rvAdapter
+                }
             }
         }
     }
@@ -53,13 +58,9 @@ class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_scr
         val progressBar = view?.findViewById<ProgressBar>(R.id.wannahelp_progressBar)
         progressBar?.visibility = View.VISIBLE
         val parseFileWorkRequest =
-            OneTimeWorkRequestBuilder<ReadNewsFileWorker>()
-                .setInputData(
-                    Data.Builder()
-                        .putString(CATEGORIES_FILE_NAME_KEY, CATEGORIES_FILE_NAME)
-                        .build(),
-                )
-                .build()
+            OneTimeWorkRequestBuilder<ReadCategoryFileWorker>().setInputData(
+                Data.Builder().putString(CATEGORIES_FILE_NAME_KEY, CATEGORIES_FILE_NAME).build(),
+            ).build()
 
         WorkManager.getInstance(requireContext()).enqueue(parseFileWorkRequest)
     }
