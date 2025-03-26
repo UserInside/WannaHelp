@@ -43,6 +43,11 @@ android {
 }
 
 dependencies {
+    implementation(libs.rxandroid)
+    implementation(libs.rxbinding.support.v4)
+    implementation(libs.rxbinding.appcompat.v7)
+    implementation(libs.rxjava)
+    implementation(libs.rxbinding)
     implementation(libs.androidx.wokrmanager)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.livedata.core)
