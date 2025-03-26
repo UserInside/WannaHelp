@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@id/auth_editText_email" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit_text_password"
+        android:id="@+id/auth_editText_password"
         style="@style/TextStyle8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
         android:gravity="center"
         android:text="@string/enter"
         app:cornerRadius="2dp"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_password"
+        app:layout_constraintTop_toBottomOf="@id/auth_editText_password"
 
         />
 

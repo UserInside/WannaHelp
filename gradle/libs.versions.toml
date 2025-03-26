@@ -23,6 +23,8 @@ rxbinding = "4.0.0"
 rxbindingSupportV4 = "0.4.0"
 rxjava = "3.1.5"
 workManager = "2.10.0"
+legacySupportV4 = "1.0.0"
+lifecycleViewmodelKtx = "2.8.7"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
@@ -51,6 +53,8 @@ rxbinding = { module = "com.jakewharton.rxbinding4:rxbinding", version.ref = "rx
 rxbinding-appcompat-v7 = { module = "com.jakewharton.rxbinding:rxbinding-appcompat-v7", version.ref = "rxbindingSupportV4" }
 rxbinding-support-v4 = { module = "com.jakewharton.rxbinding:rxbinding-support-v4", version.ref = "rxbindingSupportV4" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
+androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
