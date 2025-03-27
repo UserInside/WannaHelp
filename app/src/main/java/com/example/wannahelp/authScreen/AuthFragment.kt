@@ -7,23 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.widget.Toolbar
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.wannahelp.MainActivity
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentAuthBinding
+import com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.jakewharton.rxbinding.widget.RxTextView.textChanges
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
-import rx.Subscriber
 
 class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = true) {
 
@@ -32,7 +27,12 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
     private val viewModel: AuthViewModel by viewModels()
 
     override fun setupToolbar(toolbar: Toolbar, actionButton: ImageButton) {
-        toolbar.title = getString(R.string.authorization)
+        toolbar.apply {
+            title = getString(R.string.authorization)
+            setNavigationOnClickListener {
+                requireActivity().finishAffinity()
+            }
+        }
     }
 
     override fun onCreateView(
@@ -40,6 +40,12 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        requireActivity().onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finishAffinity()
+            }
+        })
+
         bottomNavView =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav_view).also {
                 it.visibility = View.GONE
@@ -52,23 +58,31 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAuthBinding.bind(content ?: view)
 
-        var emailLengthObservable: Observable<Int> =
-            binding.authEditTextEmail.textChanges().map {
-                it.length
-            }
+        if(savedInstanceState != null) {
+            binding.authEditTextEmail.setText(viewModel.emailTextValue)
+            binding.authEditTextPassword.setText(viewModel.passwordTextValue)
+        }
 
-        var passwordLengthObservable: Observable<Int> =
-            binding.authEditTextPassword.textChanges().map {
+        var emailLengthSufficient: Observable<Boolean> =
+            binding.authEditTextEmail.textChanges().map {
+                viewModel.emailTextValue = it.toString()
                 it.length
-            }
+            }.map { it >= 6 }.distinctUntilChanged()
+
+        var passwordLengthSufficient: Observable<Boolean> =
+            binding.authEditTextPassword.textChanges().map {
+                viewModel.passwordTextValue = it.toString()
+                it.length
+            }.map { it >= 6 }.distinctUntilChanged()
 
         Observable.combineLatest(
-            emailLengthObservable, passwordLengthObservable
-        ) { emailLength, passwordLength -> emailLength >= 6 && passwordLength >= 6 }
+            emailLengthSufficient, passwordLengthSufficient
+        ) { emailLength, passwordLength -> emailLength && passwordLength }
+            .distinctUntilChanged()
             .subscribe { isButtonActive ->
                 Log.e("WOW", "more than six ?? -> $isButtonActive")
                 binding.authBtnEnter.apply {
-                    isClickable = isButtonActive
+                    isClickable = isButtonActive //почему не работает? после уменьшения пароля кнопка всё еще кликабельная, хотя тут значение false
                     if (isButtonActive) {
                         setBackgroundColor(resources.getColor(R.color.leaf, null))
                         setOnClickListener {
@@ -76,8 +90,14 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
                                 .navigate(R.id.navigateToWannaHelpScreenFragment)
                             bottomNavView.visibility = View.VISIBLE
                         }
-                    } else setBackgroundColor(resources.getColor(R.color.warm_grey, null))
+                    } else {
+                        setBackgroundColor(resources.getColor(R.color.warm_grey, null))
+                        setOnClickListener {}
+                    }
                 }
             }
+
+
     }
+
 }

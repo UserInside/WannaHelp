@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_l"
             android:background="@color/white"
+            android:contentDescription="@null"
             android:src="@drawable/icon_vk"
             app:layout_constraintEnd_toStartOf="@+id/auth_btn_fb"
             app:layout_constraintStart_toStartOf="@id/auth_textView1"
@@ -40,7 +41,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginTop="@dimen/spacing_l"
             android:background="@color/white"
-
+            android:contentDescription="@null"
             android:src="@drawable/icon_fb"
             app:layout_constraintEnd_toEndOf="@id/auth_textView1"
             app:layout_constraintStart_toStartOf="@id/auth_textView1"
@@ -52,9 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_l"
             android:background="@color/white"
-
+            android:contentDescription="@null"
             android:src="@drawable/icon_ok"
-
             app:layout_constraintEnd_toEndOf="@id/auth_textView1"
             app:layout_constraintStart_toEndOf="@id/auth_btn_fb"
             app:layout_constraintTop_toBottomOf="@id/auth_textView1"
@@ -90,7 +90,6 @@
             android:hint="@string/input_email"
             android:paddingStart="0dp"
             app:layout_constraintTop_toBottomOf="@id/auth_tv_email"
-
             tools:ignore="RtlSymmetry" />
 
         <TextView
@@ -127,9 +126,7 @@
             android:inputType="textEmailAddress"
             android:text="@string/enter"
             app:cornerRadius="2dp"
-            app:layout_constraintTop_toBottomOf="@id/auth_editText_password"
-
-            />
+            app:layout_constraintTop_toBottomOf="@id/auth_editText_password" />
 
         <TextView
             android:id="@+id/auth_tv_forgotten_password"
