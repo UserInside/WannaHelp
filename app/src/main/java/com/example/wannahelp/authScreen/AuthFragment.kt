@@ -36,11 +36,9 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        requireActivity().onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 requireActivity().finishAffinity()
             }
@@ -58,7 +56,7 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAuthBinding.bind(content ?: view)
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             binding.authEditTextEmail.setText(viewModel.emailTextValue)
             binding.authEditTextPassword.setText(viewModel.passwordTextValue)
         }
@@ -77,12 +75,12 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
 
         Observable.combineLatest(
             emailLengthSufficient, passwordLengthSufficient
-        ) { emailLength, passwordLength -> emailLength && passwordLength }
-            .distinctUntilChanged()
+        ) { emailLength, passwordLength -> emailLength && passwordLength }.distinctUntilChanged()
             .subscribe { isButtonActive ->
                 Log.e("WOW", "more than six ?? -> $isButtonActive")
                 binding.authBtnEnter.apply {
-                    isClickable = isButtonActive //почему не работает? после уменьшения пароля кнопка всё еще кликабельная, хотя тут значение false
+                    isClickable =
+                        isButtonActive //почему не работает? после уменьшения пароля кнопка всё еще кликабельная, хотя тут значение false
                     if (isButtonActive) {
                         setBackgroundColor(resources.getColor(R.color.leaf, null))
                         setOnClickListener {

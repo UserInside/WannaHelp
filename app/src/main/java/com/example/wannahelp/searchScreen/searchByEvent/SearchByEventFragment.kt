@@ -1,4 +1,4 @@
-package com.example.wannahelp.searchScreen
+package com.example.wannahelp.searchScreen.searchByEvent
 
 import android.os.Bundle
 import android.view.LayoutInflater

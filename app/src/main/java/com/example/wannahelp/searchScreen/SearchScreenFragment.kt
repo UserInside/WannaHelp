@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentSearchScreenBinding
+import com.example.wannahelp.searchScreen.searchByEvent.SearchByEventFragment
+import com.example.wannahelp.searchScreen.searchByNKO.SearchByNKOFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class SearchScreenFragment : Fragment() {

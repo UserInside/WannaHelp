@@ -54,4 +54,7 @@
     <string name="enter">ВОЙТИ</string>
     <string name="forgotten_password"><u>Забыли пароль?</u></string>
     <string name="registration"><u>Регистрация</u></string>
+    <string name="write_event_name_or_keywords">Напишите в строке поиска название \nмероприятия или ключевые слова.</string>
+    <string name="search_tv_example">Например,</string>
+    <string name="search_tv_master_class"><u>мастер-класс, помощь</u></string>
 </resources>
