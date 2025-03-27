@@ -10,6 +10,9 @@ import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.example.wannahelp.MainActivity
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentAuthBinding
@@ -25,7 +28,7 @@ import rx.Subscriber
 class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = true) {
 
     private lateinit var binding: FragmentAuthBinding
-    private val bottomNavView = activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+    private lateinit var bottomNavView: View
     private val viewModel: AuthViewModel by viewModels()
 
     override fun setupToolbar(toolbar: Toolbar, actionButton: ImageButton) {
@@ -37,7 +40,10 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bottomNavView?.visibility = View.GONE
+        bottomNavView =
+            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav_view).also {
+                it.visibility = View.GONE
+            }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -46,20 +52,10 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAuthBinding.bind(content ?: view)
 
-
-//        binding.authEditTextEmail.textChanges().subscribe()
-
-
-//        val disposable = CompositeDisposable()
-//        disposable.add(
-//
-//        )
-
         var emailLengthObservable: Observable<Int> =
             binding.authEditTextEmail.textChanges().map {
                 it.length
             }
-
 
         var passwordLengthObservable: Observable<Int> =
             binding.authEditTextPassword.textChanges().map {
@@ -68,21 +64,20 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
 
         Observable.combineLatest(
             emailLengthObservable, passwordLengthObservable
-        ) { emailLength, passwordLength -> emailLength > 5 && passwordLength > 5 }
+        ) { emailLength, passwordLength -> emailLength >= 6 && passwordLength >= 6 }
             .subscribe { isButtonActive ->
-                Log.e("WOW", "more then six?? -> $isButtonActive")
+                Log.e("WOW", "more than six ?? -> $isButtonActive")
                 binding.authBtnEnter.apply {
                     isClickable = isButtonActive
-                    if (isButtonActive) setBackgroundColor(resources.getColor(R.color.leaf, null))
-                    else setBackgroundColor(resources.getColor(R.color.warm_grey, null))
+                    if (isButtonActive) {
+                        setBackgroundColor(resources.getColor(R.color.leaf, null))
+                        setOnClickListener {
+                            NavHostFragment.findNavController(this@AuthFragment)
+                                .navigate(R.id.navigateToWannaHelpScreenFragment)
+                            bottomNavView.visibility = View.VISIBLE
+                        }
+                    } else setBackgroundColor(resources.getColor(R.color.warm_grey, null))
                 }
             }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        bottomNavView?.visibility = View.VISIBLE
-    }
-
-
 }
