@@ -8,14 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentAuthBinding
-import com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.core.Observable
@@ -65,13 +63,13 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
             binding.authEditTextEmail.textChanges().map {
                 viewModel.emailTextValue = it.toString()
                 it.length
-            }.map { it >= 6 }.distinctUntilChanged()
+            }.map { it >= 0 }.distinctUntilChanged() //todo 6
 
         var passwordLengthSufficient: Observable<Boolean> =
             binding.authEditTextPassword.textChanges().map {
                 viewModel.passwordTextValue = it.toString()
                 it.length
-            }.map { it >= 6 }.distinctUntilChanged()
+            }.map { it >= 0 }.distinctUntilChanged() //todo 6
 
         Observable.combineLatest(
             emailLengthSufficient, passwordLengthSufficient

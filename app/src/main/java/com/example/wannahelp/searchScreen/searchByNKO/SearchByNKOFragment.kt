@@ -28,22 +28,27 @@ class SearchByNKOFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val searchResultList = arguments?.getStringArrayList(SEARCH_RESULT)
-        val recyclerViewAdapter = searchResultList?.let { SearchRecyclerViewAdapter(it) }
+        val recyclerViewAdapter = searchResultList?.let { SearchRecyclerViewAdapter() }
         val recyclerView = binding.recyclerViewSearchResults
-        recyclerView.adapter = recyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.apply {
+            adapter = recyclerViewAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     companion object {
         const val SEARCH_RESULT = "search result"
 
-        fun newInstance(searchResult: ArrayList<String>): SearchByNKOFragment {
-            return SearchByNKOFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putStringArrayList(SEARCH_RESULT, searchResult)
-                    }
-            }
+        //        fun newInstance(searchResult: ArrayList<String>): SearchByNKOFragment {
+//            return SearchByNKOFragment().apply {
+//                arguments =
+//                    Bundle().apply {
+//                        putStringArrayList(SEARCH_RESULT, searchResult)
+//                    }
+//            }
+//        }
+        fun newInstance(): SearchByNKOFragment {
+            return SearchByNKOFragment()
         }
     }
 }
