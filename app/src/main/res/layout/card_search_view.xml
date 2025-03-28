@@ -18,7 +18,6 @@
         app:searchIcon="@drawable/icon_search_24" >
 
 
-
     </android.widget.SearchView>
 <!--black54 cvet sdelat''-->
 

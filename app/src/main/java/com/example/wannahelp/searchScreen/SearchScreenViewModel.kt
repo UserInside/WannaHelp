@@ -1,11 +1,14 @@
 package com.example.wannahelp.searchScreen
 
-import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.core.Observable
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.example.wannahelp.common.extentions.parseToList
+import com.example.wannahelp.newsScreen.NewsItem
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
 
-class SearchScreenViewModel : ViewModel() {
+class SearchScreenViewModel(application: Application) : AndroidViewModel(application) {
 
     var searchFieldText = BehaviorSubject.createDefault("")
 
@@ -23,7 +26,10 @@ class SearchScreenViewModel : ViewModel() {
         "Фонд 4",
     )
 
-    val listToShow = searchFieldText.debounce(500, TimeUnit.MILLISECONDS).map{ searchText ->
-        fondsToShowList.filter { it.contains(searchText) } as ArrayList<String>
-    }
+    val eventsOriginList =
+        Json.parseToList<NewsItem>(application.applicationContext, "news.json") //filename
+
+    val listToShow = searchFieldText.debounce(500, TimeUnit.MILLISECONDS).map { searchText ->
+        eventsOriginList.filter { it.title.contains(searchText) }
+    }.distinctUntilChanged()
 }

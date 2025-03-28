@@ -2,11 +2,11 @@ package com.example.wannahelp.searchScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SearchView
-import androidx.annotation.MainThread
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.wannahelp.R
@@ -14,9 +14,9 @@ import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentSearchScreenBinding
 import com.example.wannahelp.searchScreen.searchByEvent.SearchByEventFragment
 import com.example.wannahelp.searchScreen.searchByNKO.SearchByNKOFragment
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jakewharton.rxbinding4.widget.queryTextChanges
-import io.reactivex.rxjava3.core.Scheduler
 
 class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
     private lateinit var binding: FragmentSearchScreenBinding
@@ -24,7 +24,6 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
     private lateinit var vpAdapter: ViewPagerAdapter
 
 //    val viewModel: SearchScreenViewModel by viewModels() //move to companion ?
-
 
     override fun setupToolbar(
         toolbar: androidx.appcompat.widget.Toolbar,
@@ -34,12 +33,9 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
         actionButton.apply {
             visibility = View.VISIBLE
             setImageResource(R.drawable.icon_search_24)
-            setOnClickListener {
-                visibility = View.GONE
-//                binding.searchViewField.visibility = View.VISIBLE
-                toolbar.removeAllViews()
-                LayoutInflater.from(requireContext())
-                    .inflate(R.layout.search_toolbar, toolbar, true)
+            actionButton.setOnClickListener {
+                toolbar.visibility = View.GONE
+                requireView().findViewById<MaterialToolbar>(R.id.search_toolbar).visibility = View.VISIBLE
             }
         }
     }
@@ -52,16 +48,27 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSearchScreenBinding.bind(content ?: view)
         viewModel = ViewModelProvider(requireActivity())[SearchScreenViewModel::class]
-        val searchView = view.findViewById<SearchView>(R.id.search_view)
-        if (savedInstanceState != null) {
-//            searchView.setQuery(viewModel.searchFieldText, true)
-            //остановился тут. падает при смене экрана и затем назад на этот.
 
-        }
+        binding.searchView.queryTextChanges().apply {
+            Log.e("WOW", "it changes - > ${this}")
+        }.map {
 
-//        searchView.queryTextChanges().map {
-//            viewModel.searchFieldText.onNext(it.toString())
-//        }
+                viewModel.searchFieldText.onNext(it.toString())
+            } //todo продолжить тут . или починить или использовать код ниже
+
+
+//
+//        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean = false
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                Log.e("WOW", "it changes - > ${newText}")
+//
+//                viewModel.searchFieldText.onNext(newText.toString())
+//                return true
+//            }
+//        })
+
 
         val viewPagerFragmentsList =
             listOf<Fragment>(

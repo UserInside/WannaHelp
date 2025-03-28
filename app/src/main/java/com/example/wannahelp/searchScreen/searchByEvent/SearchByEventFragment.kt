@@ -8,27 +8,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.wannahelp.R
+import com.example.wannahelp.databinding.FragmentSearchByEventBinding
+import com.example.wannahelp.newsScreen.NewsItem
 import com.example.wannahelp.searchScreen.SearchRecyclerViewAdapter
 import com.example.wannahelp.searchScreen.SearchScreenViewModel
-import com.example.wannahelp.searchScreen.searchByNKO.SearchByNKOFragment
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 class SearchByEventFragment : Fragment() {
     private lateinit var viewModel: SearchScreenViewModel
     private lateinit var rvAdapter: SearchRecyclerViewAdapter
+    private lateinit var binding: FragmentSearchByEventBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        viewModel = ViewModelProvider(requireActivity())[SearchScreenViewModel::class]
-        val layout = R.layout.fragment_search_by_event
-//            if (viewModel.searchFieldText == "") R.layout.fragment_search_by_event_placeholder
-//            else R.layout.fragment_search_by_event
-
-        return inflater.inflate(layout, container, false)
+        binding = FragmentSearchByEventBinding.inflate(inflater)
+        return binding.root
     }
 
     @SuppressLint("CheckResult")
@@ -36,33 +33,28 @@ class SearchByEventFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[SearchScreenViewModel::class]
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.search_by_event_recyclerview)
+        binding.searchPlaceholderGroup.visibility = View.VISIBLE
 
-        rvAdapter = SearchRecyclerViewAdapter().apply { submitList(emptyList<String>()) }
+        val recyclerView = binding.searchByEventRecyclerview.apply {
+            visibility = View.GONE
+        }
+
+
+        rvAdapter = SearchRecyclerViewAdapter().apply { submitList(emptyList<NewsItem>()) }
 
         recyclerView.apply {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.listToShow.subscribe {
+        viewModel.listToShow.observeOn(AndroidSchedulers.mainThread()).subscribe() {
+            binding.searchPlaceholderGroup.visibility = View.GONE
+            binding.searchByEventRecyclerview.visibility = View.VISIBLE
             rvAdapter.submitList(it)
         }
-
-
     }
 
     companion object {
-        const val SEARCH_RESULT = "search result"
-
-        //        fun newInstance(searchResult: ArrayList<String>): SearchByEventFragment {
-//            return SearchByEventFragment().apply {
-//                arguments =
-//                    Bundle().apply {
-//                        putStringArrayList(SEARCH_RESULT, searchResult)
-//                    }
-//            }
-//        }
         fun newInstance(): SearchByEventFragment {
             return SearchByEventFragment()
         }

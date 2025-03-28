@@ -14,7 +14,7 @@ import com.example.wannahelp.searchScreen.SearchRecyclerViewAdapter.ViewHolder
 class SearchRecyclerViewAdapter(
 //    private val onItemClicked: (Int) -> Unit
 ) :
-    ListAdapter<String, ViewHolder>(SearchResultItemDiffCallback()) {
+    ListAdapter<NewsItem, ViewHolder>(NewsItemDiffCallback()) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.tv_nko_title)
@@ -36,6 +36,6 @@ class SearchRecyclerViewAdapter(
         position: Int,
     ) {
         val item = getItem(position)
-        holder.title.text = item
+        holder.title.text = item.title
     }
 }
