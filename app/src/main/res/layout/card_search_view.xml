@@ -15,7 +15,7 @@
         app:voiceIcon="@drawable/icon_mic_24"
         android:layout_gravity="bottom"
         android:background="@color/white"
-        app:searchIcon="@drawable/icon_search_24" >
+        app:searchIcon="@drawable/icon_search_24_black" >
 
 
     </android.widget.SearchView>

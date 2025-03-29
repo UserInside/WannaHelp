@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.databinding.FragmentSearchByEventBinding
 import com.example.wannahelp.newsScreen.NewsItem
 import com.example.wannahelp.searchScreen.SearchRecyclerViewAdapter
+import com.example.wannahelp.searchScreen.SearchResult
 import com.example.wannahelp.searchScreen.SearchScreenViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
@@ -33,25 +34,28 @@ class SearchByEventFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[SearchScreenViewModel::class]
 
-        binding.searchPlaceholderGroup.visibility = View.VISIBLE
-
-        val recyclerView = binding.searchByEventRecyclerview.apply {
-            visibility = View.GONE
-        }
-
-
         rvAdapter = SearchRecyclerViewAdapter().apply { submitList(emptyList<NewsItem>()) }
 
-        recyclerView.apply {
+        binding.searchByEventRecyclerview.apply {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.listToShow.observeOn(AndroidSchedulers.mainThread()).subscribe() {
-            binding.searchPlaceholderGroup.visibility = View.GONE
-            binding.searchByEventRecyclerview.visibility = View.VISIBLE
-            rvAdapter.submitList(it)
-        }
+        viewModel.searchResultObservable.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { result ->
+                when (result) {
+                    is SearchResult.NoInputMade -> {
+                        binding.searchPlaceholderGroup.visibility = View.VISIBLE
+                        binding.searchByEventRecyclerview.visibility = View.GONE
+                    }
+
+                    is SearchResult.ResultToShow -> {
+                        binding.searchPlaceholderGroup.visibility = View.GONE
+                        binding.searchByEventRecyclerview.visibility = View.VISIBLE
+                        rvAdapter.submitList(result.listToShow)
+                    }
+                }
+            }
     }
 
     companion object {
