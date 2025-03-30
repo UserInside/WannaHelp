@@ -1,20 +1,19 @@
 package com.example.wannahelp.newsScreen
 
 import android.content.Context.MODE_PRIVATE
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
-import androidx.annotation.RequiresApi
+import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
+import com.example.wannahelp.backgroundWork.service.ReadNewsFileService
 import com.example.wannahelp.common.ToolbarFragment
-import com.example.wannahelp.common.extentions.parseToList
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
 import com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment
-import kotlinx.serialization.json.Json
 
 class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
     override fun setupToolbar(
@@ -32,7 +31,6 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -40,31 +38,65 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
 
-        val sharedPref = requireContext().getSharedPreferences(NewsFilterFragment.CHOSEN_CATEGORIES, MODE_PRIVATE)
-        val setOfChosenCategories = sharedPref?.getStringSet(NewsFilterFragment.CHOSEN_CATEGORIES, null)
+        if (savedInstanceState == null) startReadNewsFileService()
 
-        val newsItemList = Json.parseToList<NewsItem>(requireContext(), NEWS_FILE_NAME)
+        val sharedPref =
+            requireContext().getSharedPreferences(
+                NewsFilterFragment.CHOSEN_CATEGORIES,
+                MODE_PRIVATE,
+            )
+        val setOfChosenCategories =
+            sharedPref?.getStringSet(NewsFilterFragment.CHOSEN_CATEGORIES, null)
 
-        val listToShow =
-            newsItemList.filter { setOfChosenCategories?.contains(it.category.toString()) == true }
+        var newsItemList: List<NewsItem>? = null
 
-        val recyclerView = binding.recyclerViewNews
-        val rvAdapter =
-            NewsRecyclerViewAdapter { position ->
-                val action =
-                    NewsScreenFragmentDirections.navigateToEventDetailsScreen(listToShow[position])
-                NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
-            }.apply {
-                submitList(listToShow)
+        ReadNewsFileService.apply {
+            progress.observe(viewLifecycleOwner) {
+                binding.newsProgressBar.progress = it
             }
+            resultLiveData.observe(viewLifecycleOwner) {
+                binding.newsProgressBar.visibility = View.GONE
+                newsItemList = it
 
-        recyclerView.apply {
-            adapter = rvAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+                val listToShow =
+                    (
+                        newsItemList?.filter {
+                            setOfChosenCategories?.contains(it.category.toString()) == true
+                        }
+                    ) ?: listOf()
+
+                val recyclerView = binding.recyclerViewNews
+                val rvAdapter =
+                    NewsRecyclerViewAdapter { position ->
+                        val action =
+                            NewsScreenFragmentDirections.navigateToEventDetailsScreen(
+                                listToShow.get(
+                                    position,
+                                ),
+                            )
+                        NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
+                    }.apply {
+                        submitList(listToShow)
+                    }
+
+                recyclerView.apply {
+                    adapter = rvAdapter
+                    layoutManager = LinearLayoutManager(requireContext())
+                }
+            }
         }
     }
 
-    private companion object {
+    private fun startReadNewsFileService() {
+        val progressBar = view?.findViewById<ProgressBar>(R.id.news_progressBar)
+        progressBar?.visibility = View.VISIBLE
+        val intent = Intent(requireContext(), ReadNewsFileService::class.java)
+        intent.putExtra(NEWS_FILE_NAME_KEY, NEWS_FILE_NAME)
+        requireContext().startService(intent)
+    }
+
+    companion object {
+        const val NEWS_FILE_NAME_KEY = "fileName"
         private const val NEWS_FILE_NAME = "news.json"
     }
 }

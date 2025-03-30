@@ -9,4 +9,4 @@ data class CategoryItem(
     val image: String = "",
     val title: String = "",
     val category: Category = Category.KIDS,
-)
+) : java.io.Serializable

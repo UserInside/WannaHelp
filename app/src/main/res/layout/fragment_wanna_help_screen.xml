@@ -5,6 +5,21 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/wannahelp_progressBar"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:visibility="gone"
+        app:indicatorColor="@color/turtle_green"
+        app:indicatorDirectionCircular="clockwise"
+        app:indicatorSize="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackThickness="8dp"
+        />
+
     <TextView
         android:id="@+id/tv_choose_help_category"
         style="@style/TextStyle5"
