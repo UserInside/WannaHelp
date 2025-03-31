@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
 import com.example.wannahelp.common.Category
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class NewsFilterRecyclerViewAdapter(
-    private val list: List<FilterCategoryCard>,
     private val onSwitchChanged: (category: Category, isChecked: Boolean) -> Unit,
 ) :
-    RecyclerView.Adapter<NewsFilterRecyclerViewAdapter.ViewHolder>() {
+    ListAdapter<FilterCategoryCard, NewsFilterRecyclerViewAdapter.ViewHolder>(NewsFilterDiffCallback()) {
     class ViewHolder(
         itemView: View,
     ) : RecyclerView.ViewHolder(itemView) {
@@ -31,13 +31,11 @@ class NewsFilterRecyclerViewAdapter(
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = list.size
-
     override fun onBindViewHolder(
         holder: ViewHolder,
         position: Int,
     ) {
-        val item = list[position]
+        val item = getItem(position)
         holder.title.text = item.title
         holder.switch.isChecked = item.isChecked
         holder.switch.setOnCheckedChangeListener { _, isChecked ->

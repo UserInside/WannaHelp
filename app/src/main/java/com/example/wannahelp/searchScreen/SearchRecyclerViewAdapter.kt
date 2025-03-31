@@ -15,7 +15,6 @@ class SearchRecyclerViewAdapter(
 //    private val onItemClicked: (Int) -> Unit
 ) :
     ListAdapter<NewsItem, ViewHolder>(NewsItemDiffCallback()) {
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.tv_nko_title)
     }
@@ -29,7 +28,6 @@ class SearchRecyclerViewAdapter(
                 .inflate(R.layout.recycler_view_card_search_result, parent, false)
         return ViewHolder(view)
     }
-
 
     override fun onBindViewHolder(
         holder: ViewHolder,

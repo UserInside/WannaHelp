@@ -1,21 +1,24 @@
 package com.example.wannahelp.newsScreen
 
-import android.content.Context.MODE_PRIVATE
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
-import com.example.wannahelp.backgroundWork.service.ReadNewsFileService
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
-import com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
+    private lateinit var viewModel: NewsViewModel
+    private lateinit var rvAdapter: NewsRecyclerViewAdapter
+    private val disposables = CompositeDisposable()
+
     override fun setupToolbar(
         toolbar: Toolbar,
         actionButton: ImageButton,
@@ -31,72 +34,52 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         }
     }
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
+        viewModel = ViewModelProvider(requireActivity())[NewsViewModel::class]
 
-        if (savedInstanceState == null) startReadNewsFileService()
-
-        val sharedPref =
-            requireContext().getSharedPreferences(
-                NewsFilterFragment.CHOSEN_CATEGORIES,
-                MODE_PRIVATE,
-            )
-        val setOfChosenCategories =
-            sharedPref?.getStringSet(NewsFilterFragment.CHOSEN_CATEGORIES, null)
-
-        var newsItemList: List<NewsItem>? = null
-
-        ReadNewsFileService.apply {
-            progress.observe(viewLifecycleOwner) {
-                binding.newsProgressBar.progress = it
+        rvAdapter =
+            NewsRecyclerViewAdapter { item ->
+                if (!item.isRead) viewModel.decreaseCount()
+                val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(item)
+                NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
             }
-            resultLiveData.observe(viewLifecycleOwner) {
-                binding.newsProgressBar.visibility = View.GONE
-                newsItemList = it
 
-                val listToShow =
-                    (
-                        newsItemList?.filter {
-                            setOfChosenCategories?.contains(it.category.toString()) == true
-                        }
-                    ) ?: listOf()
-
-                val recyclerView = binding.recyclerViewNews
-                val rvAdapter =
-                    NewsRecyclerViewAdapter { position ->
-                        val action =
-                            NewsScreenFragmentDirections.navigateToEventDetailsScreen(
-                                listToShow.get(
-                                    position,
-                                ),
-                            )
-                        NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
-                    }.apply {
-                        submitList(listToShow)
-                    }
-
-                recyclerView.apply {
-                    adapter = rvAdapter
-                    layoutManager = LinearLayoutManager(requireContext())
-                }
-            }
+        binding.recyclerViewNews.apply {
+            adapter = rvAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
+
+        val newsSubscription =
+            viewModel.listToShow.observeOn(AndroidSchedulers.mainThread()).subscribe {
+                rvAdapter.submitList(it)
+            }
+        disposables.add(newsSubscription)
+
+        val stateSubscription =
+            viewModel.screenStateObservable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe { state ->
+                    when (state) {
+                        is NewsState.Progress -> {
+                            binding.newsProgressBar.visibility = View.VISIBLE
+                            binding.newsProgressBar.progress = state.progress
+                        }
+
+                        is NewsState.Done -> {
+                            binding.newsProgressBar.visibility = View.GONE
+                        }
+                    }
+                }
+        disposables.add(stateSubscription)
     }
 
-    private fun startReadNewsFileService() {
-        val progressBar = view?.findViewById<ProgressBar>(R.id.news_progressBar)
-        progressBar?.visibility = View.VISIBLE
-        val intent = Intent(requireContext(), ReadNewsFileService::class.java)
-        intent.putExtra(NEWS_FILE_NAME_KEY, NEWS_FILE_NAME)
-        requireContext().startService(intent)
-    }
-
-    companion object {
-        const val NEWS_FILE_NAME_KEY = "fileName"
-        private const val NEWS_FILE_NAME = "news.json"
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposables.clear()
     }
 }

@@ -21,7 +21,8 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
     private lateinit var vpAdapter: ViewPagerAdapter
 
     override fun setupToolbar(
-        toolbar: androidx.appcompat.widget.Toolbar, actionButton: ImageButton
+        toolbar: androidx.appcompat.widget.Toolbar,
+        actionButton: ImageButton,
     ) {
         toolbar.title = getString(R.string.search)
         actionButton.apply {
@@ -44,44 +45,48 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
         binding = FragmentSearchScreenBinding.bind(content ?: view)
         viewModel = ViewModelProvider(requireActivity())[SearchScreenViewModel::class]
 
-
         binding.searchView.apply {
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean = false
+            setOnQueryTextListener(
+                object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean = false
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    viewModel.searchQuery.onNext(newText.toString())
-                    return true
-                }
-            })
-            setOnCloseListener(object : SearchView.OnCloseListener {
-                override fun onClose(): Boolean {
-                    binding.searchToolbar.visibility = View.GONE
-                    requireView().findViewById<MaterialToolbar>(R.id.main_toolbar).visibility =
-                        View.VISIBLE
-                    return true
-                }
-            })
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        viewModel.searchQuery.onNext(newText.toString())
+                        return true
+                    }
+                },
+            )
+            setOnCloseListener(
+                object : SearchView.OnCloseListener {
+                    override fun onClose(): Boolean {
+                        binding.searchToolbar.visibility = View.GONE
+                        requireView().findViewById<MaterialToolbar>(R.id.main_toolbar).visibility =
+                            View.VISIBLE
+                        return true
+                    }
+                },
+            )
         }
 
-        val viewPagerFragmentsList = listOf<Fragment>(
-            SearchByEventFragment.newInstance(),
-            SearchByNKOFragment.newInstance(),
-        )
+        val viewPagerFragmentsList =
+            listOf<Fragment>(
+                SearchByEventFragment.newInstance(),
+                SearchByNKOFragment.newInstance(),
+            )
 
         vpAdapter = ViewPagerAdapter(this, viewPagerFragmentsList)
         binding.pager.adapter = vpAdapter
 
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
-            tab.text = when (position) {
-                0 -> getString(R.string.by_events)
-                1 -> getString(R.string.by_organization)
-                else -> null
-            }
+            tab.text =
+                when (position) {
+                    0 -> getString(R.string.by_events)
+                    1 -> getString(R.string.by_organization)
+                    else -> null
+                }
         }.attach()
     }
 }
 
-
-//todo сделать все отписки от потоков
-//todo сделать сохранение при переворачивании
+// todo сделать все отписки от потоков
+// todo сделать сохранение при переворачивании

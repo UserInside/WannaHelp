@@ -2,7 +2,6 @@ package com.example.wannahelp.authScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,12 +18,14 @@ import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.core.Observable
 
 class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = true) {
-
     private lateinit var binding: FragmentAuthBinding
     private lateinit var bottomNavView: View
     private val viewModel: AuthViewModel by viewModels()
 
-    override fun setupToolbar(toolbar: Toolbar, actionButton: ImageButton) {
+    override fun setupToolbar(
+        toolbar: Toolbar,
+        actionButton: ImageButton,
+    ) {
         toolbar.apply {
             title = getString(R.string.authorization)
             setNavigationOnClickListener {
@@ -34,13 +35,17 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().finishAffinity()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finishAffinity()
+                }
+            },
+        )
 
         bottomNavView =
             requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav_view).also {
@@ -50,7 +55,10 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
     }
 
     @SuppressLint("CheckResult")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAuthBinding.bind(content ?: view)
 
@@ -63,22 +71,23 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
             binding.authEditTextEmail.textChanges().map {
                 viewModel.emailTextValue = it.toString()
                 it.length
-            }.map { it >= 0 }.distinctUntilChanged() //todo 6
+            }.map { it >= 6 }.distinctUntilChanged()
 
         var passwordLengthSufficient: Observable<Boolean> =
             binding.authEditTextPassword.textChanges().map {
                 viewModel.passwordTextValue = it.toString()
                 it.length
-            }.map { it >= 0 }.distinctUntilChanged() //todo 6
+            }.map { it >= 6 }.distinctUntilChanged()
 
         Observable.combineLatest(
-            emailLengthSufficient, passwordLengthSufficient
+            emailLengthSufficient,
+            passwordLengthSufficient,
         ) { emailLength, passwordLength -> emailLength && passwordLength }.distinctUntilChanged()
             .subscribe { isButtonActive ->
-                Log.e("WOW", "more than six ?? -> $isButtonActive")
+
                 binding.authBtnEnter.apply {
                     isClickable =
-                        isButtonActive //почему не работает? после уменьшения пароля кнопка всё еще кликабельная, хотя тут значение false
+                        isButtonActive // почему не работает? после уменьшения пароля кнопка всё еще кликабельная, хотя тут значение false
                     if (isButtonActive) {
                         setBackgroundColor(resources.getColor(R.color.leaf, null))
                         setOnClickListener {
@@ -92,8 +101,5 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
                     }
                 }
             }
-
-
     }
-
 }

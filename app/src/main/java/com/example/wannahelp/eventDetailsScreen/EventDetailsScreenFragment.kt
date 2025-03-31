@@ -4,19 +4,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentEventDetailsScreenBinding
 
-class EventDetailsScreenFragment : ToolbarFragment(R.layout.fragment_event_details_screen) {
+class EventDetailsScreenFragment :
+    ToolbarFragment(R.layout.fragment_event_details_screen, showBackButton = true) {
     val args: EventDetailsScreenFragmentArgs by navArgs()
 
     override fun setupToolbar(
         toolbar: Toolbar,
         actionBtn: ImageButton,
     ) {
-        toolbar.title = getString(R.string.event_details)
+        toolbar.apply {
+            title = getString(R.string.event_details)
+            setNavigationOnClickListener {
+                NavHostFragment.findNavController(this@EventDetailsScreenFragment)
+                    .popBackStack()
+            }
+        }
         actionBtn.apply {
             visibility = View.VISIBLE
             setImageResource(R.drawable.icon_share_24)

@@ -15,7 +15,7 @@ class ReadCategoryFileWorker(val context: Context, workerParams: WorkerParameter
         val fileName: String =
             inputData.getString(WannaHelpScreenFragment.CATEGORIES_FILE_NAME_KEY) ?: ""
 
-        for (i in 0..1) { //todo 100
+        for (i in 0..1) { // todo 100
             Thread.sleep(50)
             progress.postValue(i)
         }

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.databinding.FragmentSearchByEventBinding
-import com.example.wannahelp.newsScreen.NewsItem
 import com.example.wannahelp.searchScreen.SearchRecyclerViewAdapter
 import com.example.wannahelp.searchScreen.SearchResult
 import com.example.wannahelp.searchScreen.SearchScreenViewModel
@@ -30,11 +29,15 @@ class SearchByEventFragment : Fragment() {
     }
 
     @SuppressLint("CheckResult")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[SearchScreenViewModel::class]
 
-        rvAdapter = SearchRecyclerViewAdapter().apply { submitList(emptyList<NewsItem>()) }
+        rvAdapter =
+            SearchRecyclerViewAdapter() // удалил .apply { submitList(emptyList<NewsItem>()) }
 
         binding.searchByEventRecyclerview.apply {
             adapter = rvAdapter

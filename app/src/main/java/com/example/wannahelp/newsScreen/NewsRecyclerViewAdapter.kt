@@ -11,7 +11,7 @@ import com.example.wannahelp.R
 import com.example.wannahelp.newsScreen.NewsRecyclerViewAdapter.ViewHolder
 
 class NewsRecyclerViewAdapter(
-    private val onItemClicked: (Int) -> Unit,
+    private val onItemClicked: (NewsItem) -> Unit,
 ) :
     ListAdapter<NewsItem, ViewHolder>(NewsItemDiffCallback()) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,8 +42,7 @@ class NewsRecyclerViewAdapter(
         holder.remains.text = item.date
 
         holder.itemView.setOnClickListener {
-            val position = position
-            onItemClicked(position)
+            onItemClicked(item)
         }
     }
 }
