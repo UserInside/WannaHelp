@@ -14,6 +14,4 @@ data class NewsItem(
     val description: String = "",
     val date: String = "",
     val category: Category = Category.KIDS,
-    @Transient
-    var isRead: Boolean = false,
 ) : java.io.Serializable

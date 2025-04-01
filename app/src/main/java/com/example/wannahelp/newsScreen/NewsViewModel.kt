@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.example.wannahelp.R
 import com.example.wannahelp.common.Category
@@ -21,11 +22,14 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private val screenStateSubject = BehaviorSubject.createDefault<NewsState>(NewsState.Done())
     val screenStateObservable: Observable<NewsState> = screenStateSubject
 
+    val setOfReadNews = mutableSetOf<NewsItem>()
+
     private val unreadCountSubject: BehaviorSubject<Int> = BehaviorSubject.createDefault(0)
     val unreadCountObs: Observable<Int> = unreadCountSubject
 
     private var setOfChosenCategories =
-        sharedPref.getStringSet(CHOSEN_CATEGORIES_KEY, null) ?: emptySet()
+        sharedPref.getStringSet(CHOSEN_CATEGORIES_KEY, null) ?: Category.entries.map { it.name }
+            .toSet()
 
     private var categoriesSubject = BehaviorSubject.createDefault(setOfChosenCategories)
 
@@ -36,6 +40,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
                     .map { newsList ->
                         newsList.filter { newsItem ->
                             categories.contains(newsItem.category.toString())
+                        }.apply {
+                            countUnreadMsg(this)
                         }
                     }
             }
@@ -56,7 +62,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
                     screenStateSubject.onNext(NewsState.Progress(i))
                 }
                 val newsList = getNewsList()
-                unreadCountSubject.onNext(newsList.size)
                 emitter.onNext(newsList)
                 emitter.onComplete()
                 screenStateSubject.onNext(NewsState.Done())
@@ -67,6 +72,14 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }.subscribeOn(Schedulers.io())
     }
 
+    private fun countUnreadMsg(list: List<NewsItem>) {
+        var unreadCount = list.size
+        list.forEach { newsItem ->
+            if (setOfReadNews.contains(newsItem)) unreadCount--
+            unreadCountSubject.onNext(unreadCount)
+        }
+    }
+
     @SuppressLint("CheckResult")
     private fun getNewsList(): List<NewsItem> {
         return Json.parseToList<NewsItem>(
@@ -75,9 +88,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun decreaseCount() {
-        val currentCount = unreadCountSubject.value
-        unreadCountSubject.onNext(currentCount?.minus(1) ?: 0)
+    fun addReadItemToSet(newsItem: NewsItem) {
+        setOfReadNews.add(newsItem)
     }
 
     // filter screen below
@@ -123,7 +135,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
 
-    fun removeNewsItemFromFilter(category: String) = tmpSetOfFilteredCategoriesToSave.remove(category)
+    fun removeNewsItemFromFilter(category: String) =
+        tmpSetOfFilteredCategoriesToSave.remove(category)
 
     fun saveChosenCategories() {
         setOfChosenCategories = tmpSetOfFilteredCategoriesToSave.toSet()

@@ -35,10 +35,9 @@ class MainActivity : AppCompatActivity() {
             badgeTextColor = resources.getColor(R.color.white, null)
             maxCharacterCount = 3
 
-            badge.isVisible = false
+//            badge.isVisible = false
         }
         viewModel.unreadCountObs.observeOn(AndroidSchedulers.mainThread()).subscribe { count ->
-            Log.e("WOW", "Activity observe count -> $count")
             updateNewsBadge(count)
         }
     }

@@ -44,9 +44,9 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         viewModel = ViewModelProvider(requireActivity())[NewsViewModel::class]
 
         rvAdapter =
-            NewsRecyclerViewAdapter { item ->
-                if (!item.isRead) viewModel.decreaseCount()
-                val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(item)
+            NewsRecyclerViewAdapter { newsItem ->
+                viewModel.addReadItemToSet(newsItem)
+                val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(newsItem)
                 NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
             }
 
