@@ -3,7 +3,6 @@ package com.example.wannahelp.newsScreen
 import com.example.wannahelp.common.Category
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 @Serializable
 data class NewsItem(

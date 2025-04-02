@@ -2,7 +2,6 @@ package com.example.wannahelp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -34,8 +33,6 @@ class MainActivity : AppCompatActivity() {
             backgroundColor = resources.getColor(R.color.leaf, null)
             badgeTextColor = resources.getColor(R.color.white, null)
             maxCharacterCount = 3
-
-//            badge.isVisible = false
         }
         viewModel.unreadCountObs.observeOn(AndroidSchedulers.mainThread()).subscribe { count ->
             updateNewsBadge(count)

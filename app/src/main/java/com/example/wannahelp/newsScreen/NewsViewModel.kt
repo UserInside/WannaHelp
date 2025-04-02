@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.util.Log
+import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import com.example.wannahelp.R
 import com.example.wannahelp.common.Category
@@ -16,15 +16,19 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.serialization.json.Json
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
+    private val initialNewsList = getNewsList()
+
     private var sharedPref: SharedPreferences =
         application.applicationContext.getSharedPreferences(CHOSEN_CATEGORIES_KEY, MODE_PRIVATE)
 
     private val screenStateSubject = BehaviorSubject.createDefault<NewsState>(NewsState.Done())
     val screenStateObservable: Observable<NewsState> = screenStateSubject
 
-    val setOfReadNews = mutableSetOf<NewsItem>()
+    private val setOfReadNews = loadReadSetFromSharedPref()
+    val unreadMsgCount = sharedPref.getInt(UNREAD_MSG_COUNT, initialNewsList.size)
 
-    private val unreadCountSubject: BehaviorSubject<Int> = BehaviorSubject.createDefault(0)
+    private val unreadCountSubject: BehaviorSubject<Int> =
+        BehaviorSubject.createDefault(unreadMsgCount)
     val unreadCountObs: Observable<Int> = unreadCountSubject
 
     private var setOfChosenCategories =
@@ -61,7 +65,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
                     Thread.sleep(100)
                     screenStateSubject.onNext(NewsState.Progress(i))
                 }
-                val newsList = getNewsList()
+                val newsList = initialNewsList
                 emitter.onNext(newsList)
                 emitter.onComplete()
                 screenStateSubject.onNext(NewsState.Done())
@@ -78,6 +82,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
             if (setOfReadNews.contains(newsItem)) unreadCount--
             unreadCountSubject.onNext(unreadCount)
         }
+        sharedPref.edit { putInt(UNREAD_MSG_COUNT, unreadCount) }
     }
 
     @SuppressLint("CheckResult")
@@ -90,11 +95,29 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addReadItemToSet(newsItem: NewsItem) {
         setOfReadNews.add(newsItem)
+        saveReadSetToSharedPref()
+    }
+
+    private fun saveReadSetToSharedPref() {
+        val serializedSetToSave = mutableSetOf<String>()
+        setOfReadNews.forEach {
+            serializedSetToSave.add(Json.encodeToString(it))
+        }
+        sharedPref.edit { putStringSet(READ_NEWS_KEY, serializedSetToSave) }
+    }
+
+    private fun loadReadSetFromSharedPref(): MutableSet<NewsItem> {
+        val setToDeserialize = sharedPref.getStringSet(READ_NEWS_KEY, null)
+        val result = mutableSetOf<NewsItem>()
+        setToDeserialize?.forEach {
+            result.add(Json.decodeFromString(it))
+        }
+        return result
     }
 
     // filter screen below
     // изменить источник
-    val initialFilterCategoryList =
+    private val initialFilterCategoryList =
         Observable.just<List<FilterCategoryCard>>(
             mutableListOf(
                 FilterCategoryCard(
@@ -131,12 +154,11 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
 
-    var tmpSetOfFilteredCategoriesToSave = setOfChosenCategories.toMutableSet()
+    private val tmpSetOfFilteredCategoriesToSave = setOfChosenCategories.toMutableSet()
 
     fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
 
-    fun removeNewsItemFromFilter(category: String) =
-        tmpSetOfFilteredCategoriesToSave.remove(category)
+    fun removeNewsItemFromFilter(category: String) = tmpSetOfFilteredCategoriesToSave.remove(category)
 
     fun saveChosenCategories() {
         setOfChosenCategories = tmpSetOfFilteredCategoriesToSave.toSet()
@@ -149,6 +171,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object {
         private const val CHOSEN_CATEGORIES_KEY = "chosenCategories"
+        private const val READ_NEWS_KEY = "readNews"
+        private const val UNREAD_MSG_COUNT = "unreadMsgCount"
         private const val NEWS_FILE_NAME = "news.json"
         const val NEWS_FILE_NAME_KEY = "news"
     }
