@@ -51,10 +51,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
             }
 
     init {
-        loadInitialData()
-    }
-
-    private fun loadInitialData() {
         screenStateSubject.onNext(NewsState.Progress(0))
     }
 
@@ -95,10 +91,10 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addReadItemToSet(newsItem: NewsItem) {
         setOfReadNews.add(newsItem)
-        saveReadSetToSharedPref()
+        saveReadMsgSetToSharedPref()
     }
 
-    private fun saveReadSetToSharedPref() {
+    private fun saveReadMsgSetToSharedPref() {
         val serializedSetToSave = mutableSetOf<String>()
         setOfReadNews.forEach {
             serializedSetToSave.add(Json.encodeToString(it))
@@ -115,9 +111,34 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         return result
     }
 
-    // filter screen below
-    // изменить источник
-    private val initialFilterCategoryList =
+    val listOfCategoryFiltersToShow =
+        getInitialFilterList(application).map { list ->
+            list.map { item ->
+                if (setOfChosenCategories.contains(item.category.toString())) {
+                    item.copy(isChecked = true)
+                } else {
+                    item.copy(isChecked = false)
+                }
+            }
+        }
+
+    private val tmpSetOfFilteredCategoriesToSave = setOfChosenCategories.toMutableSet()
+
+    fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
+
+    fun removeNewsItemFromFilter(category: String) =
+        tmpSetOfFilteredCategoriesToSave.remove(category)
+
+    fun saveChosenCategories() {
+        setOfChosenCategories = tmpSetOfFilteredCategoriesToSave.toSet()
+        sharedPref.edit().apply {
+            putStringSet(CHOSEN_CATEGORIES_KEY, tmpSetOfFilteredCategoriesToSave)
+            apply()
+        }
+        categoriesSubject.onNext(tmpSetOfFilteredCategoriesToSave.toSet())
+    }
+
+    private fun getInitialFilterList(application: Application) =
         Observable.just<List<FilterCategoryCard>>(
             mutableListOf(
                 FilterCategoryCard(
@@ -142,32 +163,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
                 ),
             ),
         )
-
-    val listOfCategoryFiltersToShow =
-        initialFilterCategoryList.map { list ->
-            list.map { item ->
-                if (setOfChosenCategories.contains(item.category.toString())) {
-                    item.copy(isChecked = true)
-                } else {
-                    item.copy(isChecked = false)
-                }
-            }
-        }
-
-    private val tmpSetOfFilteredCategoriesToSave = setOfChosenCategories.toMutableSet()
-
-    fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
-
-    fun removeNewsItemFromFilter(category: String) = tmpSetOfFilteredCategoriesToSave.remove(category)
-
-    fun saveChosenCategories() {
-        setOfChosenCategories = tmpSetOfFilteredCategoriesToSave.toSet()
-        sharedPref.edit().apply {
-            putStringSet(CHOSEN_CATEGORIES_KEY, tmpSetOfFilteredCategoriesToSave)
-            apply()
-        }
-        categoriesSubject.onNext(tmpSetOfFilteredCategoriesToSave.toSet())
-    }
 
     companion object {
         private const val CHOSEN_CATEGORIES_KEY = "chosenCategories"

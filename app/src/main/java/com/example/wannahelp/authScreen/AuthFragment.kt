@@ -71,13 +71,13 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
             binding.authEditTextEmail.textChanges().map {
                 viewModel.emailTextValue = it.toString()
                 it.length
-            }.map { it >= 0 }.distinctUntilChanged()
+            }.map { it >= 6 }.distinctUntilChanged()
 
         var passwordLengthSufficient: Observable<Boolean> =
             binding.authEditTextPassword.textChanges().map {
                 viewModel.passwordTextValue = it.toString()
                 it.length
-            }.map { it >= 0 }.distinctUntilChanged() // todo 6
+            }.map { it >= 6 }.distinctUntilChanged()
 
         Observable.combineLatest(
             emailLengthSufficient,
