@@ -43,6 +43,9 @@ android {
 }
 
 dependencies {
+
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
     implementation(libs.rxandroid)
     implementation(libs.rxbinding.support.v4)
     implementation(libs.rxbinding.appcompat.v7)

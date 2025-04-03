@@ -104,6 +104,6 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
     }
 
     companion object {
-        private const val REQUIRED_STRING_LENGTH = 6
+        private const val REQUIRED_STRING_LENGTH = 0
     }
 }

@@ -2,6 +2,7 @@ package com.example.wannahelp.searchScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SearchView
@@ -51,7 +52,11 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
                     override fun onQueryTextSubmit(query: String?): Boolean = false
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        viewModel.searchQuery.onNext(newText.toString())
+                        Log.e("SEARCH", "newText -> $newText")
+                        viewModel.searchQuery.value = newText.toString()
+                        viewModel.updateSearchResult()
+                        Log.e("SEARCH", "vm search value -> ${viewModel.searchQuery.value}")
+
                         return true
                     }
                 },

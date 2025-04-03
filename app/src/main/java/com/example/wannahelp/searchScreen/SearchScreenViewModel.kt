@@ -1,38 +1,55 @@
 package com.example.wannahelp.searchScreen
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.common.extentions.parseToList
 import com.example.wannahelp.newsScreen.NewsItem
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMap
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import java.util.concurrent.TimeUnit
 
 const val FILE_NAME = "news.json"
 
 class SearchScreenViewModel(application: Application) : AndroidViewModel(application) {
     val eventsOriginList = Json.parseToList<NewsItem>(application.applicationContext, FILE_NAME)
 
-    var searchQuery: BehaviorSubject<String> = BehaviorSubject.create<String>()
+    var searchQuery: MutableStateFlow<String> = MutableStateFlow<String>("")
 
-    var searchResultObservable: Observable<SearchResult> =
-        searchQuery.debounce(500, TimeUnit.MILLISECONDS)
-            .distinctUntilChanged()
-            .flatMap { searchText ->
-                if (searchText == "") {
-                    Observable.just(SearchResult.NoInputMade)
-                } else {
-                    val filteredList =
-                        eventsOriginList.filter { it.title.contains(searchText) }
-                            .ifEmpty { emptyList() }
-                    Observable.just(SearchResult.ResultToShow(filteredList))
+    var searchResultStateFlow = MutableStateFlow<SearchResult>(SearchResult.NoInputMade)
+
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
+    fun updateSearchResult() {
+        viewModelScope.launch {
+            searchQuery.debounce(500).distinctUntilChanged().flatMapConcat { searchText ->
+                flow {
+                    val result = if (searchText == "") {
+                        SearchResult.NoInputMade
+                    } else {
+                        val filteredList =
+                            eventsOriginList.filter { it.title.contains(searchText) }
+                                .ifEmpty { emptyList() }
+                        SearchResult.ResultToShow(filteredList)
+                    }
+                    emit(result)
                 }
+            }.collect { result ->
+                searchResultStateFlow.value = result
             }
+        }
+    }
 }
 
 sealed class SearchResult {
     object NoInputMade : SearchResult()
-
     class ResultToShow(val listToShow: List<NewsItem>) : SearchResult()
 }

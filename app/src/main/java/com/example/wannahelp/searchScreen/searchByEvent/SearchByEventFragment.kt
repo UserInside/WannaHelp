@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.databinding.FragmentSearchByEventBinding
 import com.example.wannahelp.searchScreen.SearchRecyclerViewAdapter
 import com.example.wannahelp.searchScreen.SearchResult
 import com.example.wannahelp.searchScreen.SearchScreenViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.flow.observeOn
+import kotlinx.coroutines.launch
 
 class SearchByEventFragment : Fragment() {
     private lateinit var viewModel: SearchScreenViewModel
@@ -43,9 +46,8 @@ class SearchByEventFragment : Fragment() {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-
-        viewModel.searchResultObservable.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { result ->
+        lifecycleScope.launch {
+            viewModel.searchResultStateFlow.collect { result ->
                 when (result) {
                     is SearchResult.NoInputMade -> {
                         binding.searchPlaceholderGroup.visibility = View.VISIBLE
@@ -59,6 +61,24 @@ class SearchByEventFragment : Fragment() {
                     }
                 }
             }
+
+//
+//        observeOn(AndroidSchedulers.mainThread())
+//            .subscribe { result ->
+//                when (result) {
+//                    is SearchResult.NoInputMade -> {
+//                        binding.searchPlaceholderGroup.visibility = View.VISIBLE
+//                        binding.searchByEventRecyclerview.visibility = View.GONE
+//                    }
+//
+//                    is SearchResult.ResultToShow -> {
+//                        binding.searchPlaceholderGroup.visibility = View.GONE
+//                        binding.searchByEventRecyclerview.visibility = View.VISIBLE
+//                        rvAdapter.submitList(result.listToShow)
+//                    }
+//                }
+//            }
+        }
     }
 
     companion object {
