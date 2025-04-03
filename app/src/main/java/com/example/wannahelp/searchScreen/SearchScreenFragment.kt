@@ -52,11 +52,7 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
                     override fun onQueryTextSubmit(query: String?): Boolean = false
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        Log.e("SEARCH", "newText -> $newText")
-                        viewModel.searchQuery.value = newText.toString()
-                        viewModel.updateSearchResult()
-                        Log.e("SEARCH", "vm search value -> ${viewModel.searchQuery.value}")
-
+                        viewModel.updateSearchResult(newText.toString())
                         return true
                     }
                 },

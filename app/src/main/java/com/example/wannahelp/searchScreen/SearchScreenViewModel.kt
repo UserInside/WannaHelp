@@ -28,7 +28,8 @@ class SearchScreenViewModel(application: Application) : AndroidViewModel(applica
     var searchResultStateFlow = MutableStateFlow<SearchResult>(SearchResult.NoInputMade)
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-    fun updateSearchResult() {
+    fun updateSearchResult(newText: String) {
+        searchQuery.value = newText
         viewModelScope.launch {
             searchQuery.debounce(500).distinctUntilChanged().flatMapConcat { searchText ->
                 flow {
