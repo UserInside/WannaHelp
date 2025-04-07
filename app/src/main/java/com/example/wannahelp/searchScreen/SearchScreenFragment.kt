@@ -2,7 +2,6 @@ package com.example.wannahelp.searchScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.SearchView
@@ -88,6 +87,3 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
         }.attach()
     }
 }
-
-// todo сделать все отписки от потоков
-// todo сделать сохранение при переворачивании

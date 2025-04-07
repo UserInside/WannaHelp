@@ -2,22 +2,26 @@ package com.example.wannahelp.newsScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 
 class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
     private lateinit var viewModel: NewsViewModel
     private lateinit var rvAdapter: NewsRecyclerViewAdapter
-    private val disposables = CompositeDisposable()
 
     override fun setupToolbar(
         toolbar: Toolbar,
@@ -54,32 +58,33 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+        val exHandler =
+            CoroutineExceptionHandler { _, exception ->
+                Log.e(TAG, "exception caught by handler -> $exception")
+            }
 
-        val newsSubscription =
-            viewModel.listToShow.observeOn(AndroidSchedulers.mainThread()).subscribe {
+        val scope = lifecycleScope.plus(SupervisorJob() + Dispatchers.Main + exHandler)
+        scope.launch {
+            viewModel.listToShowStateFlow.collect {
                 rvAdapter.submitList(it)
             }
-        disposables.add(newsSubscription)
 
-        val stateSubscription =
-            viewModel.screenStateObservable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe { state ->
-                    when (state) {
-                        is NewsState.Progress -> {
-                            binding.newsProgressBar.visibility = View.VISIBLE
-                            binding.newsProgressBar.progress = state.progress
-                        }
+            viewModel.screenStateFlow.collect { state ->
+                when (state) {
+                    is NewsState.Progress -> {
+                        binding.newsProgressBar.visibility = View.VISIBLE
+                        binding.newsProgressBar.progress = state.progress
+                    }
 
-                        is NewsState.Done -> {
-                            binding.newsProgressBar.visibility = View.GONE
-                        }
+                    is NewsState.Done -> {
+                        binding.newsProgressBar.visibility = View.GONE
                     }
                 }
-        disposables.add(stateSubscription)
+            }
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        disposables.clear()
+    companion object {
+        private const val TAG = "NewsScreenFragment"
     }
 }

@@ -4,12 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.wannahelp.newsScreen.NewsViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var badge: BadgeDrawable
@@ -34,8 +35,10 @@ class MainActivity : AppCompatActivity() {
             badgeTextColor = resources.getColor(R.color.white, null)
             maxCharacterCount = 3
         }
-        viewModel.unreadCountObs.observeOn(AndroidSchedulers.mainThread()).subscribe { count ->
-            updateNewsBadge(count)
+        lifecycleScope.launch {
+            viewModel.unreadMsgCountStateFlow.collect { count ->
+                updateNewsBadge(count)
+            }
         }
     }
 

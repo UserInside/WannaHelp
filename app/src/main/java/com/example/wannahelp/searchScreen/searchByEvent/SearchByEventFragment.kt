@@ -13,8 +13,6 @@ import com.example.wannahelp.databinding.FragmentSearchByEventBinding
 import com.example.wannahelp.searchScreen.SearchRecyclerViewAdapter
 import com.example.wannahelp.searchScreen.SearchResult
 import com.example.wannahelp.searchScreen.SearchScreenViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import kotlinx.coroutines.flow.observeOn
 import kotlinx.coroutines.launch
 
 class SearchByEventFragment : Fragment() {

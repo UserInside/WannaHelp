@@ -6,77 +6,81 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.R
 import com.example.wannahelp.common.Category
 import com.example.wannahelp.common.extentions.parseToList
 import com.example.wannahelp.newsScreen.newsFilterScreen.FilterCategoryCard
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
     private val initialNewsList = getNewsList()
-
     private var sharedPref: SharedPreferences =
         application.applicationContext.getSharedPreferences(CHOSEN_CATEGORIES_KEY, MODE_PRIVATE)
 
-    private val screenStateSubject = BehaviorSubject.createDefault<NewsState>(NewsState.Done())
-    val screenStateObservable: Observable<NewsState> = screenStateSubject
-
     private val setOfReadNews = loadReadSetFromSharedPref()
-    val unreadMsgCount = sharedPref.getInt(UNREAD_MSG_COUNT, initialNewsList.size)
-
-    private val unreadCountSubject: BehaviorSubject<Int> =
-        BehaviorSubject.createDefault(unreadMsgCount)
-    val unreadCountObs: Observable<Int> = unreadCountSubject
+    private val unreadMsgCount = sharedPref.getInt(UNREAD_MSG_COUNT, initialNewsList.size)
+    val unreadMsgCountStateFlow = MutableStateFlow<Int>(unreadMsgCount)
 
     private var setOfChosenCategories =
         sharedPref.getStringSet(CHOSEN_CATEGORIES_KEY, null) ?: Category.entries.map { it.name }
             .toSet()
 
-    private var categoriesSubject = BehaviorSubject.createDefault(setOfChosenCategories)
+    private var categoriesStateFlow = MutableStateFlow<Set<String>>(setOfChosenCategories)
 
-    val listToShow: Observable<List<NewsItem>> =
-        categoriesSubject
-            .switchMap { categories ->
-                loadNewsWithProgress()
-                    .map { newsList ->
-                        newsList.filter { newsItem ->
-                            categories.contains(newsItem.category.toString())
-                        }.apply {
-                            countUnreadMsg(this)
-                        }
-                    }
-            }
+    val screenStateFlow = MutableStateFlow<NewsState>(NewsState.Done())
+    val listToShowStateFlow = MutableStateFlow<List<NewsItem>>(emptyList())
 
     init {
-        screenStateSubject.onNext(NewsState.Progress(0))
+        viewModelScope.launch { updateListToShow() }
     }
 
-    private fun loadNewsWithProgress(): Observable<List<NewsItem>> {
-        return Observable.create<List<NewsItem>> { emitter ->
-            try {
-                for (i in 1..100 step 34) {
-                    Thread.sleep(100)
-                    screenStateSubject.onNext(NewsState.Progress(i))
+    private suspend fun loadNewsWithProgress(): MutableStateFlow<List<NewsItem>> {
+        for (i in 1..100 step 34) {
+            delay(100)
+            screenStateFlow.value = NewsState.Progress(i)
+        }
+        return MutableStateFlow<List<NewsItem>>(initialNewsList).also {
+            screenStateFlow.value = NewsState.Done()
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    suspend fun updateListToShow() {
+        withContext(Dispatchers.IO) {
+            categoriesStateFlow.flatMapLatest { categories ->
+                flow {
+                    val result =
+                        loadNewsWithProgress().map { newsList ->
+                            newsList.filter { newsItem ->
+                                categories.contains(newsItem.category.toString())
+                            }.apply {
+                                countUnreadMsg(this)
+                            }
+                        }
+                    emit(result)
                 }
-                val newsList = initialNewsList
-                emitter.onNext(newsList)
-                emitter.onComplete()
-                screenStateSubject.onNext(NewsState.Done())
-            } catch (e: Exception) {
-                emitter.onError(e)
-                screenStateSubject.onNext(NewsState.Done())
+            }.collect { result ->
+                result.collect { listToShowStateFlow.value = it }
             }
-        }.subscribeOn(Schedulers.io())
+        }
     }
 
     private fun countUnreadMsg(list: List<NewsItem>) {
         var unreadCount = list.size
         list.forEach { newsItem ->
             if (setOfReadNews.contains(newsItem)) unreadCount--
-            unreadCountSubject.onNext(unreadCount)
+            unreadMsgCountStateFlow.value = unreadCount
         }
         sharedPref.edit { putInt(UNREAD_MSG_COUNT, unreadCount) }
     }
@@ -92,6 +96,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     fun addReadItemToSet(newsItem: NewsItem) {
         setOfReadNews.add(newsItem)
         saveReadMsgSetToSharedPref()
+        viewModelScope.launch { updateListToShow() }
     }
 
     private fun saveReadMsgSetToSharedPref() {
@@ -126,16 +131,16 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
 
-    fun removeNewsItemFromFilter(category: String) =
-        tmpSetOfFilteredCategoriesToSave.remove(category)
+    fun removeNewsItemFromFilter(category: String) = tmpSetOfFilteredCategoriesToSave.remove(category)
 
     fun saveChosenCategories() {
+        viewModelScope.launch { updateListToShow() }
         setOfChosenCategories = tmpSetOfFilteredCategoriesToSave.toSet()
         sharedPref.edit().apply {
             putStringSet(CHOSEN_CATEGORIES_KEY, tmpSetOfFilteredCategoriesToSave)
             apply()
         }
-        categoriesSubject.onNext(tmpSetOfFilteredCategoriesToSave.toSet())
+        categoriesStateFlow.value = tmpSetOfFilteredCategoriesToSave.toSet()
     }
 
     private fun getInitialFilterList(application: Application) =

@@ -1,7 +1,6 @@
 package com.example.wannahelp.searchScreen
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.common.extentions.parseToList
@@ -11,10 +10,8 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMap
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
@@ -33,14 +30,15 @@ class SearchScreenViewModel(application: Application) : AndroidViewModel(applica
         viewModelScope.launch {
             searchQuery.debounce(500).distinctUntilChanged().flatMapConcat { searchText ->
                 flow {
-                    val result = if (searchText == "") {
-                        SearchResult.NoInputMade
-                    } else {
-                        val filteredList =
-                            eventsOriginList.filter { it.title.contains(searchText) }
-                                .ifEmpty { emptyList() }
-                        SearchResult.ResultToShow(filteredList)
-                    }
+                    val result =
+                        if (searchText == "") {
+                            SearchResult.NoInputMade
+                        } else {
+                            val filteredList =
+                                eventsOriginList.filter { it.title.contains(searchText) }
+                                    .ifEmpty { emptyList() }
+                            SearchResult.ResultToShow(filteredList)
+                        }
                     emit(result)
                 }
             }.collect { result ->
@@ -52,5 +50,6 @@ class SearchScreenViewModel(application: Application) : AndroidViewModel(applica
 
 sealed class SearchResult {
     object NoInputMade : SearchResult()
+
     class ResultToShow(val listToShow: List<NewsItem>) : SearchResult()
 }
