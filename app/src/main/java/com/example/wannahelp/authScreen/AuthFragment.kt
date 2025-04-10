@@ -1,6 +1,5 @@
 package com.example.wannahelp.authScreen
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentAuthBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.jakewharton.rxbinding4.widget.textChanges
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.launch
 
 class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = true) {
     private lateinit var binding: FragmentAuthBinding
@@ -54,7 +54,6 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    @SuppressLint("CheckResult")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
@@ -63,31 +62,22 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         binding = FragmentAuthBinding.bind(content ?: view)
 
         if (savedInstanceState != null) {
-            binding.authEditTextEmail.setText(viewModel.emailTextValue)
-            binding.authEditTextPassword.setText(viewModel.passwordTextValue)
+            binding.authEditTextEmail.setText(viewModel.emailTextValue.value)
+            binding.authEditTextPassword.setText(viewModel.passwordTextValue.value)
         }
 
-        var emailLengthSufficient: Observable<Boolean> =
-            binding.authEditTextEmail.textChanges().map {
-                viewModel.emailTextValue = it.toString()
-                it.length
-            }.map { it >= REQUIRED_STRING_LENGTH }.distinctUntilChanged()
+        binding.authEditTextEmail.doOnTextChanged { newText, _, _, _ ->
+            viewModel.emailTextValue.value = newText.toString()
+        }
 
-        var passwordLengthSufficient: Observable<Boolean> =
-            binding.authEditTextPassword.textChanges().map {
-                viewModel.passwordTextValue = it.toString()
-                it.length
-            }.map { it >= REQUIRED_STRING_LENGTH }.distinctUntilChanged()
+        binding.authEditTextPassword.doOnTextChanged { newText, _, _, _ ->
+            viewModel.passwordTextValue.value = newText.toString()
+        }
 
-        Observable.combineLatest(
-            emailLengthSufficient,
-            passwordLengthSufficient,
-        ) { emailLength, passwordLength -> emailLength && passwordLength }.distinctUntilChanged()
-            .subscribe { isButtonActive ->
-
+        lifecycleScope.launch {
+            viewModel.isFieldsLengthSufficient.collect { isButtonActive ->
                 binding.authBtnEnter.apply {
-                    isClickable =
-                        isButtonActive // почему не работает? после уменьшения пароля кнопка всё еще кликабельная, хотя тут значение false
+                    isClickable = isButtonActive
                     if (isButtonActive) {
                         setBackgroundColor(resources.getColor(R.color.leaf, null))
                         setOnClickListener {
@@ -101,9 +91,6 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
                     }
                 }
             }
-    }
-
-    companion object {
-        private const val REQUIRED_STRING_LENGTH = 6
+        }
     }
 }

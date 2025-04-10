@@ -39,14 +39,6 @@ class SearchByNKOFragment : Fragment() {
     companion object {
         const val SEARCH_RESULT = "search result"
 
-        //        fun newInstance(searchResult: ArrayList<String>): SearchByNKOFragment {
-//            return SearchByNKOFragment().apply {
-//                arguments =
-//                    Bundle().apply {
-//                        putStringArrayList(SEARCH_RESULT, searchResult)
-//                    }
-//            }
-//        }
         fun newInstance(): SearchByNKOFragment {
             return SearchByNKOFragment()
         }

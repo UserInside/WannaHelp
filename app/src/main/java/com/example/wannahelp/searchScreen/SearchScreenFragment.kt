@@ -56,16 +56,12 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
                     }
                 },
             )
-            setOnCloseListener(
-                object : SearchView.OnCloseListener {
-                    override fun onClose(): Boolean {
-                        binding.searchToolbar.visibility = View.GONE
-                        requireView().findViewById<MaterialToolbar>(R.id.main_toolbar).visibility =
-                            View.VISIBLE
-                        return true
-                    }
-                },
-            )
+            setOnCloseListener {
+                binding.searchToolbar.visibility = View.GONE
+                requireView().findViewById<MaterialToolbar>(R.id.main_toolbar).visibility =
+                    View.VISIBLE
+                true
+            }
         }
 
         val viewPagerFragmentsList =

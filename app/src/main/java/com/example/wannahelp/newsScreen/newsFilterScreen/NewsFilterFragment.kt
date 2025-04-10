@@ -6,17 +6,17 @@ import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentNewsFilterBinding
-import com.example.wannahelp.newsScreen.NewsViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.launch
 
 class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBackButton = true) {
     private lateinit var binding: FragmentNewsFilterBinding
-    private lateinit var viewModel: NewsViewModel
+    private lateinit var viewModel: NewsFilterViewModel
 
     override fun setupToolbar(
         toolbar: Toolbar,
@@ -47,7 +47,7 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewsFilterBinding.bind(content ?: view)
-        viewModel = ViewModelProvider(requireActivity())[NewsViewModel::class]
+        viewModel = ViewModelProvider(this@NewsFilterFragment)[NewsFilterViewModel::class]
 
         val rvAdapter =
             NewsFilterRecyclerViewAdapter { category, isChecked ->
@@ -63,8 +63,10 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.listOfCategoryFiltersToShow.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            rvAdapter.submitList(it)
+        lifecycleScope.launch {
+            viewModel.listOfCategoryFiltersToShow.collect {
+                rvAdapter.submitList(it)
+            }
         }
     }
 }

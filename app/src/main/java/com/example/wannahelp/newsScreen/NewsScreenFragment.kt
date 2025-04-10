@@ -46,6 +46,9 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
         viewModel = ViewModelProvider(requireActivity())[NewsViewModel::class]
+        lifecycleScope.launch {
+            viewModel.updateListToShow()
+        }
 
         rvAdapter =
             NewsRecyclerViewAdapter { newsItem ->
@@ -65,10 +68,6 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
 
         val scope = lifecycleScope.plus(SupervisorJob() + Dispatchers.Main + exHandler)
         scope.launch {
-            viewModel.listToShowStateFlow.collect {
-                rvAdapter.submitList(it)
-            }
-
             viewModel.screenStateFlow.collect { state ->
                 when (state) {
                     is NewsState.Progress -> {
@@ -80,6 +79,11 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
                         binding.newsProgressBar.visibility = View.GONE
                     }
                 }
+            }
+        }
+        scope.launch {
+            viewModel.listToShowStateFlow.collect {
+                rvAdapter.submitList(it)
             }
         }
     }

@@ -38,7 +38,7 @@ class SearchByEventFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[SearchScreenViewModel::class]
 
         rvAdapter =
-            SearchRecyclerViewAdapter() // удалил .apply { submitList(emptyList<NewsItem>()) }
+            SearchRecyclerViewAdapter()
 
         binding.searchByEventRecyclerview.apply {
             adapter = rvAdapter
@@ -59,23 +59,6 @@ class SearchByEventFragment : Fragment() {
                     }
                 }
             }
-
-//
-//        observeOn(AndroidSchedulers.mainThread())
-//            .subscribe { result ->
-//                when (result) {
-//                    is SearchResult.NoInputMade -> {
-//                        binding.searchPlaceholderGroup.visibility = View.VISIBLE
-//                        binding.searchByEventRecyclerview.visibility = View.GONE
-//                    }
-//
-//                    is SearchResult.ResultToShow -> {
-//                        binding.searchPlaceholderGroup.visibility = View.GONE
-//                        binding.searchByEventRecyclerview.visibility = View.VISIBLE
-//                        rvAdapter.submitList(result.listToShow)
-//                    }
-//                }
-//            }
         }
     }
 
