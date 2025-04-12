@@ -31,7 +31,7 @@ class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryIte
     ) {
         val currentCard = categoriesList[position]
 //   заглушка     holder.image.setImageResource(currentCard.image)
-        holder.title.text = currentCard.title
+        holder.title.text = currentCard.name
     }
 
     override fun getItemCount(): Int = categoriesList.size

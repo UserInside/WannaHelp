@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var badge: BadgeDrawable
-    private val viewModel: NewsViewModel by viewModels()
+//    private val viewModel: NewsViewModel by viewModels()
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +35,11 @@ class MainActivity : AppCompatActivity() {
             badgeTextColor = resources.getColor(R.color.white, null)
             maxCharacterCount = 3
         }
-        lifecycleScope.launch {
-            viewModel.unreadMsgCountStateFlow.collect { count ->
-                updateNewsBadge(count)
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.unreadMsgCountStateFlow.collect { count ->
+//                updateNewsBadge(count)
+//            }
+//        }
     }
 
     private fun updateNewsBadge(count: Int) {
