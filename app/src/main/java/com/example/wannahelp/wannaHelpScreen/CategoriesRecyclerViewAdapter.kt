@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.wannahelp.R
 
 class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryItem>) :
@@ -30,7 +31,13 @@ class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryIte
         position: Int,
     ) {
         val currentCard = categoriesList[position]
-//   заглушка     holder.image.setImageResource(currentCard.image)
+
+        with(holder.image) {
+            Glide
+                .with(holder.itemView)
+                .load(currentCard.image)
+                .into(this)
+        }
         holder.title.text = currentCard.name
     }
 
