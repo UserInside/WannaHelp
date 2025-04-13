@@ -36,7 +36,6 @@ class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_scr
                 when (state) {
                     is WannaHelpScreenState.Progress -> {
                         progressBar.visibility = View.VISIBLE
-                        progressBar.progress = state.progress
                     }
 
                     is WannaHelpScreenState.Done -> {

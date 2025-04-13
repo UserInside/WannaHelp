@@ -1,34 +1,32 @@
-{
-  "categories": {
-    "kids": {
-      "id": "1",
-      "name_en": "kids",
-      "name": "Дети",
-      "image": "http://46.17.104.59/images/icon_cat_kids.png"
-    },
-    "adults": {
-      "id": "2",
-      "name_en": "adults",
-      "name": "Взрослые",
-      "image": "http://46.17.104.59/images/icon_cat_adults.png"
-    },
-    "aged": {
-      "id": "3",
-      "name_en": "aged",
-      "name": "Пожилые",
-      "image": "http://46.17.104.59/images/icon_cat_aged.png"
-    },
-    "animals": {
-      "id": "4",
-      "name_en": "animals",
-      "name": "Животные",
-      "image": "http://46.17.104.59/images/icon_cat_animals.png"
-    },
-    "events": {
-      "id": "5",
-      "name_en": "events",
-      "name": "Мероприятия",
-      "image": "http://46.17.104.59/images/icon_cat_events.png"
-    }
+[
+  {
+    "id": "1",
+    "name_en": "kids",
+    "name": "Дети",
+    "image": "http://46.17.104.59/images/icon_cat_kids.png"
+  },
+  {
+    "id": "2",
+    "name_en": "adults",
+    "name": "Взрослые",
+    "image": "http://46.17.104.59/images/icon_cat_adults.png"
+  },
+  {
+    "id": "3",
+    "name_en": "aged",
+    "name": "Пожилые",
+    "image": "http://46.17.104.59/images/icon_cat_aged.png"
+  },
+  {
+    "id": "4",
+    "name_en": "animals",
+    "name": "Животные",
+    "image": "http://46.17.104.59/images/icon_cat_animals.png"
+  },
+  {
+    "id": "5",
+    "name_en": "events",
+    "name": "Мероприятия",
+    "image": "http://46.17.104.59/images/icon_cat_events.png"
   }
-}
+]

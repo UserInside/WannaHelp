@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.wannahelp.R
 
 class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryItem>) :
@@ -36,6 +37,8 @@ class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryIte
             Glide
                 .with(holder.itemView)
                 .load(currentCard.image)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.placeholder_24)
                 .into(this)
         }
         holder.title.text = currentCard.name
