@@ -1,16 +1,20 @@
 package com.example.wannahelp.newsScreen
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.common.Category
 import com.example.wannahelp.common.extentions.parseToList
+import com.example.wannahelp.network.CategoryFilter
+import com.example.wannahelp.network.RetrofitClient
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -21,12 +25,13 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
-    private val initialNewsList = getNewsList()
+    private var initialNewsList = MutableStateFlow<List<NewsItem>>(emptyList())
+
     private var sharedPref: SharedPreferences =
         application.applicationContext.getSharedPreferences(CHOSEN_CATEGORIES_KEY, MODE_PRIVATE)
 
     private val setOfReadNews = loadReadSetFromSharedPref()
-    private val unreadMsgCount = sharedPref.getInt(UNREAD_MSG_COUNT, initialNewsList.size)
+    private val unreadMsgCount = sharedPref.getInt(UNREAD_MSG_COUNT, initialNewsList.value.size)
     val unreadMsgCountStateFlow = MutableStateFlow<Int>(unreadMsgCount)
 
     private var categoriesStateFlow =
@@ -35,18 +40,44 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
                 .toSet(),
         )
 
-    val screenStateFlow = MutableStateFlow<NewsState>(NewsState.Progress(0))
-    val listToShowStateFlow = MutableStateFlow<List<NewsItem>>(emptyList())
+    val screenStateFlow = MutableStateFlow<NewsState>(NewsState.Progress)
+    val listToShowStateFlow = initialNewsList
 
-    private suspend fun loadNewsWithProgress(): MutableStateFlow<List<NewsItem>> {
-        if (screenStateFlow.value is NewsState.Progress)
-            {
-                for (i in 0..100 step 9) {
-                    delay(50)
-                    screenStateFlow.value = NewsState.Progress(i)
-                }
+    init {
+        viewModelScope.launch {
+            initialNewsList = loadInitialNewsList()
+            updateListToShow()
+        }
+    }
+
+    private suspend fun loadInitialNewsList(): MutableStateFlow<List<NewsItem>> {
+        screenStateFlow.value = NewsState.Progress
+        var resultList = MutableStateFlow<List<NewsItem>>(emptyList())
+
+        val exHandler = CoroutineExceptionHandler { _, _ ->
+            Log.i("DEMO", "try news from file") // для демонстрации
+            resultList = MutableStateFlow<List<NewsItem>>(
+                Json.parseToList<NewsItem>(
+                    getApplication<Application>().applicationContext,
+                    NEWS_FILE_NAME,
+                )
+            )
+            Log.i("DEMO", "news loaded from file") // для демонстрации
+        }
+
+        resultList = viewModelScope.async(exHandler) {
+            Log.i("DEMO", "try news from api") // для демонстрации
+            val response = RetrofitClient.apiService.getEvents()
+            val listOfNewsItem = mutableListOf<NewsItem>()
+            response.forEach {
+                listOfNewsItem.add(NewsApiResponseItem.mapResponseItemToNewsItem(it))
             }
-        return MutableStateFlow<List<NewsItem>>(initialNewsList).also {
+            MutableStateFlow<List<NewsItem>>(listOfNewsItem) // todo refactoring
+        }.await().also {
+            Log.i("DEMO", "news loaded from api") // для демонстрации
+        }
+        return resultList.also {
+            Log.i("DEMO", "resultListFromApi ${it.value}") // для демонстрации
             screenStateFlow.value = NewsState.Done()
         }
     }
@@ -58,7 +89,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
             categoriesStateFlow.flatMapLatest { categories ->
                 flow {
                     val result =
-                        loadNewsWithProgress().map { newsList ->
+                        initialNewsList.map { newsList ->
                             newsList.filter { newsItem ->
                                 categories.contains(newsItem.category.toString())
                             }.apply {
@@ -86,14 +117,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
             unreadMsgCountStateFlow.value = unreadCount
         }
         sharedPref.edit { putInt(UNREAD_MSG_COUNT, unreadCount) }
-    }
-
-    @SuppressLint("CheckResult")
-    private fun getNewsList(): List<NewsItem> {
-        return Json.parseToList<NewsItem>(
-            getApplication<Application>().applicationContext,
-            NEWS_FILE_NAME,
-        )
     }
 
     fun addReadItemToSet(newsItem: NewsItem) {
@@ -128,7 +151,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 }
 
 sealed class NewsState {
-    class Progress(val progress: Int) : NewsState()
-
+    object Progress : NewsState()
     class Done() : NewsState()
 }

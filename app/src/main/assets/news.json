@@ -1,74 +1,82 @@
-{
-  "events": [
-    {
-      "id": "1",
-      "name": "Детское благотворительное событие",
-      "startDate": 1476914400000,
-      "endDate": 1477000800000,
-      "description": "Подробное описание первого благотворительного события с некоторыми деталями",
-      "status": 1,
-      "photos": ["/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"],
-      "category": "KIDS",
-      "createAt": 1476835200000,
-      "phone": "",
-      "address": "",
-      "organisation": ""
-    },
-    {
-      "id": "2",
-      "name": "Взрослое благотворительное событие",
-      "startDate": 1712361600000,
-      "endDate": 1712448000000,
-      "description": "Второе описание для второго благотворительного события с некоторыми деталями",
-      "status": 1,
-      "photos": "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png",
-      "category": "ADULTS",
-      "createAt": 1712275200000,
-      "phone": "",
-      "address": "",
-      "organisation": ""
-    },
-    {
-      "id": "3",
-      "name": "Старческое благотворительное событие",
-      "startDate": 1765929600000,
-      "endDate": 1766016000000,
-      "description": "Что-то тут еще одно описание благотворительного события с некоторыми деталями",
-      "status": 1,
-      "photos": ["/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"],
-      "category": "AGED",
-      "createAt": 1765843200000,
-      "phone": "",
-      "address": "",
-      "organisation": ""
-    },
-    {
-      "id": "4",
-      "name": "Животное благотворительное событие",
-      "startDate": 1750032000000,
-      "endDate": 1750118400000,
-      "description": "Подробное описание очередного благотворительного события с некоторыми деталями",
-      "status": 1,
-      "photos": ["/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"],
-      "category": "ANIMALS",
-      "createAt": 1749945600000,
-      "phone": "",
-      "address": "",
-      "organisation": ""
-    },
-    {
-      "id": "5",
-      "name": "Ивентовое Пятое и не последнее",
-      "startDate": 1743456000000,
-      "endDate": 1743542400000,
-      "description": "Подробное описание пятого благотворительного события с некоторыми деталями",
-      "status": 1,
-      "photos": ["/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"],
-      "category": "EVENTS",
-      "createAt": 1743369600000,
-      "phone": "",
-      "address": "",
-      "organisation": ""
-    }
-  ]
-}
+[
+  {
+    "id": "1",
+    "name": "Детское благотворительное событие",
+    "startDate": 1476914400000,
+    "endDate": 1477000800000,
+    "description": "Подробное описание первого благотворительного события с некоторыми деталями",
+    "status": 1,
+    "photos": [
+      "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"
+    ],
+    "category": "kids",
+    "createAt": 1476835200000,
+    "phone": "",
+    "address": "",
+    "organisation": ""
+  },
+  {
+    "id": "2",
+    "name": "Взрослое благотворительное событие",
+    "startDate": 1712361600000,
+    "endDate": 1712448000000,
+    "description": "Второе описание для второго благотворительного события с некоторыми деталями",
+    "status": 1,
+    "photos": [
+      "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"
+    ],
+    "category": "adults",
+    "createAt": 1712275200000,
+    "phone": "",
+    "address": "",
+    "organisation": ""
+  },
+  {
+    "id": "3",
+    "name": "Старческое благотворительное событие",
+    "startDate": 1765929600000,
+    "endDate": 1766016000000,
+    "description": "Что-то тут еще одно описание благотворительного события с некоторыми деталями",
+    "status": 1,
+    "photos": [
+      "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"
+    ],
+    "category": "aged",
+    "createAt": 1765843200000,
+    "phone": "",
+    "address": "",
+    "organisation": ""
+  },
+  {
+    "id": "4",
+    "name": "Животное благотворительное событие",
+    "startDate": 1750032000000,
+    "endDate": 1750118400000,
+    "description": "Подробное описание очередного благотворительного события с некоторыми деталями",
+    "status": 1,
+    "photos": [
+      "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"
+    ],
+    "category": "animals",
+    "createAt": 1749945600000,
+    "phone": "",
+    "address": "",
+    "organisation": ""
+  },
+  {
+    "id": "5",
+    "name": "Ивентовое Пятое и не последнее",
+    "startDate": 1743456000000,
+    "endDate": 1743542400000,
+    "description": "Подробное описание пятого благотворительного события с некоторыми деталями",
+    "status": 1,
+    "photos": [
+      "/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png"
+    ],
+    "category": "events",
+    "createAt": 1743369600000,
+    "phone": "",
+    "address": "",
+    "organisation": ""
+  }
+]

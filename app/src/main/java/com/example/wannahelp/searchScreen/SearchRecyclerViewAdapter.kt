@@ -34,6 +34,6 @@ class SearchRecyclerViewAdapter(
         position: Int,
     ) {
         val item = getItem(position)
-        holder.title.text = item.title
+        holder.title.text = item.name
     }
 }

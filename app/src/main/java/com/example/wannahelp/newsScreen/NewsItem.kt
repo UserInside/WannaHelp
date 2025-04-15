@@ -9,7 +9,7 @@ data class NewsItem(
     val id: Int = 0,
     @SerialName("image")
     val imageRes: String = "",
-    val title: String = "",
+    val name: String = "",
     val description: String = "",
     val date: String = "",
     val category: Category = Category.KIDS,
