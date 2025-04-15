@@ -18,11 +18,7 @@ interface ApiService {
     @GET("events")
     suspend fun getEvents(): List<NewsApiResponseItem>
 
-//    @POST("events/{filter}")
-//    suspend fun getEventsById(id: String?): Map<String, List<NewsItem>>
 }
-
-data class CategoryFilter(val categoryName: String)
 
 object RetrofitClient {
     private const val BASE_URL = "http://46.17.104.59:3000/"
