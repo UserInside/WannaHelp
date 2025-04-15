@@ -26,10 +26,8 @@ data class NewsApiResponseItem(
                 name = responseItem.name,
                 description = responseItem.description,
                 date = responseItem.startDate.toString(),
-                category = Category.valueOf(responseItem.category.uppercase())
+                category = Category.valueOf(responseItem.category.uppercase()),
             )
         }
     }
 }
-
-

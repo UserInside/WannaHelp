@@ -26,12 +26,13 @@ class WannaHelpViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     suspend fun loadCategoriesListFromAPI(context: Context) {
-        val exHandler = CoroutineExceptionHandler { _, throwable ->
-            _screenState.value = WannaHelpScreenState.Done(loadCategoriesListFromFile(context))
-            Log.i("DEMO", "categories from file + ${throwable.message} + ${throwable.cause}") // для демонстрации
-        }
+        val exHandler =
+            CoroutineExceptionHandler { _, throwable ->
+                _screenState.value = WannaHelpScreenState.Done(loadCategoriesListFromFile(context))
+                Log.i("DEMO", "categories from file + ${throwable.message} + ${throwable.cause}") // для демонстрации
+            }
         _screenState.value = WannaHelpScreenState.Progress
-        delay(500)  // для демонстрации
+        delay(500) // для демонстрации
         viewModelScope.launch(exHandler) {
             val response = RetrofitClient.apiService.getCategories()
             _screenState.value = WannaHelpScreenState.Done(response.values.toList())
@@ -50,5 +51,6 @@ class WannaHelpViewModel(application: Application) : AndroidViewModel(applicatio
 
 sealed class WannaHelpScreenState {
     object Progress : WannaHelpScreenState()
+
     class Done(val categoryList: List<CategoryItem>) : WannaHelpScreenState()
 }

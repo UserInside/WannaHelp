@@ -9,13 +9,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.common.Category
 import com.example.wannahelp.common.extentions.parseToList
-import com.example.wannahelp.network.CategoryFilter
 import com.example.wannahelp.network.RetrofitClient
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -54,28 +52,31 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         screenStateFlow.value = NewsState.Progress
         var resultList = MutableStateFlow<List<NewsItem>>(emptyList())
 
-        val exHandler = CoroutineExceptionHandler { _, _ ->
-            Log.i("DEMO", "try news from file") // для демонстрации
-            resultList = MutableStateFlow<List<NewsItem>>(
-                Json.parseToList<NewsItem>(
-                    getApplication<Application>().applicationContext,
-                    NEWS_FILE_NAME,
-                )
-            )
-            Log.i("DEMO", "news loaded from file") // для демонстрации
-        }
-
-        resultList = viewModelScope.async(exHandler) {
-            Log.i("DEMO", "try news from api") // для демонстрации
-            val response = RetrofitClient.apiService.getEvents()
-            val listOfNewsItem = mutableListOf<NewsItem>()
-            response.forEach {
-                listOfNewsItem.add(NewsApiResponseItem.mapResponseItemToNewsItem(it))
+        val exHandler =
+            CoroutineExceptionHandler { _, _ ->
+                Log.i("DEMO", "try news from file") // для демонстрации
+                resultList =
+                    MutableStateFlow<List<NewsItem>>(
+                        Json.parseToList<NewsItem>(
+                            getApplication<Application>().applicationContext,
+                            NEWS_FILE_NAME,
+                        ),
+                    )
+                Log.i("DEMO", "news loaded from file") // для демонстрации
             }
-            MutableStateFlow<List<NewsItem>>(listOfNewsItem) // todo refactoring
-        }.await().also {
-            Log.i("DEMO", "news loaded from api") // для демонстрации
-        }
+
+        resultList =
+            viewModelScope.async(exHandler) {
+                Log.i("DEMO", "try news from api") // для демонстрации
+                val response = RetrofitClient.apiService.getEvents()
+                val listOfNewsItem = mutableListOf<NewsItem>()
+                response.forEach {
+                    listOfNewsItem.add(NewsApiResponseItem.mapResponseItemToNewsItem(it))
+                }
+                MutableStateFlow<List<NewsItem>>(listOfNewsItem) // todo refactoring
+            }.await().also {
+                Log.i("DEMO", "news loaded from api") // для демонстрации
+            }
         return resultList.also {
             Log.i("DEMO", "resultListFromApi ${it.value}") // для демонстрации
             screenStateFlow.value = NewsState.Done()
@@ -152,5 +153,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
 sealed class NewsState {
     object Progress : NewsState()
+
     class Done() : NewsState()
 }

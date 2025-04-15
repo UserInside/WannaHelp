@@ -25,7 +25,7 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
 
     override fun setupToolbar(
         toolbar: Toolbar,
-        actionButton: ImageButton
+        actionButton: ImageButton,
     ) {
         toolbar.title = getString(R.string.news)
         actionButton.apply {
@@ -86,9 +86,6 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
             }
         }
     }
-
-
-
 
     companion object {
         private const val TAG = "NewsScreenFragment"
