@@ -17,7 +17,7 @@ class ProfileViewModel : ViewModel() {
         loadFriendsList()
     }
 
-    fun loadFriendsList() {
+    private fun loadFriendsList() {
         viewModelScope.launch {
             val response = RetrofitClient.apiService.getFriends()
             _friendsList.value = response.values.toList()
