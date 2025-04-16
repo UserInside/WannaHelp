@@ -9,14 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentProfileScreenBinding
+import kotlinx.coroutines.launch
 
 class ProfileScreenFragment : Fragment() {
     private lateinit var binding: FragmentProfileScreenBinding
+    private val viewModel : ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,20 +68,17 @@ class ProfileScreenFragment : Fragment() {
 
         val recyclerView = binding.profileInformation.recyclerViewYourFriends
 
-        val friendsList =
-            listOf(
-                FriendCard(R.drawable.avatar_3, "Дмитрий Валериевич"),
-                FriendCard(R.drawable.avatar_2, "Евгений Александров"),
-                FriendCard(R.drawable.avatar_1, "Виктор Кузнецов"),
-            )
-
-        val rvAdapter = FriendsRecyclerViewAdapter(friendsList)
-        with(recyclerView) {
-            layoutManager =
-                object : LinearLayoutManager(requireContext()) {
-                    override fun canScrollVertically(): Boolean = false
+        lifecycleScope.launch {
+            viewModel.friendsList.collect { friendsList ->
+                val rvAdapter = FriendsRecyclerViewAdapter(friendsList)
+                with(recyclerView) {
+                    layoutManager =
+                        object : LinearLayoutManager(requireContext()) {
+                            override fun canScrollVertically(): Boolean = false
+                        }
+                    adapter = rvAdapter
                 }
-            adapter = rvAdapter
+            }
         }
     }
 }

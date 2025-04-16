@@ -1,6 +1,7 @@
 package com.example.wannahelp.network
 
 import com.example.wannahelp.newsScreen.NewsApiResponseItem
+import com.example.wannahelp.profileScreen.FriendCard
 import com.example.wannahelp.wannaHelpScreen.CategoryItem
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -18,6 +19,8 @@ interface ApiService {
     @GET("events")
     suspend fun getEvents(): List<NewsApiResponseItem>
 
+    @GET("friends")
+    suspend fun getFriends(): Map<String, FriendCard>
 }
 
 object RetrofitClient {
