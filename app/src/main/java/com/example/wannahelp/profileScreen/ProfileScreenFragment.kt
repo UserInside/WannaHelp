@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class ProfileScreenFragment : Fragment() {
     private lateinit var binding: FragmentProfileScreenBinding
-    private val viewModel : ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

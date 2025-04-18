@@ -13,10 +13,10 @@ data class NewsApiResponseItem(
     val status: Int,
     val photos: List<String>,
     val category: String,
-    val createAt: Long,
+    val createdAt: Long,
     val phone: String,
     val address: String,
-    val organisation: String,
+    val organization: String,
 ) : java.io.Serializable {
     companion object {
         fun mapResponseItemToNewsItem(responseItem: NewsApiResponseItem): NewsItem {

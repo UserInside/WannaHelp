@@ -8,10 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ProfileViewModel : ViewModel() {
-
     private val _friendsList = MutableStateFlow<List<FriendCard>>(emptyList())
     val friendsList: StateFlow<List<FriendCard>> = _friendsList
-
 
     init {
         loadFriendsList()
@@ -20,7 +18,7 @@ class ProfileViewModel : ViewModel() {
     private fun loadFriendsList() {
         viewModelScope.launch {
             val response = RetrofitClient.apiService.getFriends()
-            _friendsList.value = response.values.toList()
+            _friendsList.value = response
         }
     }
 }

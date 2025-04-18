@@ -9,18 +9,22 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 
 interface ApiService {
     @GET("categories")
-    suspend fun getCategories(): Map<String, CategoryItem>
+    suspend fun getCategories(): List<CategoryItem>
 
-    @GET("events")
-    suspend fun getEvents(): List<NewsApiResponseItem>
+    @POST("events")
+    suspend fun getEvents(
+        @Body request: Map<String, @JvmSuppressWildcards List<String>> = emptyMap<String, List<String>>(),
+    ): List<NewsApiResponseItem>
 
     @GET("friends")
-    suspend fun getFriends(): Map<String, FriendCard>
+    suspend fun getFriends(): List<FriendCard>
 }
 
 object RetrofitClient {

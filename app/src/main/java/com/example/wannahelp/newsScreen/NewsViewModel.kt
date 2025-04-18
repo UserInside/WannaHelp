@@ -15,9 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -69,11 +67,11 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
             viewModelScope.async(exHandler) {
                 Log.i("DEMO", "try news from api") // для демонстрации
                 val response = RetrofitClient.apiService.getEvents()
-                val listOfNewsItem = mutableListOf<NewsItem>()
-                response.forEach {
-                    listOfNewsItem.add(NewsApiResponseItem.mapResponseItemToNewsItem(it))
-                }
-                MutableStateFlow<List<NewsItem>>(listOfNewsItem) // todo refactoring
+                MutableStateFlow<List<NewsItem>>(
+                    response.map {
+                        NewsApiResponseItem.mapResponseItemToNewsItem(it)
+                    },
+                )
             }.await().also {
                 Log.i("DEMO", "news loaded from api") // для демонстрации
             }
@@ -85,27 +83,25 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     suspend fun updateListToShow() {
-        updateCategories()
+        updateChosenCategories()
         withContext(Dispatchers.IO) {
-            categoriesStateFlow.flatMapLatest { categories ->
-                flow {
-                    val result =
-                        initialNewsList.map { newsList ->
-                            newsList.filter { newsItem ->
-                                categories.contains(newsItem.category.toString())
-                            }.apply {
-                                countUnreadMsg(this)
-                            }
-                        }
-                    emit(result)
+            val request: Map<String, List<String>> =
+                mapOf("id" to categoriesStateFlow.value.map { it.lowercase() }.toList())
+            val apiResponse = RetrofitClient.apiService.getEvents(request)
+            val newsItemList =
+                apiResponse.map { it ->
+                    NewsApiResponseItem.mapResponseItemToNewsItem(it)
                 }
-            }.collect { result ->
-                result.collect { listToShowStateFlow.value = it }
+            flow {
+                emit(newsItemList)
+            }.collect {
+                countUnreadMsg(it)
+                listToShowStateFlow.value = it
             }
         }
     }
 
-    private fun updateCategories() {
+    private fun updateChosenCategories() {
         categoriesStateFlow.value =
             sharedPref.getStringSet(CHOSEN_CATEGORIES_KEY, null) ?: Category.entries.map { it.name }
                 .toSet()

@@ -35,7 +35,7 @@ class WannaHelpViewModel(application: Application) : AndroidViewModel(applicatio
         delay(500) // для демонстрации
         viewModelScope.launch(exHandler) {
             val response = RetrofitClient.apiService.getCategories()
-            _screenState.value = WannaHelpScreenState.Done(response.values.toList())
+            _screenState.value = WannaHelpScreenState.Done(response)
             Log.i("DEMO", "categories from api") // для демонстрации
         }
     }
