@@ -5,6 +5,7 @@ plugins {
     kotlin("plugin.serialization") version "1.9.0"
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -43,6 +44,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.glide)
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
