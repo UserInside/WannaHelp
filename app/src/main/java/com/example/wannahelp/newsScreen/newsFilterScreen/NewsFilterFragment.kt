@@ -1,34 +1,22 @@
 package com.example.wannahelp.newsScreen.newsFilterScreen
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
-import com.example.wannahelp.common.Category
 import com.example.wannahelp.common.ToolbarFragment
+import com.example.wannahelp.databinding.FragmentNewsFilterBinding
+import kotlinx.coroutines.launch
 
-class NewsFilterFragment : ToolbarFragment(R.layout.fragment_new_filter, showBackButton = true) {
-    private lateinit var setOfChosenCategoriesToSave: MutableSet<String>
-    private lateinit var sharedPref: SharedPreferences
-    private lateinit var sharedPrefEditor: SharedPreferences.Editor
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        sharedPref = requireContext().getSharedPreferences(CHOSEN_CATEGORIES, MODE_PRIVATE)
-        sharedPrefEditor = sharedPref.edit()
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBackButton = true) {
+    private lateinit var binding: FragmentNewsFilterBinding
+    private lateinit var viewModel: NewsFilterViewModel
 
     override fun setupToolbar(
         toolbar: Toolbar,
@@ -45,58 +33,40 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_new_filter, showBac
             visibility = View.VISIBLE
             setImageResource(R.drawable.icon_check_24)
             setOnClickListener {
-                sharedPrefEditor.apply {
-                    putStringSet(CHOSEN_CATEGORIES, setOfChosenCategoriesToSave)
-                    apply()
-                }
+                viewModel.saveChosenCategories()
                 NavHostFragment.findNavController(this@NewsFilterFragment)
                     .popBackStack()
             }
         }
     }
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentNewsFilterBinding.bind(content ?: view)
+        viewModel = ViewModelProvider(this@NewsFilterFragment)[NewsFilterViewModel::class]
 
-        val filterCategoriesList =
-            mutableListOf(
-                FilterCategoryCard(resources.getString(R.string.tv_cat_kids), Category.KIDS),
-                FilterCategoryCard(resources.getString(R.string.tv_cat_adults), Category.ADULTS),
-                FilterCategoryCard(resources.getString(R.string.tv_cat_aged), Category.AGED),
-                FilterCategoryCard(resources.getString(R.string.tv_cat_animals), Category.ANIMALS),
-                FilterCategoryCard(resources.getString(R.string.tv_cat_events), Category.EVENTS),
-            )
-
-        val setOfChosenCategories = sharedPref.getStringSet(CHOSEN_CATEGORIES, null)
-
-        val listToShow =
-            filterCategoriesList.map { categoryCard ->
-                val isChecked =
-                    setOfChosenCategories?.contains(categoryCard.category.toString()) == true
-                categoryCard.copy(isChecked = isChecked)
-            }
-
-        setOfChosenCategoriesToSave =
-            setOfChosenCategories?.toMutableSet()
-                ?: filterCategoriesList.map { it.category.toString() }.toMutableSet()
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_filter_categories)
-        val adapter =
-            NewsFilterRecyclerViewAdapter(listToShow) { category, isChecked ->
+        val rvAdapter =
+            NewsFilterRecyclerViewAdapter { category, isChecked ->
                 if (isChecked) {
-                    setOfChosenCategoriesToSave.add(category.toString())
+                    viewModel.addNewsItemToFilter(category.toString())
                 } else {
-                    setOfChosenCategoriesToSave.remove(category.toString())
+                    viewModel.removeNewsItemFromFilter(category.toString())
                 }
             }
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-    }
 
-    companion object {
-        internal const val CHOSEN_CATEGORIES = "chosenCategories"
+        binding.recyclerViewFilterCategories.apply {
+            adapter = rvAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        lifecycleScope.launch {
+            viewModel.listOfCategoryFiltersToShow.collect {
+                rvAdapter.submitList(it)
+            }
+        }
     }
 }

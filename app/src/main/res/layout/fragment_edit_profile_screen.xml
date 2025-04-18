@@ -164,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_l"
-            android:text="@string/email"
+            android:text="@string/email_for_notifications"
             app:layout_constraintStart_toStartOf="@id/tv_title_your_birthday"
             app:layout_constraintTop_toBottomOf="@id/edit_text_password" />
 

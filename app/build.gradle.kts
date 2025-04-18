@@ -43,6 +43,14 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.rxandroid)
+    implementation(libs.rxbinding.support.v4)
+    implementation(libs.rxbinding.appcompat.v7)
+    implementation(libs.rxjava)
+    implementation(libs.rxbinding)
     implementation(libs.androidx.wokrmanager)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.livedata.core)
@@ -61,6 +69,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

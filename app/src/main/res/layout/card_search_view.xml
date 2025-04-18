@@ -7,7 +7,7 @@
     app:cardCornerRadius="2dp"
     android:elevation="2dp">
 
-    <androidx.appcompat.widget.SearchView
+    <android.widget.SearchView
         android:id="@+id/search_view_field"
         style="@style/TextStyle15"
         android:layout_width="match_parent"
@@ -15,11 +15,10 @@
         app:voiceIcon="@drawable/icon_mic_24"
         android:layout_gravity="bottom"
         android:background="@color/white"
-        app:searchIcon="@drawable/icon_search_24" >
+        app:searchIcon="@drawable/icon_search_24_black" >
 
 
-
-    </androidx.appcompat.widget.SearchView>
+    </android.widget.SearchView>
 <!--black54 cvet sdelat''-->
 
 

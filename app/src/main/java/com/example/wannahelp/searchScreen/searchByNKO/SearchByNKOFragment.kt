@@ -1,4 +1,4 @@
-package com.example.wannahelp.searchScreen
+package com.example.wannahelp.searchScreen.searchByNKO
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.databinding.FragmentSearchByNkoBinding
+import com.example.wannahelp.searchScreen.SearchRecyclerViewAdapter
 
 class SearchByNKOFragment : Fragment() {
     private lateinit var binding: FragmentSearchByNkoBinding
@@ -27,22 +28,19 @@ class SearchByNKOFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val searchResultList = arguments?.getStringArrayList(SEARCH_RESULT)
-        val recyclerViewAdapter = searchResultList?.let { SearchRecyclerViewAdapter(it) }
+        val recyclerViewAdapter = searchResultList?.let { SearchRecyclerViewAdapter() }
         val recyclerView = binding.recyclerViewSearchResults
-        recyclerView.adapter = recyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.apply {
+            adapter = recyclerViewAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
     }
 
     companion object {
         const val SEARCH_RESULT = "search result"
 
-        fun newInstance(searchResult: ArrayList<String>): SearchByNKOFragment {
-            return SearchByNKOFragment().apply {
-                arguments =
-                    Bundle().apply {
-                        putStringArrayList(SEARCH_RESULT, searchResult)
-                    }
-            }
+        fun newInstance(): SearchByNKOFragment {
+            return SearchByNKOFragment()
         }
     }
 }
