@@ -13,11 +13,10 @@ class MainApp : Application() {
             klass = AppDatabase::class.java,
             name = "wanna_help_database",
         ).build()
-
-
     }
 
     companion object {
         lateinit var database: AppDatabase
     }
 }
+

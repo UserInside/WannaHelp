@@ -19,9 +19,7 @@ interface ApiService {
     suspend fun getCategories(): List<CategoryItem>
 
     @POST("events")
-    suspend fun getEvents(
-        @Body request: Map<String, @JvmSuppressWildcards List<String>> = emptyMap<String, List<String>>(),
-    ): List<NewsApiResponseItem>
+    suspend fun getEvents(): List<NewsApiResponseItem>
 
     @GET("friends")
     suspend fun getFriends(): List<FriendCard>

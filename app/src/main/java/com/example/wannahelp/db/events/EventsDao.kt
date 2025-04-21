@@ -1,6 +1,5 @@
 package com.example.wannahelp.db.events
 
-import android.provider.CalendarContract
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
@@ -10,10 +9,11 @@ import androidx.room.Query
 interface EventsDao {
 
     @Insert(onConflict = REPLACE)
-    fun  addEvent(event: EventsEntity)
+    suspend fun addEvent(event: EventsEntity)
 
-    @Query("SELECT * FROM events")
-    fun getEvents() {
-//todo add filter
-    }
+    @Query("SELECT * FROM events WHERE category IN (:categories)")
+    suspend fun getEvents(categories: List<String>): List<EventsEntity>
+
+    @Query("UPDATE events SET isRead = true WHERE id = :id")
+    suspend fun markEventAsRead(id: Int)
 }

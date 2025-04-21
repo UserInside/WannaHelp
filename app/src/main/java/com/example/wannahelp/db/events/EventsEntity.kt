@@ -15,6 +15,7 @@ data class EventsEntity(
     val endDate: Long,
     val description: String,
     val status: Int,
+    val isRead: Boolean = false,
     val photos: List<String>,
     val category: String,
     @ColumnInfo(name = "created_at")

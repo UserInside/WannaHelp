@@ -1,6 +1,7 @@
 package com.example.wannahelp.newsScreen
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
+import com.example.wannahelp.wannaHelpScreen.MainApp
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -45,14 +47,14 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
-        viewModel = ViewModelProvider(requireActivity())[NewsViewModel::class]
+        viewModel = NewsViewModelFactory(requireActivity().applicationContext as Application, MainApp.database.getEventsDao()).create(NewsViewModel::class.java)
         lifecycleScope.launch {
-            viewModel.updateListToShow()
+            viewModel.loadNewsFromDb()
         }
 
         rvAdapter =
             NewsRecyclerViewAdapter { newsItem ->
-                viewModel.addReadItemToSet(newsItem)
+                viewModel.markNewsItemAsRead(newsItem)
                 val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(newsItem)
                 NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
             }
