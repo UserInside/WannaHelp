@@ -1,20 +1,18 @@
 package com.example.wannahelp.newsScreen
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
 import com.example.wannahelp.common.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
-import com.example.wannahelp.wannaHelpScreen.MainApp
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -22,7 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
-    private lateinit var viewModel: NewsViewModel
+    private val viewModel: NewsViewModel by activityViewModels()
     private lateinit var rvAdapter: NewsRecyclerViewAdapter
 
     override fun setupToolbar(
@@ -47,9 +45,8 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
-        viewModel = NewsViewModelFactory(requireActivity().applicationContext as Application, MainApp.database.getEventsDao()).create(NewsViewModel::class.java)
         lifecycleScope.launch {
-            viewModel.loadNewsFromDb()
+            viewModel.loadNewsFromDB()
         }
 
         rvAdapter =
@@ -84,6 +81,8 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         }
         scope.launch {
             viewModel.listToShowStateFlow.collect {
+                Log.e("DEMO", "список изменился во фрагменте $it")
+
                 rvAdapter.submitList(it)
             }
         }

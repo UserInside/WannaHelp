@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -12,7 +13,7 @@ import com.example.wannahelp.db.mapCategoryApiResponseItemToDbEntity
 import com.example.wannahelp.db.mapEventApiResponseItemToDbEntity
 import com.example.wannahelp.network.RetrofitClient
 import com.example.wannahelp.newsScreen.NewsViewModel
-import com.example.wannahelp.newsScreen.NewsViewModelFactory
+//import com.example.wannahelp.newsScreen.NewsViewModelFactory
 import com.example.wannahelp.wannaHelpScreen.MainApp
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,13 +21,11 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var badge: BadgeDrawable
-    private lateinit var viewModel: NewsViewModel
+    private val viewModel: NewsViewModel by viewModels()
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = NewsViewModelFactory(applicationContext as Application, MainApp.database.getEventsDao()).create(NewsViewModel::class.java)
-//        viewModel = ViewModelProvider(this, NewsViewModelFactory(applicationContext as Application, MainApp.database.getEventsDao()))[NewsViewModel::class.java]
         setContentView(R.layout.activity_main)
         fetchDataToDB()
 
@@ -46,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             viewModel.unreadMsgCountStateFlow.collect { count ->
+                Log.i("DEMO", "Actiity unread count $count")
                 updateNewsBadge(count)
             }
         }
