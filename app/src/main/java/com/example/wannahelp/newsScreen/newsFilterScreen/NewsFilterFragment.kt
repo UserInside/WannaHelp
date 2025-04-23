@@ -36,7 +36,6 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
             setOnClickListener {
                 lifecycleScope.launch {
                     viewModel.saveChosenCategories()
-
                     NavHostFragment.findNavController(this@NewsFilterFragment)
                         .popBackStack()
                 }

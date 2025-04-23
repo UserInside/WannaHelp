@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.common.Category
 import com.example.wannahelp.db.mapEventDbEntityToNewsItem
-import com.example.wannahelp.newsScreen.newsFilterScreen.DataStoreManager
 import com.example.wannahelp.wannaHelpScreen.MainApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,7 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
-    val dsm = DataStoreManager(application)
+//    val dsm = DataStoreManager(application)
 
     val screenStateFlow = MutableStateFlow<NewsState>(NewsState.Progress)
 
@@ -24,13 +23,13 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     val unreadMsgCountStateFlow =
         MutableStateFlow<Int>(listToShowStateFlow.value.count { it.isRead == false })
 
-    val setOfChosenCategories = dsm.getSelectedCategoriesSet().stateIn(
-        viewModelScope, SharingStarted.Eagerly, null
-    )
+//    val setOfChosenCategories = dsm.getSelectedCategoriesSet().stateIn(
+//        viewModelScope, SharingStarted.Eagerly, null
+//    )
 
 
     init {
-        Log.i("DSTORE", "--- onInit NewsScreen ${setOfChosenCategories.value}")
+//        Log.i("DSTORE", "--- onInit NewsScreen ${setOfChosenCategories.value}")
         viewModelScope.launch {
             loadNewsFromDB()
         }
