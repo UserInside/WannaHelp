@@ -55,11 +55,8 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
         val rvAdapter =
             NewsFilterRecyclerViewAdapter { category, isChecked ->
                 if (isChecked) {
-                    Log.i("DSTORE", "add ${category.toString()} ")
                     viewModel.addNewsItemToFilter(category.toString())
                 } else {
-                    Log.i("DSTORE", "remove ${category.toString()}")
-
                     viewModel.removeNewsItemFromFilter(category.toString())
                 }
             }

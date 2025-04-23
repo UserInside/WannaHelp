@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -32,13 +33,14 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
 
     override fun onCleared() {
         Log.i("DSTORE", "onCleared cats listToShow ${listOfCategoryFiltersToShow.value}")
+        Log.i("DSTORE", "onCleared cats set ${setOfChosenCategories.value}")
         super.onCleared()
     }
 
     private val initialFilterList = getInitialFilterList(application).toList()
 
-    val setOfChosenCategories = getSelectedCategoriesSet().stateIn(
-        viewModelScope, SharingStarted.Eagerly, null
+    val setOfChosenCategories = getSelectedCategoriesSet().filterNotNull().stateIn(
+        viewModelScope, SharingStarted.Eagerly, initialFilterList.map { it.category.name }.toSet()
     )
 
     val listOfCategoryFiltersToShow =
@@ -76,7 +78,7 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
     fun getSelectedCategoriesSet(): Flow<Set<String>?> {
         Log.i("DSTORE", "g- try get set from ds")
         return ctx.datastore.data.map { preference ->
-            preference[stringSetPreferencesKey(CHOSEN_CATEGORIES)] ?: initialFilterList.map { it.category.name }.toSet()
+            preference[stringSetPreferencesKey(CHOSEN_CATEGORIES)]
         }.also {
             Log.i("DSTORE", "g- loaded from ds")
         }
