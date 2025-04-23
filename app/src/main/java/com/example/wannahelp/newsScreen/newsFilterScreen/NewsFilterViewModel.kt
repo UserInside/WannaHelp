@@ -45,6 +45,7 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
             }
         }
     }
+
     private var cachedSetOfCategories: Set<String>? = emptySet<String>()
 
     private fun updateLTS() {
@@ -60,8 +61,8 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
 
     private suspend fun getChosenCategoriesFromDS(): Set<String>? {
         return cachedSetOfCategories ?: ctx.datastore.data.map { preference ->
-            preference[stringSetPreferencesKey(CHOSEN_CATEGORIES)] ?: initialFilterList.map{it.category.name}.toSet()
-
+            preference[stringSetPreferencesKey(CHOSEN_CATEGORIES)]
+                ?: initialFilterList.map { it.category.name }.toSet()
         }.first().also { cachedSetOfCategories = it }
     }
 
