@@ -24,6 +24,6 @@ class AuthViewModel : ViewModel() {
     val isFieldsLengthSufficient: StateFlow<Boolean> = _isFieldsLengthSufficient
 
     companion object {
-        private const val REQUIRED_FIELD_LENGTH = 6
+        private const val REQUIRED_FIELD_LENGTH = 0
     }
 }

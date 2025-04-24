@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.wannahelp.R
 import com.example.wannahelp.newsScreen.NewsRecyclerViewAdapter.ViewHolder
 
@@ -36,8 +37,13 @@ class NewsRecyclerViewAdapter(
         position: Int,
     ) {
         val item = getItem(position)
+
+        Glide.with(holder.itemView)
+            .load(item.imageRes)
+//            .placeholder(R.drawable.placeholder_24)
+            .into(holder.image)
 //        holder.image.setBackgroundResource("/home/igor/WannaHelpApplication/WannaHelp/app/src/main/res/drawable/news_card_img1.png")
-        holder.title.text = item.title
+        holder.title.text = item.name
         holder.description.text = item.description
         holder.remains.text = item.date
 

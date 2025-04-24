@@ -32,11 +32,10 @@ class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_scr
         val progressBar = view.findViewById<ProgressBar>(R.id.wannahelp_progressBar)
 
         lifecycleScope.launch {
-            viewModel.wannaHelpScreenStateFlow.collect { state ->
+            viewModel.screenState.collect { state ->
                 when (state) {
                     is WannaHelpScreenState.Progress -> {
                         progressBar.visibility = View.VISIBLE
-                        progressBar.progress = state.progress
                     }
 
                     is WannaHelpScreenState.Done -> {

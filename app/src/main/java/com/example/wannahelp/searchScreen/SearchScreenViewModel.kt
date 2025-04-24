@@ -35,7 +35,7 @@ class SearchScreenViewModel(application: Application) : AndroidViewModel(applica
                             SearchResult.NoInputMade
                         } else {
                             val filteredList =
-                                eventsOriginList.filter { it.title.contains(searchText) }
+                                eventsOriginList.filter { it.name.contains(searchText) }
                                     .ifEmpty { emptyList() }
                             SearchResult.ResultToShow(filteredList)
                         }

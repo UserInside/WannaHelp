@@ -2,9 +2,12 @@ package com.example.wannahelp.wannaHelpScreen
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.common.extentions.parseToList
+import com.example.wannahelp.network.RetrofitClient
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,23 +15,32 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 class WannaHelpViewModel(application: Application) : AndroidViewModel(application) {
-    private val _wannaHelpScreenStateFlow =
+    private val _screenState =
         MutableStateFlow<WannaHelpScreenState>(WannaHelpScreenState.Done(emptyList()))
-    val wannaHelpScreenStateFlow: StateFlow<WannaHelpScreenState> = _wannaHelpScreenStateFlow
+    val screenState: StateFlow<WannaHelpScreenState> = _screenState
 
     init {
-        viewModelScope.launch { loadNewsWithProgress(application.applicationContext) }
-    }
-
-    private suspend fun loadNewsWithProgress(context: Context) {
-        for (i in 0..100 step 9) {
-            delay(50)
-            _wannaHelpScreenStateFlow.value = WannaHelpScreenState.Progress(i)
+        viewModelScope.launch {
+            loadCategoriesListFromAPI(application.applicationContext)
         }
-        _wannaHelpScreenStateFlow.value = WannaHelpScreenState.Done(loadCategoriesList(context))
     }
 
-    private fun loadCategoriesList(context: Context): List<CategoryItem> {
+    suspend fun loadCategoriesListFromAPI(context: Context) {
+        val exHandler =
+            CoroutineExceptionHandler { _, throwable ->
+                _screenState.value = WannaHelpScreenState.Done(loadCategoriesListFromFile(context))
+                Log.i("DEMO", "categories from file + ${throwable.message} + ${throwable.cause}") // для демонстрации
+            }
+        _screenState.value = WannaHelpScreenState.Progress
+        delay(500) // для демонстрации
+        viewModelScope.launch(exHandler) {
+            val response = RetrofitClient.apiService.getCategories()
+            _screenState.value = WannaHelpScreenState.Done(response)
+            Log.i("DEMO", "categories from api") // для демонстрации
+        }
+    }
+
+    private fun loadCategoriesListFromFile(context: Context): List<CategoryItem> {
         return Json.parseToList<CategoryItem>(context, CATEGORIES_FILE_NAME)
     }
 
@@ -38,7 +50,7 @@ class WannaHelpViewModel(application: Application) : AndroidViewModel(applicatio
 }
 
 sealed class WannaHelpScreenState {
-    class Progress(val progress: Int) : WannaHelpScreenState()
+    object Progress : WannaHelpScreenState()
 
     class Done(val categoryList: List<CategoryItem>) : WannaHelpScreenState()
 }

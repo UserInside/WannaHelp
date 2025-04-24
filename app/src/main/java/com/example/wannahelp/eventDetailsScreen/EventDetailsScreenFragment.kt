@@ -43,7 +43,7 @@ class EventDetailsScreenFragment :
         val newsItem = args.clickedNewsItem
 
         binding.apply {
-            tvTitleEventDetails.text = newsItem.title
+            tvTitleEventDetails.text = newsItem.name
         }
     }
 }

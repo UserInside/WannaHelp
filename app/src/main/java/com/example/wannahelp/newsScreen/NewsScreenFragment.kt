@@ -72,7 +72,6 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
                 when (state) {
                     is NewsState.Progress -> {
                         binding.newsProgressBar.visibility = View.VISIBLE
-                        binding.newsProgressBar.progress = state.progress
                     }
 
                     is NewsState.Done -> {

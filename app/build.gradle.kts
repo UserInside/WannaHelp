@@ -43,14 +43,14 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.glide)
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.converter.kotlinx.serialization)
+    implementation(libs.retrofit)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.rxandroid)
-    implementation(libs.rxbinding.support.v4)
-    implementation(libs.rxbinding.appcompat.v7)
-    implementation(libs.rxjava)
-    implementation(libs.rxbinding)
     implementation(libs.androidx.wokrmanager)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.livedata.core)

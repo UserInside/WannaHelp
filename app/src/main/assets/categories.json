@@ -1,32 +1,32 @@
 [
   {
-    "id": 1,
-    "title": "Дети",
-    "image": "R.drawable.icon_cat_kids",
-    "category": "KIDS"
+    "id": "1",
+    "name_en": "kids",
+    "name": "Дети",
+    "image": "http://46.17.104.59/images/icon_cat_kids.png"
   },
   {
-    "id": 2,
-    "title": "Взрослые",
-    "image": "R.drawable.icon_cat_adults",
-    "category": "ADULTS"
+    "id": "2",
+    "name_en": "adults",
+    "name": "Взрослые",
+    "image": "http://46.17.104.59/images/icon_cat_adults.png"
   },
   {
-    "id": 3,
-    "title": "Пожилые",
-    "image": "R.drawable.icon_cat_aged",
-    "category": "AGED"
+    "id": "3",
+    "name_en": "aged",
+    "name": "Пожилые",
+    "image": "http://46.17.104.59/images/icon_cat_aged.png"
   },
   {
-    "id": 4,
-    "title": "Животные",
-    "image": "R.drawable.icon_cat_animals",
-    "category": "ANIMALS"
+    "id": "4",
+    "name_en": "animals",
+    "name": "Животные",
+    "image": "http://46.17.104.59/images/icon_cat_animals.png"
   },
   {
-    "id": 5,
-    "title": "Мероприятия",
-    "image": "R.drawable.icon_cat_events",
-    "category": "EVENTS"
+    "id": "5",
+    "name_en": "events",
+    "name": "Мероприятия",
+    "image": "http://46.17.104.59/images/icon_cat_events.png"
   }
 ]

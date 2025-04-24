@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.wannahelp.R
 
 class FriendsRecyclerViewAdapter(private val friendCardsList: List<FriendCard>) :
     RecyclerView.Adapter<FriendsRecyclerViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val avatar: ImageView = itemView.findViewById(R.id.img_friend_avatar)
+        val image: ImageView = itemView.findViewById(R.id.img_friend_avatar)
         val name: TextView = itemView.findViewById(R.id.tv_friend_name)
     }
 
@@ -30,7 +32,11 @@ class FriendsRecyclerViewAdapter(private val friendCardsList: List<FriendCard>) 
         position: Int,
     ) {
         val item = friendCardsList[position]
-        holder.avatar.setImageResource(item.avatar)
+        Glide.with(holder.itemView)
+            .load(item.image)
+            .placeholder(R.drawable.placeholder_24)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(holder.image)
         holder.name.text = item.name
     }
 
