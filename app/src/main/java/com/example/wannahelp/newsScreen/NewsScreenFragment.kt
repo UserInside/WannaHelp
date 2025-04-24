@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
-    private lateinit var viewModel: NewsViewModel
+    private val viewModel: NewsViewModel by activityViewModels()
     private lateinit var rvAdapter: NewsRecyclerViewAdapter
 
     override fun setupToolbar(
@@ -45,14 +45,13 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
-        viewModel = ViewModelProvider(requireActivity())[NewsViewModel::class]
         lifecycleScope.launch {
-            viewModel.updateListToShow()
+            viewModel.loadNewsFromDB()
         }
 
         rvAdapter =
             NewsRecyclerViewAdapter { newsItem ->
-                viewModel.addReadItemToSet(newsItem)
+                viewModel.markNewsItemAsRead(newsItem)
                 val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(newsItem)
                 NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
             }
@@ -72,7 +71,6 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
                 when (state) {
                     is NewsState.Progress -> {
                         binding.newsProgressBar.visibility = View.VISIBLE
-                        binding.newsProgressBar.progress = state.progress
                     }
 
                     is NewsState.Done -> {
@@ -83,6 +81,8 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         }
         scope.launch {
             viewModel.listToShowStateFlow.collect {
+                Log.e("DEMO", "список изменился во фрагменте $it")
+
                 rvAdapter.submitList(it)
             }
         }

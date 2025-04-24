@@ -16,6 +16,7 @@
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_gravity="center"
+        android:indeterminate="true"
         android:visibility="gone"
         app:indicatorColor="@color/turtle_green"
         app:indicatorDirectionCircular="clockwise"

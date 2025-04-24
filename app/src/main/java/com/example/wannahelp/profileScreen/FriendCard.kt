@@ -1,6 +1,10 @@
 package com.example.wannahelp.profileScreen
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class FriendCard(
-    val avatar: Int,
+    val id: Int,
+    val image: String,
     val name: String,
 )

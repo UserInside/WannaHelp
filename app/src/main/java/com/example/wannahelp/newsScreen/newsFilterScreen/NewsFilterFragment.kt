@@ -33,9 +33,11 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
             visibility = View.VISIBLE
             setImageResource(R.drawable.icon_check_24)
             setOnClickListener {
-                viewModel.saveChosenCategories()
-                NavHostFragment.findNavController(this@NewsFilterFragment)
-                    .popBackStack()
+                lifecycleScope.launch {
+                    viewModel.saveChosenCategories()
+                    NavHostFragment.findNavController(this@NewsFilterFragment)
+                        .popBackStack()
+                }
             }
         }
     }

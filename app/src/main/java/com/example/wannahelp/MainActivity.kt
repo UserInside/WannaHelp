@@ -2,12 +2,17 @@ package com.example.wannahelp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.wannahelp.db.mapCategoryApiResponseItemToDbEntity
+import com.example.wannahelp.db.mapEventApiResponseItemToDbEntity
+import com.example.wannahelp.network.RetrofitClient
 import com.example.wannahelp.newsScreen.NewsViewModel
+import com.example.wannahelp.wannaHelpScreen.MainApp
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
@@ -20,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        fetchDataToDB()
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -48,6 +54,26 @@ class MainActivity : AppCompatActivity() {
             badge.isVisible = true
         } else {
             badge.isVisible = false
+        }
+    }
+
+    private fun fetchDataToDB() {
+        lifecycleScope.launch {
+            val eventsResponse = RetrofitClient.apiService.getEvents()
+            Log.i("DEMO", "eventsResponse received $eventsResponse") // для демонстрации
+
+            eventsResponse.forEach {
+                MainApp.database.getEventsDao().addEvent(mapEventApiResponseItemToDbEntity(it))
+            }
+        }
+        lifecycleScope.launch {
+            val categoriesResponse = RetrofitClient.apiService.getCategories()
+            Log.i("DEMO", "categoriesResponse received $categoriesResponse") // для демонстрации
+
+            categoriesResponse.forEach {
+                MainApp.database.getCategoriesDao()
+                    .addCategory(mapCategoryApiResponseItemToDbEntity(it))
+            }
         }
     }
 }
