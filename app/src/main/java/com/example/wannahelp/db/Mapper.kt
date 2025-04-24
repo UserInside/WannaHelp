@@ -53,4 +53,3 @@ fun mapCategoryDbEntityToCategoryItem(entity: CategoriesEntity): CategoryItem {
         image = entity.image,
     )
 }
-

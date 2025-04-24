@@ -7,7 +7,6 @@ import androidx.room.Query
 
 @Dao
 interface CategoriesDao {
-
     @Insert(onConflict = REPLACE)
     suspend fun addCategory(categoriesEntity: CategoriesEntity)
 

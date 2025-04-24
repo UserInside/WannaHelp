@@ -9,8 +9,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toStringList (str: String): List<String> {
+    fun toStringList(str: String): List<String> {
         return if (str.isEmpty()) emptyList() else str.split(",")
     }
-
 }

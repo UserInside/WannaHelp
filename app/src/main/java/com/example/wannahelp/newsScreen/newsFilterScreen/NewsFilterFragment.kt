@@ -2,7 +2,6 @@ package com.example.wannahelp.newsScreen.newsFilterScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar

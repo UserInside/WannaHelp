@@ -10,7 +10,8 @@ import com.example.wannahelp.db.events.EventsEntity
 
 @Database(entities = [CategoriesEntity::class, EventsEntity::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun getEventsDao(): EventsDao
+
     abstract fun getCategoriesDao(): CategoriesDao
 }

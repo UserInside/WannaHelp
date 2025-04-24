@@ -4,16 +4,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EventsDao {
-
     @Insert(onConflict = REPLACE)
     suspend fun addEvent(event: EventsEntity)
 
     @Query("SELECT * FROM events WHERE category IN (:categories)")
-    suspend fun getEvents(categories: List<String>): List<EventsEntity>
+    suspend fun getEvents(categories: Set<String>): List<EventsEntity>
 
     @Query("UPDATE events SET isRead = true WHERE id = :id")
     suspend fun markEventAsRead(id: Int)

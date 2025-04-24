@@ -32,7 +32,7 @@ class WannaHelpViewModel(application: Application) : AndroidViewModel(applicatio
                 _screenState.value = WannaHelpScreenState.Done(loadCategoriesListFromFile(context))
                 Log.i(
                     "DEMO",
-                    "categories from file + ${throwable.message} + ${throwable.cause}"
+                    "categories from file + ${throwable.message} + ${throwable.cause}",
                 ) // для демонстрации
             }
         _screenState.value = WannaHelpScreenState.Progress

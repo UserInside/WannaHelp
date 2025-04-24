@@ -11,13 +11,9 @@ import com.example.wannahelp.R
 import com.example.wannahelp.common.Category
 import com.example.wannahelp.common.datastore
 import com.example.wannahelp.newsScreen.NewsViewModel.Companion.CHOSEN_CATEGORIES
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class NewsFilterViewModel(application: Application) : AndroidViewModel(application) {
@@ -49,14 +45,15 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
     private var cachedSetOfCategories: Set<String>? = emptySet<String>()
 
     private fun updateLTS() {
-        listOfCategoryFiltersToShow.value = initialFilterList
-            .map { item ->
-                if (setOfChosenCategories?.contains(item.category.toString()) == true) {
-                    item.copy(isChecked = true)
-                } else {
-                    item.copy(isChecked = false)
+        listOfCategoryFiltersToShow.value =
+            initialFilterList
+                .map { item ->
+                    if (setOfChosenCategories?.contains(item.category.toString()) == true) {
+                        item.copy(isChecked = true)
+                    } else {
+                        item.copy(isChecked = false)
+                    }
                 }
-            }
     }
 
     private suspend fun getChosenCategoriesFromDS(): Set<String>? {
@@ -76,11 +73,9 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
-    fun addNewsItemToFilter(category: String) =
-        tmpSetOfFilteredCategoriesToSave.add(category)
+    fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
 
-    fun removeNewsItemFromFilter(category: String) =
-        tmpSetOfFilteredCategoriesToSave.remove(category)
+    fun removeNewsItemFromFilter(category: String) = tmpSetOfFilteredCategoriesToSave.remove(category)
 
     private fun getInitialFilterList(application: Application) =
         listOf(

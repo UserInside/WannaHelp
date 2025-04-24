@@ -1,7 +1,6 @@
 package com.example.wannahelp
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -13,7 +12,6 @@ import com.example.wannahelp.db.mapCategoryApiResponseItemToDbEntity
 import com.example.wannahelp.db.mapEventApiResponseItemToDbEntity
 import com.example.wannahelp.network.RetrofitClient
 import com.example.wannahelp.newsScreen.NewsViewModel
-//import com.example.wannahelp.newsScreen.NewsViewModelFactory
 import com.example.wannahelp.wannaHelpScreen.MainApp
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -45,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             viewModel.unreadMsgCountStateFlow.collect { count ->
-                Log.i("DEMO", "Actiity unread count $count")
                 updateNewsBadge(count)
             }
         }
@@ -80,5 +77,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-

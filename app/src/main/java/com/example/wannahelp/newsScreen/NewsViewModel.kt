@@ -1,19 +1,24 @@
 package com.example.wannahelp.newsScreen
 
+import android.annotation.SuppressLint
 import android.app.Application
-import android.util.Log
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.common.Category
+import com.example.wannahelp.common.datastore
 import com.example.wannahelp.db.mapEventDbEntityToNewsItem
 import com.example.wannahelp.wannaHelpScreen.MainApp
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class NewsViewModel(application: Application) : AndroidViewModel(application) {
-//    val dsm = DataStoreManager(application)
+    @SuppressLint("StaticFieldLeak")
+    val ctx = application.applicationContext
+
+    private val initialListToShow = getFullCatList()
 
     val screenStateFlow = MutableStateFlow<NewsState>(NewsState.Progress)
 
@@ -23,37 +28,32 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     val unreadMsgCountStateFlow =
         MutableStateFlow<Int>(listToShowStateFlow.value.count { it.isRead == false })
 
-//    val setOfChosenCategories = dsm.getSelectedCategoriesSet().stateIn(
-//        viewModelScope, SharingStarted.Eagerly, null
-//    )
-
-
     init {
-//        Log.i("DSTORE", "--- onInit NewsScreen ${setOfChosenCategories.value}")
         viewModelScope.launch {
             loadNewsFromDB()
         }
     }
 
-    suspend fun loadNewsFromDB(){
+    suspend fun loadNewsFromDB() {
+        val setOfChosenCategories = getChosenCategoriesFromDS().map { it.lowercase() }.toSet()
         screenStateFlow.value = NewsState.Progress
-//        val catList = readCategoriesFromDataStore()
-        val catList = emptyList<String>() //todo
-        val events = MainApp.database.getEventsDao()
-                .getEvents(catList)
+
+        val eventsList =
+            MainApp.database.getEventsDao()
+                .getEvents(setOfChosenCategories)
                 .map { mapEventDbEntityToNewsItem(it) }
-        listToShowStateFlow.value = events
-        unreadMsgCountStateFlow.value = events.count { !it.isRead }
+
+        listToShowStateFlow.value = eventsList
+        unreadMsgCountStateFlow.value = eventsList.count { !it.isRead }
+
         screenStateFlow.value = NewsState.Done
     }
 
-//    private suspend fun readCategoriesFromDataStore(): List<String> {
-//        val prefKey = stringSetPreferencesKey(CHOSEN_CATEGORIES)
-//        val preferences = categoriesDataStore.data.firstOrNull()
-//        val result = preferences?.get(prefKey)?.toList() ?: getInitialList()
-//        Log.e("DSTORE", "result $result")
-//        return result
-//    }
+    private suspend fun getChosenCategoriesFromDS(): Set<String> {
+        return ctx.datastore.data.map { preference ->
+            preference[stringSetPreferencesKey(CHOSEN_CATEGORIES)] ?: initialListToShow
+        }.first()
+    }
 
     fun markNewsItemAsRead(newsItem: NewsItem) {
         viewModelScope.launch {
@@ -61,8 +61,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun getInitialList() =
-        listOf(
+    private fun getFullCatList() =
+        setOf(
             Category.KIDS.name,
             Category.ADULTS.name,
             Category.EVENTS.name,
@@ -77,5 +77,6 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
 sealed class NewsState {
     object Progress : NewsState()
+
     object Done : NewsState()
 }
