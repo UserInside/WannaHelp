@@ -44,6 +44,13 @@ android {
 }
 
 dependencies {
+
+    implementation (libs.dagger)
+    annotationProcessor (libs.dagger.compiler)
+    implementation (libs.dagger.android)
+    implementation (libs.dagger.android.support)
+    annotationProcessor (libs.dagger.android.processor)
+
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
