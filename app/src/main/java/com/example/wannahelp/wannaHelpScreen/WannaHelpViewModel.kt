@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wannahelp.MainApp
 import com.example.wannahelp.common.extentions.parseToList
 import com.example.wannahelp.db.mapCategoryDbEntityToCategoryItem
 import kotlinx.coroutines.CoroutineExceptionHandler

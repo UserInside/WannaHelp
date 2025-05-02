@@ -12,19 +12,25 @@ import com.example.wannahelp.db.mapCategoryApiResponseItemToDbEntity
 import com.example.wannahelp.db.mapEventApiResponseItemToDbEntity
 import com.example.wannahelp.network.RetrofitClient
 import com.example.wannahelp.newsScreen.NewsViewModel
-import com.example.wannahelp.wannaHelpScreen.MainApp
+import com.example.wannahelp.MainApp
+import com.example.wannahelp.di.AppComponent
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var badge: BadgeDrawable
     private val viewModel: NewsViewModel by viewModels()
 
-    @SuppressLint("CheckResult")
+    @Inject
+    lateinit var retrofit: Retrofit
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        MainApp.appComponent.inject(this) //todo потестить. с инжектом, без него, с аннотацией и без и т.п.
         fetchDataToDB()
 
         val navHostFragment =
@@ -59,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchDataToDB() {
         lifecycleScope.launch {
-            val eventsResponse = RetrofitClient.apiService.getEvents()
+            val eventsResponse = RetrofitClient(retrofit).apiService.getEvents()
             Log.i("DEMO", "eventsResponse received $eventsResponse") // для демонстрации
 
             eventsResponse.forEach {
@@ -67,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         lifecycleScope.launch {
-            val categoriesResponse = RetrofitClient.apiService.getCategories()
+            val categoriesResponse = RetrofitClient(retrofit).apiService.getCategories()
             Log.i("DEMO", "categoriesResponse received $categoriesResponse") // для демонстрации
 
             categoriesResponse.forEach {

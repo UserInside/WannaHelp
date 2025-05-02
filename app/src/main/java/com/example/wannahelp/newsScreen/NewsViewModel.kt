@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.common.Category
 import com.example.wannahelp.common.datastore
 import com.example.wannahelp.db.mapEventDbEntityToNewsItem
-import com.example.wannahelp.wannaHelpScreen.MainApp
+import com.example.wannahelp.MainApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map

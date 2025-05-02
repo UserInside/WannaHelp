@@ -1,5 +1,6 @@
 package com.example.wannahelp.network
 
+import com.example.wannahelp.MainApp
 import com.example.wannahelp.newsScreen.NewsApiResponseItem
 import com.example.wannahelp.profileScreen.FriendCard
 import com.example.wannahelp.wannaHelpScreen.CategoryItem
@@ -9,9 +10,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 interface ApiService {
     @GET("categories")
@@ -24,31 +27,7 @@ interface ApiService {
     suspend fun getFriends(): List<FriendCard>
 }
 
-object RetrofitClient {
-    private const val BASE_URL = "http://46.17.104.59:3000/"
-
-    private val json =
-        Json {
-            ignoreUnknownKeys = true
-            isLenient = true
-        }
-
-    private val okHttpClient =
-        OkHttpClient.Builder()
-            .callTimeout(3, TimeUnit.SECONDS)
-            .addInterceptor(
-                HttpLoggingInterceptor()
-                    .apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    },
-            ).build()
-
-    private val retrofit =
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            .client(okHttpClient)
-            .build()
-
+class RetrofitClient(retrofit: Retrofit) {
+//    @Inject lateinit var retrofit: Retrofit
     val apiService: ApiService = retrofit.create(ApiService::class.java)
 }
