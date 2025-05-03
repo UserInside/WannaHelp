@@ -1,4 +1,4 @@
-package com.example.wannahelp.common
+package com.example.wannahelp.common.extentions
 
 import android.content.Context
 import androidx.datastore.core.DataStore

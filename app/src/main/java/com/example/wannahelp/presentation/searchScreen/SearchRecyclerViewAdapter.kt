@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
 import com.example.wannahelp.domain.entities.NewsItem
-import com.example.wannahelp.presentation.newsScreen.NewsItemDiffCallback
+import com.example.wannahelp.presentation.newsScreen.newsRecycler.NewsItemDiffCallback
 import com.example.wannahelp.presentation.searchScreen.SearchRecyclerViewAdapter.ViewHolder
 
 class SearchRecyclerViewAdapter(

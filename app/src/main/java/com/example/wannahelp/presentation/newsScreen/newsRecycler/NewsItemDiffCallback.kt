@@ -1,4 +1,4 @@
-package com.example.wannahelp.presentation.newsScreen
+package com.example.wannahelp.presentation.newsScreen.newsRecycler
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.wannahelp.domain.entities.NewsItem

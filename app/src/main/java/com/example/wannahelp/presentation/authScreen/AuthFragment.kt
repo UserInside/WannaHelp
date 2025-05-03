@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.example.wannahelp.R
-import com.example.wannahelp.common.ToolbarFragment
+import com.example.wannahelp.presentation.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentAuthBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch

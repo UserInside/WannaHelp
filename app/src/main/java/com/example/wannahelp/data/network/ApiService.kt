@@ -2,7 +2,6 @@ package com.example.wannahelp.data.network
 
 import com.example.wannahelp.domain.entities.CategoryItem
 import com.example.wannahelp.domain.entities.FriendCardItem
-import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -17,7 +16,3 @@ interface ApiService {
     suspend fun getFriends(): List<FriendCardItem>
 }
 
-class RetrofitClient(retrofit: Retrofit) {
-//    @Inject lateinit var retrofit: Retrofit
-    val apiService: ApiService = retrofit.create(ApiService::class.java)
-}

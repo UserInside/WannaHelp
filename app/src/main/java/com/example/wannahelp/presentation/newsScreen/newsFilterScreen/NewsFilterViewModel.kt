@@ -7,10 +7,9 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wannahelp.R
-import com.example.wannahelp.common.Category
-import com.example.wannahelp.common.datastore
+import com.example.wannahelp.common.extentions.datastore
 import com.example.wannahelp.presentation.newsScreen.NewsViewModel.Companion.CHOSEN_CATEGORIES
+import com.example.wannahelp.presentation.newsScreen.newsFilterScreen.newsFiletrRecycler.FilterCategoryCard
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -20,7 +19,7 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
     @SuppressLint("StaticFieldLeak")
     private val ctx = application.applicationContext
 
-    private val initialFilterList = getInitialFilterList(application)
+    private val initialFilterList = FilterCategoryCard.getFilterCategoryCardsList(application)
 
     private var setOfChosenCategories: Set<String>? = emptySet()
 
@@ -75,29 +74,6 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
 
     fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
 
-    fun removeNewsItemFromFilter(category: String) = tmpSetOfFilteredCategoriesToSave.remove(category)
-
-    private fun getInitialFilterList(application: Application) =
-        listOf(
-            FilterCategoryCard(
-                application.resources.getString(R.string.tv_cat_kids),
-                Category.KIDS,
-            ),
-            FilterCategoryCard(
-                application.resources.getString(R.string.tv_cat_adults),
-                Category.ADULTS,
-            ),
-            FilterCategoryCard(
-                application.resources.getString(R.string.tv_cat_aged),
-                Category.AGED,
-            ),
-            FilterCategoryCard(
-                application.resources.getString(R.string.tv_cat_events),
-                Category.EVENTS,
-            ),
-            FilterCategoryCard(
-                application.resources.getString(R.string.tv_cat_animals),
-                Category.ANIMALS,
-            ),
-        )
+    fun removeNewsItemFromFilter(category: String) =
+        tmpSetOfFilteredCategoriesToSave.remove(category)
 }

@@ -1,5 +1,6 @@
 package com.example.wannahelp.presentation.profileScreen
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -9,18 +10,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.wannahelp.MainApp
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentProfileScreenBinding
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class ProfileScreenFragment : Fragment() {
     private lateinit var binding: FragmentProfileScreenBinding
-    private val viewModel: ProfileViewModel by viewModels()
+    private lateinit var viewModel: ProfileViewModel
+
+    @Inject
+    lateinit var vmFactory: ProfileViewModelFactory
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MainApp.appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +47,7 @@ class ProfileScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this,vmFactory)[ProfileViewModel::class]
 
         val customToolbar = binding.appBar.profileToolbar
         customToolbar.apply {

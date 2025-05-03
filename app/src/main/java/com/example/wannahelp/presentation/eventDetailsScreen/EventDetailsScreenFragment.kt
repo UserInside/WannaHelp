@@ -7,7 +7,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import com.example.wannahelp.R
-import com.example.wannahelp.common.ToolbarFragment
+import com.example.wannahelp.presentation.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentEventDetailsScreenBinding
 import com.example.wannahelp.presentation.eventDetailsScreen.EventDetailsScreenFragmentArgs
 

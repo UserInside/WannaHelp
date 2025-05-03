@@ -8,7 +8,7 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.wannahelp.R
-import com.example.wannahelp.common.ToolbarFragment
+import com.example.wannahelp.presentation.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentSearchScreenBinding
 import com.example.wannahelp.presentation.searchScreen.searchByEvent.SearchByEventFragment
 import com.example.wannahelp.presentation.searchScreen.searchByNKO.SearchByNKOFragment

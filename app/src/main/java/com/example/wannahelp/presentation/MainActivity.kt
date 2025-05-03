@@ -11,12 +11,11 @@ import com.example.wannahelp.MainApp
 import com.example.wannahelp.R
 import com.example.wannahelp.data.db.mapCategoryApiResponseItemToDbEntity
 import com.example.wannahelp.data.db.mapEventApiResponseItemToDbEntity
-import com.example.wannahelp.data.network.RetrofitClient
+import com.example.wannahelp.data.network.ApiService
 import com.example.wannahelp.presentation.newsScreen.NewsViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: NewsViewModel by viewModels()
 
     @Inject
-    lateinit var retrofit: Retrofit
+    lateinit var apiService: ApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchDataToDB() {
         lifecycleScope.launch {
-            val eventsResponse = RetrofitClient(retrofit).apiService.getEvents()
+            val eventsResponse = apiService.getEvents()
             Log.i("DEMO", "eventsResponse received $eventsResponse") // для демонстрации
 
             eventsResponse.forEach {
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         lifecycleScope.launch {
-            val categoriesResponse = RetrofitClient(retrofit).apiService.getCategories()
+            val categoriesResponse = apiService.getCategories()
             Log.i("DEMO", "categoriesResponse received $categoriesResponse") // для демонстрации
 
             categoriesResponse.forEach {

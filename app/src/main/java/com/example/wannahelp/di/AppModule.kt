@@ -1,7 +1,10 @@
 package com.example.wannahelp.di
 
-import dagger.Module
 import android.content.Context
+import com.example.wannahelp.data.network.ApiService
+import com.example.wannahelp.presentation.profileScreen.ProfileViewModel
+import com.example.wannahelp.presentation.profileScreen.ProfileViewModelFactory
+import dagger.Module
 import dagger.Provides
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -38,7 +41,7 @@ class AppModule(val appContext: Context) {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
+    fun provideApiService(okHttpClient: OkHttpClient, json: Json): ApiService {
         val BASE_URL = "http://46.17.104.59:3000/"
 
         return Retrofit.Builder()
@@ -46,6 +49,13 @@ class AppModule(val appContext: Context) {
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .client(okHttpClient)
             .build()
+            .create(ApiService::class.java)
+    }
+
+    @Provides
+    fun provideProfileViewModelFactory(apiService: ApiService): ProfileViewModelFactory {
+        return ProfileViewModelFactory(apiService)
+
     }
 }
 

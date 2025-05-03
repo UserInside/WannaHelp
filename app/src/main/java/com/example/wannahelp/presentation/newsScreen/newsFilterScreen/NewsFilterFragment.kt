@@ -10,8 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
-import com.example.wannahelp.common.ToolbarFragment
+import com.example.wannahelp.presentation.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentNewsFilterBinding
+import com.example.wannahelp.presentation.newsScreen.newsFilterScreen.newsFiletrRecycler.NewsFilterRecyclerViewAdapter
 import kotlinx.coroutines.launch
 
 class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBackButton = true) {

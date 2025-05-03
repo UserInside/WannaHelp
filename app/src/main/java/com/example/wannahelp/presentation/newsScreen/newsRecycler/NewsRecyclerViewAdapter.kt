@@ -1,4 +1,4 @@
-package com.example.wannahelp.presentation.newsScreen
+package com.example.wannahelp.presentation.newsScreen.newsRecycler
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wannahelp.R
 import com.example.wannahelp.domain.entities.NewsItem
-import com.example.wannahelp.presentation.newsScreen.NewsRecyclerViewAdapter.ViewHolder
+import com.example.wannahelp.presentation.newsScreen.newsRecycler.NewsRecyclerViewAdapter.ViewHolder
 
 class NewsRecyclerViewAdapter(
     private val onItemClicked: (NewsItem) -> Unit,

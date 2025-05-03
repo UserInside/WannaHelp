@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
-import com.example.wannahelp.common.ToolbarFragment
+import com.example.wannahelp.presentation.ToolbarFragment
 import kotlinx.coroutines.launch
 
 class WannaHelpScreenFragment : ToolbarFragment(R.layout.fragment_wanna_help_screen) {

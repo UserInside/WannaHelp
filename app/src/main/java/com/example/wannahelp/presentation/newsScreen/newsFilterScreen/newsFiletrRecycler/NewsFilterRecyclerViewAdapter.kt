@@ -1,4 +1,4 @@
-package com.example.wannahelp.presentation.newsScreen.newsFilterScreen
+package com.example.wannahelp.presentation.newsScreen.newsFilterScreen.newsFiletrRecycler
 
 import android.view.LayoutInflater
 import android.view.View
