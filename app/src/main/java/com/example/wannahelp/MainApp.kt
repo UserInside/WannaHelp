@@ -2,7 +2,7 @@ package com.example.wannahelp
 
 import android.app.Application
 import androidx.room.Room
-import com.example.wannahelp.db.AppDatabase
+import com.example.wannahelp.data.db.AppDatabase
 import com.example.wannahelp.di.AppComponent
 import com.example.wannahelp.di.AppModule
 import com.example.wannahelp.di.DaggerAppComponent

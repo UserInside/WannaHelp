@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/profileScreenFragment"
-        android:name="com.example.wannahelp.profileScreen.ProfileScreenFragment"
+        android:name="com.example.wannahelp.presentation.profileScreen.ProfileScreenFragment"
         android:label="fragment_profile_screen"
         tools:layout="@layout/fragment_profile_screen" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileEditScreenFragment"
-        android:name="com.example.wannahelp.profileEditScreen.EditProfileScreenFragment"
+        android:name="com.example.wannahelp.presentation.profileEditScreen.EditProfileScreenFragment"
         android:label="ProfileEditScreenFragment" >
         <action
             android:id="@+id/navigateToProfileScreen"
@@ -24,16 +24,16 @@
     </fragment>
     <fragment
         android:id="@+id/wannaHelpScreenFragment"
-        android:name="com.example.wannahelp.wannaHelpScreen.WannaHelpScreenFragment"
+        android:name="com.example.wannahelp.presentation.wannaHelpScreen.WannaHelpScreenFragment"
         android:label="WannaHelpScreenFragment" />
     <fragment
         android:id="@+id/searchScreenFragment"
-        android:name="com.example.wannahelp.searchScreen.SearchScreenFragment"
+        android:name="com.example.wannahelp.presentation.searchScreen.SearchScreenFragment"
         android:label="fragment_search_screen"
         tools:layout="@layout/fragment_search_screen" />
     <fragment
         android:id="@+id/newsScreenFragment"
-        android:name="com.example.wannahelp.newsScreen.NewsScreenFragment"
+        android:name="com.example.wannahelp.presentation.newsScreen.NewsScreenFragment"
         android:label="fragment_news_screen"
         tools:layout="@layout/fragment_news_screen" >
         <action
@@ -44,21 +44,21 @@
             app:destination="@id/eventDetailsScreenFragment" >
             <argument
                 android:name="clickedNewsItem"
-                app:argType="com.example.wannahelp.newsScreen.NewsItem"
+                app:argType="com.example.wannahelp.domain.entities.NewsItem"
                 app:nullable="true" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/eventDetailsScreenFragment"
-        android:name="com.example.wannahelp.eventDetailsScreen.EventDetailsScreenFragment"
+        android:name="com.example.wannahelp.presentation.eventDetailsScreen.EventDetailsScreenFragment"
         android:label="EventDetailsScreenFragment" >
         <argument
             android:name="clickedNewsItem"
-            app:argType="com.example.wannahelp.newsScreen.NewsItem" />
+            app:argType="com.example.wannahelp.domain.entities.NewsItem" />
     </fragment>
     <fragment
         android:id="@+id/newsFilterFragment"
-        android:name="com.example.wannahelp.newsScreen.newsFilterScreen.NewsFilterFragment"
+        android:name="com.example.wannahelp.presentation.newsScreen.newsFilterScreen.NewsFilterFragment"
         android:label="NewsFilterFragment" >
         <action
             android:id="@+id/navigateToNewsScreen"
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.example.wannahelp.authScreen.AuthFragment"
+        android:name="com.example.wannahelp.presentation.authScreen.AuthFragment"
         android:label="AuthFragment" >
         <action
             android:id="@+id/navigateToWannaHelpScreenFragment"

@@ -46,6 +46,7 @@ android {
 dependencies {
 
     implementation (libs.dagger)
+    implementation(libs.play.services.ads)
     ksp (libs.dagger.compiler)
 
     implementation(libs.androidx.datastore.preferences)
