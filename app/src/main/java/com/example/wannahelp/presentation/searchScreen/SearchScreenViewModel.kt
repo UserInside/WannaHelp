@@ -26,7 +26,7 @@ class SearchScreenViewModel(application: Application) : AndroidViewModel(applica
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
     fun updateSearchResult(newText: String) {
-        searchQuery.value = newText
+        searchQuery.value = newText.lowercase()
         viewModelScope.launch {
             searchQuery.debounce(500).distinctUntilChanged().flatMapConcat { searchText ->
                 flow {
@@ -35,7 +35,7 @@ class SearchScreenViewModel(application: Application) : AndroidViewModel(applica
                             SearchResult.NoInputMade
                         } else {
                             val filteredList =
-                                eventsOriginList.filter { it.name.contains(searchText) }
+                                eventsOriginList.filter { it.name.lowercase().contains(searchText) }
                                     .ifEmpty { emptyList() }
                             SearchResult.ResultToShow(filteredList)
                         }

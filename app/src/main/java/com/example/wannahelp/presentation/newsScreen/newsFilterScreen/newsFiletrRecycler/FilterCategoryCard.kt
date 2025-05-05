@@ -8,7 +8,7 @@ data class FilterCategoryCard(
     val title: String,
     val category: Category,
     var isChecked: Boolean = true,
-){
+) {
     companion object {
         fun getFilterCategoryCardsList(application: Application) =
             listOf(

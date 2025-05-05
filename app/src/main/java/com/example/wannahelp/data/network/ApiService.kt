@@ -15,4 +15,3 @@ interface ApiService {
     @GET("friends")
     suspend fun getFriends(): List<FriendCardItem>
 }
-

@@ -15,6 +15,10 @@ inline fun <reified T> Json.parseToList(
     context: Context,
     fileName: String,
 ): List<T> {
+    val jsonBuilder =
+        Json {
+            ignoreUnknownKeys = true
+        }
     val jsonString = context.assets.readFile(fileName)
-    return decodeFromString<List<T>>(jsonString)
+    return jsonBuilder.decodeFromString<List<T>>(jsonString)
 }

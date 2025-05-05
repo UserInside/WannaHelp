@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.wannahelp.MainApp
 import com.example.wannahelp.R
+import com.example.wannahelp.data.db.AppDatabase
 import com.example.wannahelp.data.db.mapCategoryApiResponseItemToDbEntity
 import com.example.wannahelp.data.db.mapEventApiResponseItemToDbEntity
 import com.example.wannahelp.data.network.ApiService
@@ -25,10 +26,13 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var apiService: ApiService
 
+    @Inject
+    lateinit var db: AppDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        MainApp.Companion.appComponent.inject(this) //todo потестить. с инжектом, без него, с аннотацией и без и т.п.
+        MainApp.Companion.appComponent.inject(this) // todo потестить. с инжектом, без него, с аннотацией и без и т.п.
         fetchDataToDB()
 
         val navHostFragment =
@@ -67,10 +71,10 @@ class MainActivity : AppCompatActivity() {
             Log.i("DEMO", "eventsResponse received $eventsResponse") // для демонстрации
 
             eventsResponse.forEach {
-                MainApp.Companion.database.getEventsDao().addEvent(
+                db.getEventsDao().addEvent(
                     mapEventApiResponseItemToDbEntity(
-                        it
-                    )
+                        it,
+                    ),
                 )
             }
         }
@@ -79,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("DEMO", "categoriesResponse received $categoriesResponse") // для демонстрации
 
             categoriesResponse.forEach {
-                MainApp.Companion.database.getCategoriesDao()
+                db.getCategoriesDao()
                     .addCategory(mapCategoryApiResponseItemToDbEntity(it))
             }
         }

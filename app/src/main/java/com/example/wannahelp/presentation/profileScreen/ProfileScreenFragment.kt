@@ -47,7 +47,7 @@ class ProfileScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this,vmFactory)[ProfileViewModel::class]
+        viewModel = ViewModelProvider(this, vmFactory)[ProfileViewModel::class]
 
         val customToolbar = binding.appBar.profileToolbar
         customToolbar.apply {

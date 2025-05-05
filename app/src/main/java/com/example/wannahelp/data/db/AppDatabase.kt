@@ -12,6 +12,5 @@ import com.example.wannahelp.data.db.events.EventsEntity
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getEventsDao(): EventsDao
-
     abstract fun getCategoriesDao(): CategoriesDao
 }

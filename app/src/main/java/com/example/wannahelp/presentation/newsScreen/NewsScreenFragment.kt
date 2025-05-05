@@ -11,8 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wannahelp.R
-import com.example.wannahelp.presentation.ToolbarFragment
 import com.example.wannahelp.databinding.FragmentNewsScreenBinding
+import com.example.wannahelp.presentation.ToolbarFragment
 import com.example.wannahelp.presentation.newsScreen.newsRecycler.NewsRecyclerViewAdapter
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +52,7 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
 
         rvAdapter =
             NewsRecyclerViewAdapter { newsItem ->
-                viewModel.markNewsItemAsRead(newsItem)
+                viewModel.markNewsItemAsRead(newsItem.id)
                 val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(newsItem)
                 NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
             }

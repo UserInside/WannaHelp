@@ -1,59 +1,38 @@
 package com.example.wannahelp.presentation.wannaHelpScreen
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.MainApp
-import com.example.wannahelp.common.extentions.parseToList
-import com.example.wannahelp.data.db.mapCategoryDbEntityToCategoryItem
 import com.example.wannahelp.domain.entities.CategoryItem
-import kotlinx.coroutines.CoroutineExceptionHandler
+import com.example.wannahelp.domain.interactors.CategoriesInteractor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-internal class WannaHelpViewModel(application: Application) : AndroidViewModel(application) {
-    private val db = MainApp.database
+class WannaHelpViewModel(application: Application) : AndroidViewModel(application) {
+
+    @Inject
+    lateinit var interactor: CategoriesInteractor
+
     private val _screenState =
         MutableStateFlow<WannaHelpScreenState>(WannaHelpScreenState.Done(emptyList()))
     val screenState: StateFlow<WannaHelpScreenState> = _screenState
 
     init {
+        MainApp.appComponent.inject(this)
         viewModelScope.launch {
-            loadCategoriesListFromDb(application.applicationContext)
+            loadCategoriesListFromDb()
         }
     }
 
-    suspend fun loadCategoriesListFromDb(context: Context) {
-        val exHandler =
-            CoroutineExceptionHandler { _, throwable ->
-                _screenState.value = WannaHelpScreenState.Done(loadCategoriesListFromFile(context))
-                Log.i(
-                    "DEMO",
-                    "categories from file + ${throwable.message} + ${throwable.cause}",
-                ) // для демонстрации
-            }
+    suspend fun loadCategoriesListFromDb() {
         _screenState.value = WannaHelpScreenState.Progress
         delay(500) // для демонстрации
-        viewModelScope.launch(exHandler) {
-            val response = db.getCategoriesDao().getCategories()
-            Log.i("DEMO", "response cat from db $response") // для демонстрации
-            _screenState.value =
-                WannaHelpScreenState.Done(response.map { mapCategoryDbEntityToCategoryItem(it) })
-            Log.i("DEMO", "categories from db") // для демонстрации
-        }
-    }
-
-    private fun loadCategoriesListFromFile(context: Context): List<CategoryItem> {
-        return Json.parseToList<CategoryItem>(context, CATEGORIES_FILE_NAME)
-    }
-
-    companion object {
-        private const val CATEGORIES_FILE_NAME = "categories.json"
+        val lts = interactor.getCategories()
+        _screenState.value = WannaHelpScreenState.Done(lts)
     }
 }
 

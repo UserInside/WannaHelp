@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -7,10 +9,15 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.devtools.ksp")
 }
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
+
 
 android {
     namespace = "com.example.wannahelp"
     compileSdk = 35
+
 
     defaultConfig {
         applicationId = "com.example.wannahelp"
@@ -20,6 +27,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String", "BASE_URL", "${localProperties.getProperty("base_url")}"
+        )
+
     }
 
     buildTypes {
@@ -40,14 +52,15 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
 dependencies {
 
-    implementation (libs.dagger)
+    implementation(libs.dagger)
     implementation(libs.play.services.ads)
-    ksp (libs.dagger.compiler)
+    ksp(libs.dagger.compiler)
 
     implementation(libs.androidx.datastore.preferences)
 

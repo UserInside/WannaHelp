@@ -74,6 +74,5 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
 
     fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
 
-    fun removeNewsItemFromFilter(category: String) =
-        tmpSetOfFilteredCategoriesToSave.remove(category)
+    fun removeNewsItemFromFilter(category: String) = tmpSetOfFilteredCategoriesToSave.remove(category)
 }

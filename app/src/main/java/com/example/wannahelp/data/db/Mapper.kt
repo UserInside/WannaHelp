@@ -4,8 +4,8 @@ import com.example.wannahelp.common.Category
 import com.example.wannahelp.data.db.categories.CategoriesEntity
 import com.example.wannahelp.data.db.events.EventsEntity
 import com.example.wannahelp.data.network.NewsApiResponseItem
-import com.example.wannahelp.domain.entities.NewsItem
 import com.example.wannahelp.domain.entities.CategoryItem
+import com.example.wannahelp.domain.entities.NewsItem
 
 fun mapEventApiResponseItemToDbEntity(item: NewsApiResponseItem): EventsEntity {
     return EventsEntity(
