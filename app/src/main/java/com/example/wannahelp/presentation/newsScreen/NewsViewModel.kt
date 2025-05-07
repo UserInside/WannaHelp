@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.MainApp
 import com.example.wannahelp.common.Category
-import com.example.wannahelp.common.extentions.datastore
+import com.example.wannahelp.common.extensions.datastore
 import com.example.wannahelp.domain.entities.NewsItem
 import com.example.wannahelp.domain.interactors.NewsInteractor
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -2,7 +2,7 @@ package com.example.wannahelp.data
 
 import android.content.Context
 import android.util.Log
-import com.example.wannahelp.common.extentions.parseToList
+import com.example.wannahelp.common.extensions.parseToList
 import com.example.wannahelp.data.db.categories.CategoriesDao
 import com.example.wannahelp.data.db.mapCategoryDbEntityToCategoryItem
 import com.example.wannahelp.domain.entities.CategoryItem
