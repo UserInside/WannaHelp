@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "WannaHelp"
 include(":app")
+include(":domain")

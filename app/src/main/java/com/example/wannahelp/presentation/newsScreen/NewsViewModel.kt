@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.MainApp
-import com.example.wannahelp.common.Category
+import com.example.domain.entities.Category
 import com.example.wannahelp.common.extensions.datastore
 import com.example.wannahelp.domain.entities.NewsItem
 import com.example.wannahelp.domain.interactors.NewsInteractor

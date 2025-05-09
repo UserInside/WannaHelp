@@ -60,6 +60,7 @@ dependencies {
 
     implementation(libs.dagger)
     implementation(libs.play.services.ads)
+    implementation(project(":domain"))
     ksp(libs.dagger.compiler)
 
     implementation(libs.androidx.datastore.preferences)

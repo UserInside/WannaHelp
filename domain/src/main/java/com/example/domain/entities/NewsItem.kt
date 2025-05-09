@@ -1,6 +1,6 @@
 package com.example.wannahelp.domain.entities
 
-import com.example.wannahelp.common.Category
+import com.example.domain.entities.Category
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.2"
+agp = "8.10.0"
 coreSplashscreen = "1.0.1"
 dagger = "2.56.2"
 datastorePreferences = "1.1.4"
@@ -28,6 +28,7 @@ workManager = "2.10.1"
 legacySupportV4 = "1.0.0"
 lifecycleViewmodelKtx = "2.8.7"
 playServicesAds = "21.5.0"
+jetbrainsKotlinJvm = "2.1.10"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activity" }
@@ -72,3 +73,4 @@ play-services-ads = { group = "com.google.android.gms", name = "play-services-ad
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }

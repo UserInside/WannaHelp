@@ -1,6 +1,6 @@
 package com.example.wannahelp.data.network
 
-import com.example.wannahelp.common.Category
+import com.example.domain.entities.Category
 import com.example.wannahelp.domain.entities.NewsItem
 import kotlinx.serialization.Serializable
 

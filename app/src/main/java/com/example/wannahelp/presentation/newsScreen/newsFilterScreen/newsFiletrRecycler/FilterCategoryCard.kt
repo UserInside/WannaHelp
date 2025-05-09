@@ -2,7 +2,7 @@ package com.example.wannahelp.presentation.newsScreen.newsFilterScreen.newsFilet
 
 import android.app.Application
 import com.example.wannahelp.R
-import com.example.wannahelp.common.Category
+import com.example.domain.entities.Category
 
 data class FilterCategoryCard(
     val title: String,

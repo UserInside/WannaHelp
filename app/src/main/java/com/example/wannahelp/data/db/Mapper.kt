@@ -1,6 +1,6 @@
 package com.example.wannahelp.data.db
 
-import com.example.wannahelp.common.Category
+import com.example.domain.entities.Category
 import com.example.wannahelp.data.db.categories.CategoriesEntity
 import com.example.wannahelp.data.db.events.EventsEntity
 import com.example.wannahelp.data.network.NewsApiResponseItem

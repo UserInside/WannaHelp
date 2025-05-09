@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wannahelp.R
-import com.example.wannahelp.common.Category
+import com.example.domain.entities.Category
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class NewsFilterRecyclerViewAdapter(
