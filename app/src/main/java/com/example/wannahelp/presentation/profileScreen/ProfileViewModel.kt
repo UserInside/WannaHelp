@@ -3,8 +3,8 @@ package com.example.wannahelp.presentation.profileScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.wannahelp.data.network.ApiService
-import com.example.wannahelp.domain.entities.FriendCardItem
+import com.example.data.network.ApiService
+import com.example.domain.entities.FriendCardItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

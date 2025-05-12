@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wannahelp.R
-import com.example.wannahelp.domain.entities.NewsItem
+import com.example.domain.entities.NewsItem
 import com.example.wannahelp.presentation.newsScreen.newsRecycler.NewsRecyclerViewAdapter.ViewHolder
 
 class NewsRecyclerViewAdapter(

@@ -1,6 +1,6 @@
-package com.example.wannahelp.domain.interactors
+package com.example.domain.interactors
 
-import com.example.wannahelp.domain.entities.NewsItem
+import com.example.domain.entities.NewsItem
 import com.example.wannahelp.domain.repository.NewsRepository
 
 class NewsInteractor(

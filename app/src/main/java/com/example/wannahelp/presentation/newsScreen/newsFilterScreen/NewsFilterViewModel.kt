@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wannahelp.common.extensions.datastore
+import com.example.common.extensions.datastore
 import com.example.wannahelp.presentation.newsScreen.NewsViewModel.Companion.CHOSEN_CATEGORIES
 import com.example.wannahelp.presentation.newsScreen.newsFilterScreen.newsFiletrRecycler.FilterCategoryCard
 import kotlinx.coroutines.flow.MutableStateFlow

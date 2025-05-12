@@ -3,8 +3,8 @@ package com.example.wannahelp.presentation.searchScreen
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wannahelp.common.extensions.parseToList
-import com.example.wannahelp.domain.entities.NewsItem
+import com.example.common.extensions.parseToList
+import com.example.domain.entities.NewsItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow

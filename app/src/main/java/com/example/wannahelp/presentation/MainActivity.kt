@@ -9,10 +9,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.wannahelp.MainApp
 import com.example.wannahelp.R
-import com.example.wannahelp.data.db.AppDatabase
-import com.example.wannahelp.data.db.mapCategoryApiResponseItemToDbEntity
-import com.example.wannahelp.data.db.mapEventApiResponseItemToDbEntity
-import com.example.wannahelp.data.network.ApiService
+import com.example.data.db.AppDatabase
+import com.example.data.db.mapCategoryApiResponseItemToDbEntity
+import com.example.data.db.mapEventApiResponseItemToDbEntity
+import com.example.data.network.ApiService
 import com.example.wannahelp.presentation.newsScreen.NewsViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView

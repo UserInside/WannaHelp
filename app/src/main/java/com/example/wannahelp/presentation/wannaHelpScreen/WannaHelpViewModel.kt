@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.MainApp
-import com.example.wannahelp.domain.entities.CategoryItem
+import com.example.domain.entities.CategoryItem
 import com.example.wannahelp.domain.interactors.CategoriesInteractor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

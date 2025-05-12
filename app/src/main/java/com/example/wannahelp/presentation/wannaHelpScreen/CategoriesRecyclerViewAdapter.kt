@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.wannahelp.R
-import com.example.wannahelp.domain.entities.CategoryItem
+import com.example.domain.entities.CategoryItem
 
 internal class CategoriesRecyclerViewAdapter(private val categoriesList: List<CategoryItem>) :
     RecyclerView.Adapter<CategoriesRecyclerViewAdapter.ViewHolder>() {

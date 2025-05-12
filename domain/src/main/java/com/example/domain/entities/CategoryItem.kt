@@ -1,4 +1,4 @@
-package com.example.wannahelp.domain.entities
+package com.example.domain.entities
 
 import kotlinx.serialization.Serializable
 

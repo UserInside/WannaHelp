@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.wannahelp.R
-import com.example.wannahelp.domain.entities.FriendCardItem
+import com.example.domain.entities.FriendCardItem
 
 class FriendsRecyclerViewAdapter(private val friendCardsListItem: List<FriendCardItem>) :
     RecyclerView.Adapter<FriendsRecyclerViewAdapter.ViewHolder>() {

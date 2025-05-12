@@ -44,7 +44,7 @@
             app:destination="@id/eventDetailsScreenFragment" >
             <argument
                 android:name="clickedNewsItem"
-                app:argType="com.example.wannahelp.domain.entities.NewsItem"
+                app:argType="com.example.domain.entities.NewsItem"
                 app:nullable="true" />
         </action>
     </fragment>
@@ -54,7 +54,7 @@
         android:label="EventDetailsScreenFragment" >
         <argument
             android:name="clickedNewsItem"
-            app:argType="com.example.wannahelp.domain.entities.NewsItem" />
+            app:argType="com.example.domain.entities.NewsItem" />
     </fragment>
     <fragment
         android:id="@+id/newsFilterFragment"
