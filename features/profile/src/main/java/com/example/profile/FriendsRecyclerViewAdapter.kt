@@ -1,4 +1,4 @@
-package com.example.wannahelp.presentation.profileScreen
+package com.example.profile
 
 import android.view.LayoutInflater
 import android.view.View

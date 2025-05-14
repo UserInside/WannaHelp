@@ -1,4 +1,4 @@
-package com.example.wannahelp.presentation.profileScreen
+package com.example.profile
 
 import android.content.Context
 import android.os.Bundle

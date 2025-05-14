@@ -44,6 +44,14 @@ class DataModule(val appContext: Context) {
 
     @Provides
     @Singleton
+    fun provideJson() =
+        Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
+
+    @Provides
+    @Singleton
     fun provideApiService(
         okHttpClient: OkHttpClient,
         json: Json,
