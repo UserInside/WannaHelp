@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 
 abstract class ToolbarFragment(
     private val fragmentContent: Int,

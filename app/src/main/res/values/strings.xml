@@ -46,9 +46,9 @@
     <string name="by_events">По мероприятиям</string>
     <string name="by_organization">По НКО</string>
     <string name="error_file_not_created">Ошибка создания файла</string>
-    <string name="auth_title">Для участия в мероприятиях войдите \nв приложение через социальные сети</string>
-    <string name="auth_title2">Или авторизуйтесь через приложение</string>
-    <string name="authorization">Авторизация</string>
+<!--    <string name="auth_title">Для участия в мероприятиях войдите \nв приложение через социальные сети</string>-->
+<!--    <string name="auth_title2">Или авторизуйтесь через приложение</string>-->
+<!--    <string name="authorization">Авторизация</string>-->
     <string name="input_email">Введите e-mail</string>
     <string name="input_password">Введите пароль</string>
     <string name="enter">ВОЙТИ</string>

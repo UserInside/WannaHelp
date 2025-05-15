@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.wannahelp.MainApp
 import com.example.domain.entities.Category
 import com.example.common.extensions.datastore
-import com.example.domain.entities.NewsItem
+import com.example.domain.entities.NewsDomainModel
 import com.example.domain.interactors.NewsInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -24,8 +24,8 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
     val screenStateFlow = MutableStateFlow<NewsState>(NewsState.Progress)
 
-    val listToShowStateFlow: MutableStateFlow<List<NewsItem>> =
-        MutableStateFlow<List<NewsItem>>(emptyList())
+    val listToShowStateFlow: MutableStateFlow<List<NewsDomainModel>> =
+        MutableStateFlow<List<NewsDomainModel>>(emptyList())
 
     val unreadMsgCountStateFlow =
         MutableStateFlow<Int>(listToShowStateFlow.value.count { it.isRead == false })

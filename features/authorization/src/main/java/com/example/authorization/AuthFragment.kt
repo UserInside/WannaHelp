@@ -1,4 +1,4 @@
-package com.example.wannahelp.presentation.authScreen
+package com.example.authorization
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,15 +11,17 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import com.example.wannahelp.R
-import com.example.wannahelp.databinding.FragmentAuthBinding
-import com.example.wannahelp.presentation.ToolbarFragment
+import com.example.authorization.databinding.FragmentAuthBinding
+import com.example.common.FragmentNavigationListener
+import com.example.common.ToolbarFragment
+import com.example.common.R as commonR
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = true) {
     private lateinit var binding: FragmentAuthBinding
     private lateinit var bottomNavView: View
+    private lateinit var navListener: FragmentNavigationListener
     private val viewModel: AuthViewModel by viewModels()
 
     override fun setupToolbar(
@@ -47,10 +49,10 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
             },
         )
 
-        bottomNavView =
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_nav_view).also {
-                it.visibility = View.GONE
-            }
+//        bottomNavView =
+//            requireActivity().findViewById<BottomNavigationView>(commonR.id.bottom_nav_view).also {
+//                it.visibility = View.GONE
+//            }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -79,14 +81,26 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
                 binding.authBtnEnter.apply {
                     isClickable = isButtonActive
                     if (isButtonActive) {
-                        setBackgroundColor(resources.getColor(R.color.leaf, null))
+                        setBackgroundColor(
+                            resources.getColor(
+                                commonR.color.leaf,
+                                null
+                            )
+                        )
                         setOnClickListener {
-                            NavHostFragment.findNavController(this@AuthFragment)
-                                .navigate(R.id.navigateToWannaHelpScreenFragment)
-                            bottomNavView.visibility = View.VISIBLE
+                            navListener = requireActivity() as FragmentNavigationListener
+                            navListener.navigateTo()
+//                            NavHostFragment.findNavController(this@AuthFragment)
+//                                .navigate(R.id.navigateToWannaHelpScreenFragment)
+//                            bottomNavView.visibility = View.VISIBLE
                         }
                     } else {
-                        setBackgroundColor(resources.getColor(R.color.warm_grey, null))
+                        setBackgroundColor(
+                            resources.getColor(
+                                commonR.color.warm_grey,
+                                null
+                            )
+                        )
                         setOnClickListener {}
                     }
                 }

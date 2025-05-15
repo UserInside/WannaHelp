@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.extensions.parseToList
-import com.example.domain.entities.NewsItem
+import com.example.domain.entities.NewsDomainModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,7 @@ import kotlinx.serialization.json.Json
 const val FILE_NAME = "news.json"
 
 class SearchScreenViewModel(application: Application) : AndroidViewModel(application) {
-    val eventsOriginList = Json.parseToList<NewsItem>(application.applicationContext, FILE_NAME)
+    val eventsOriginList = Json.parseToList<NewsDomainModel>(application.applicationContext, FILE_NAME)
 
     var searchQuery: MutableStateFlow<String> = MutableStateFlow<String>("")
 
@@ -51,5 +51,5 @@ class SearchScreenViewModel(application: Application) : AndroidViewModel(applica
 sealed class SearchResult {
     object NoInputMade : SearchResult()
 
-    class ResultToShow(val listToShow: List<NewsItem>) : SearchResult()
+    class ResultToShow(val listToShow: List<NewsDomainModel>) : SearchResult()
 }

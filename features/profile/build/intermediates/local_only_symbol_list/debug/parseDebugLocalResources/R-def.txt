@@ -1,0 +1,25 @@
+R_DEF: Internal format may change without notice
+local
+id action_edit_profile
+id appBar
+id coordinator
+id img_friend_avatar
+id profile_information
+id profile_toolbar
+id recycler_view_your_friends
+id separation_view_1
+id separation_view_2
+id switch_receive_push_notifications
+id tv_friend_name
+id tv_receive_push_notifications
+id tv_title_birthday
+id tv_title_circle_of_action
+id tv_title_name
+id tv_title_your_friends
+id tv_value_birthday
+id tv_value_circle_of_action
+layout fragment_profile_screen
+layout profile_information
+layout profile_screen_appbar
+layout recycler_view_card_friends
+menu menu_toolbar_profile

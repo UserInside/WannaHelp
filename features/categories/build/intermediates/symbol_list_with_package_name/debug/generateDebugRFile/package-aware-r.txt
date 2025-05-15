@@ -1,0 +1,8 @@
+com.example.categories
+id categories_progressBar
+id img_card_help_category
+id recycler_view_categories
+id tv_choose_help_category
+id tv_title_category
+layout fragment_categories_screen
+layout recycler_view_card_help_category

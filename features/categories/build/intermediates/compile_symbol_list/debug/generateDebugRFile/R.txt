@@ -1,0 +1,7 @@
+int id categories_progressBar 0x0
+int id img_card_help_category 0x0
+int id recycler_view_categories 0x0
+int id tv_choose_help_category 0x0
+int id tv_title_category 0x0
+int layout fragment_categories_screen 0x0
+int layout recycler_view_card_help_category 0x0

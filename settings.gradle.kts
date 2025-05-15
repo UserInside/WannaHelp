@@ -24,8 +24,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "WannaHelp"
 include(":app")
-include(":domain")
-include(":data")
 include(":common")
 include(":features")
 include(":features:authorization")
+include(":features:profile")
+include(":features:categories")
+include(":core")
+include(":core:data")
+include(":core:domain")

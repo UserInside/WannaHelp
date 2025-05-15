@@ -54,9 +54,12 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.play.services.ads)
-    implementation(project(":domain"))
-    implementation(project(":data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
     implementation(project(":common"))
+    implementation(project(":features:authorization"))
+    implementation(project(":features:profile"))
+    implementation(project(":features:categories"))
     ksp(libs.dagger.compiler)
     implementation(libs.dagger)
 
@@ -68,7 +71,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.livedata.core)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.kotlinx.serialization.json)
+    api(libs.kotlinx.serialization.json)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.navigation.runtime.ktx)

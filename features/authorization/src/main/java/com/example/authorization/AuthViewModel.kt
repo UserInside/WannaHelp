@@ -1,4 +1,4 @@
-package com.example.wannahelp.presentation.authScreen
+package com.example.authorization
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

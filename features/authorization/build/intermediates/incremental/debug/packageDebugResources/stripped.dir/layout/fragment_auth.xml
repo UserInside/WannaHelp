@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingHorizontal="@dimen/spacing_l">
+
+        <TextView
+            android:id="@+id/auth_textView1"
+            style="@style/TextStyle10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/auth_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/auth_btn_vk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:background="@color/white"
+            android:contentDescription="@null"
+            android:src="@drawable/icon_vk"
+            app:layout_constraintEnd_toStartOf="@+id/auth_btn_fb"
+            app:layout_constraintStart_toStartOf="@id/auth_textView1"
+            app:layout_constraintTop_toBottomOf="@id/auth_textView1" />
+
+        <ImageButton
+            android:id="@+id/auth_btn_fb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:background="@color/white"
+            android:contentDescription="@null"
+            android:src="@drawable/icon_fb"
+            app:layout_constraintEnd_toEndOf="@id/auth_textView1"
+            app:layout_constraintStart_toStartOf="@id/auth_textView1"
+            app:layout_constraintTop_toBottomOf="@id/auth_textView1" />
+
+        <ImageButton
+            android:id="@+id/auth_btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:background="@color/white"
+            android:contentDescription="@null"
+            android:src="@drawable/icon_ok"
+            app:layout_constraintEnd_toEndOf="@id/auth_textView1"
+            app:layout_constraintStart_toEndOf="@id/auth_btn_fb"
+            app:layout_constraintTop_toBottomOf="@id/auth_textView1"
+
+            />
+
+        <TextView
+            android:id="@+id/auth_textView2"
+            style="@style/TextStyle10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/auth_title2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auth_btn_fb" />
+
+        <TextView
+            android:id="@+id/auth_tv_email"
+            style="@style/TextStyle13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:text="@string/email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auth_textView2" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/auth_editText_email"
+            style="@style/TextStylePopupPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/input_email"
+            android:paddingStart="0dp"
+            app:layout_constraintTop_toBottomOf="@id/auth_tv_email"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/auth_tv_password"
+            style="@style/TextStyle13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:text="@string/tv_password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auth_editText_email" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/auth_editText_password"
+            style="@style/TextStylePopupPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/icon_eye_open"
+            android:hint="@string/input_password"
+            android:inputType="textPassword"
+            android:paddingStart="0dp"
+            android:paddingTop="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auth_tv_password"
+            tools:ignore="RtlSymmetry" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/auth_btn_enter"
+            style="@style/TextStyle17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:gravity="center"
+            android:inputType="textEmailAddress"
+            android:text="@string/enter"
+            app:cornerRadius="2dp"
+            app:layout_constraintTop_toBottomOf="@id/auth_editText_password" />
+
+        <TextView
+            android:id="@+id/auth_tv_forgotten_password"
+            style="@style/TextStyle7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:text="@string/forgotten_password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auth_btn_enter" />
+
+        <TextView
+            android:id="@+id/auth_tv_registration"
+            style="@style/TextStyle7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:text="@string/registration"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auth_btn_enter" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

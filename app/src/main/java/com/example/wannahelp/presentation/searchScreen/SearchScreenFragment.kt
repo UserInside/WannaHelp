@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentSearchScreenBinding
-import com.example.wannahelp.presentation.ToolbarFragment
+import com.example.common.ToolbarFragment
 import com.example.wannahelp.presentation.searchScreen.searchByEvent.SearchByEventFragment
 import com.example.wannahelp.presentation.searchScreen.searchByNKO.SearchByNKOFragment
 import com.google.android.material.appbar.MaterialToolbar
@@ -58,8 +58,8 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
             )
             setOnCloseListener {
                 binding.searchToolbar.visibility = View.GONE
-                requireView().findViewById<MaterialToolbar>(R.id.main_toolbar).visibility =
-                    View.VISIBLE
+//                requireView().findViewById<MaterialToolbar>(R.id.main_toolbar).visibility =
+//                    View.VISIBLE
                 true
             }
         }

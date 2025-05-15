@@ -9,7 +9,7 @@ import androidx.core.net.toUri
 import androidx.navigation.fragment.NavHostFragment
 import com.example.wannahelp.R
 import com.example.wannahelp.databinding.FragmentEditProfileScreenBinding
-import com.example.wannahelp.presentation.ToolbarFragment
+import com.example.common.ToolbarFragment
 import java.io.File
 
 class EditProfileScreenFragment : ToolbarFragment(R.layout.fragment_edit_profile_screen) {

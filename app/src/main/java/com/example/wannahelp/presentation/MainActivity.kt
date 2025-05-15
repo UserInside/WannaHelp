@@ -2,25 +2,29 @@ package com.example.wannahelp.presentation
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.common.FragmentNavigationListener
 import com.example.wannahelp.MainApp
-import com.example.wannahelp.R
 import com.example.data.db.AppDatabase
 import com.example.data.db.mapCategoryApiResponseItemToDbEntity
 import com.example.data.db.mapEventApiResponseItemToDbEntity
 import com.example.data.network.ApiService
+import com.example.wannahelp.R
 import com.example.wannahelp.presentation.newsScreen.NewsViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FragmentNavigationListener {
     private lateinit var badge: BadgeDrawable
+    private lateinit var navController: NavController
     private val viewModel: NewsViewModel by viewModels()
 
     @Inject
@@ -37,9 +41,21 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+
+        val currentFragment = navController.currentDestination?.label
+
+        // Определяем тип фрагмента и изменяем поведение активити
+        when (currentFragment) {
+            "AuthFragment" -> {
+                bottomNavigationView.visibility = View.GONE
+            }
+            else -> {
+                bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
 
         bottomNavigationView.setupWithNavController(navController)
 
@@ -54,6 +70,10 @@ class MainActivity : AppCompatActivity() {
                 updateNewsBadge(count)
             }
         }
+    }
+
+    override fun navigateTo() {
+        navController.navigate(R.id.navigateToWannaHelpScreenFragment)
     }
 
     private fun updateNewsBadge(count: Int) {
