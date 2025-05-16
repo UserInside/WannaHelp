@@ -8,12 +8,9 @@ import javax.inject.Singleton
 
 @Module
 class ProfileModule {
-
     @Singleton
     @Provides
     fun provideProfileViewModelFactory(apiService: ApiService): ProfileViewModelFactory {
         return ProfileViewModelFactory(apiService)
     }
-
-
 }

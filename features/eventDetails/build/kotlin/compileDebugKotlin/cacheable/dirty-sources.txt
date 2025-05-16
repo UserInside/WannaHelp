@@ -1,0 +1,1 @@
+/home/igor/WannaHelpApplication/WannaHelp/features/eventDetails/src/main/java/com/example/eventdetails/EventDetailsScreenFragment.kt

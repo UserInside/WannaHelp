@@ -10,12 +10,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
 import com.example.authorization.databinding.FragmentAuthBinding
 import com.example.common.FragmentNavigationListener
 import com.example.common.ToolbarFragment
 import com.example.common.R as commonR
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = true) {
@@ -89,7 +87,7 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
                         )
                         setOnClickListener {
                             navListener = requireActivity() as FragmentNavigationListener
-                            navListener.navigateTo()
+                            navListener.navigateTo("profileEditing")
 //                            NavHostFragment.findNavController(this@AuthFragment)
 //                                .navigate(R.id.navigateToWannaHelpScreenFragment)
 //                            bottomNavView.visibility = View.VISIBLE

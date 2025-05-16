@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileEditScreenFragment"
-        android:name="com.example.wannahelp.presentation.profileEditScreen.EditProfileScreenFragment"
+        android:name="com.example.profileediting.EditProfileScreenFragment"
         android:label="ProfileEditScreenFragment" >
         <action
             android:id="@+id/navigateToProfileScreen"
@@ -28,12 +28,12 @@
         android:label="WannaHelpScreenFragment" />
     <fragment
         android:id="@+id/searchScreenFragment"
-        android:name="com.example.wannahelp.presentation.searchScreen.SearchScreenFragment"
+        android:name="com.example.search.SearchScreenFragment"
         android:label="fragment_search_screen"
         tools:layout="@layout/fragment_search_screen" />
     <fragment
         android:id="@+id/newsScreenFragment"
-        android:name="com.example.wannahelp.presentation.newsScreen.NewsScreenFragment"
+        android:name="com.example.news.NewsScreenFragment"
         android:label="fragment_news_screen"
         tools:layout="@layout/fragment_news_screen" >
         <action
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventDetailsScreenFragment"
-        android:name="com.example.wannahelp.presentation.eventDetailsScreen.EventDetailsScreenFragment"
+        android:name="com.example.eventdetails.EventDetailsScreenFragment"
         android:label="EventDetailsScreenFragment" >
         <argument
             android:name="clickedNewsItem"
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/newsFilterFragment"
-        android:name="com.example.wannahelp.presentation.newsScreen.newsFilterScreen.NewsFilterFragment"
+        android:name="com.example.news.newsFilterScreen.NewsFilterFragment"
         android:label="NewsFilterFragment" >
         <action
             android:id="@+id/navigateToNewsScreen"

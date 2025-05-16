@@ -60,6 +60,11 @@ dependencies {
     implementation(project(":features:authorization"))
     implementation(project(":features:profile"))
     implementation(project(":features:categories"))
+    implementation(project(":features:eventDetails"))
+    implementation(project(":features:profileEditing"))
+    implementation(project(":features:news"))
+    implementation(project(":features:search"))
+
     ksp(libs.dagger.compiler)
     implementation(libs.dagger)
 

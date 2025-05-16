@@ -87,10 +87,6 @@ class DataModule(val appContext: Context) {
         categoriesDao: CategoriesDao
     ): CategoriesRepository = CategoriesRepositoryImpl(context, categoriesDao)
 
-//    @Provides
-//    fun provideCategoriesInteractor(categoriesRepository: CategoriesRepository): CategoriesInteractor =
-//        CategoriesInteractor(categoriesRepository)
-
     @Provides
     fun provideNewsRepository(
         db: AppDatabase

@@ -1,15 +1,15 @@
 package com.example.wannahelp.di
 
-//@Module
-//class AppModule {
+// @Module
+// class AppModule {
 //
-////    @Provides
-////    @Singleton
-////    fun provideJson() =
-////        Json {
-////            ignoreUnknownKeys = true
-////            isLenient = true
-////        }
+// //    @Provides
+// //    @Singleton
+// //    fun provideJson() =
+// //        Json {
+// //            ignoreUnknownKeys = true
+// //            isLenient = true
+// //        }
 //
 //
-//}
+// }

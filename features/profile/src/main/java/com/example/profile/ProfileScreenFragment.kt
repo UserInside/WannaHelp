@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.FragmentNavigationListener
+import com.example.data.di.DataModule
 import com.example.profile.databinding.FragmentProfileScreenBinding
 import com.example.profile.di.DaggerProfileComponent
 import com.example.profile.di.ProfileComponent
@@ -30,16 +31,12 @@ class ProfileScreenFragment : Fragment() {
     private val profileComponent: ProfileComponent by lazy {
         DaggerProfileComponent.builder()
             .profileModule(ProfileModule())
+            .dataModule(DataModule(requireContext()))
             .build()
     }
 
     @Inject
     lateinit var vmFactory: ProfileViewModelFactory
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        (requireActivity().application as MainApp).appComponent.inject(this)
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +52,7 @@ class ProfileScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        profileComponent.inject(this)
         viewModel = ViewModelProvider(this, vmFactory)[ProfileViewModel::class]
 
         val customToolbar = binding.appBar.profileToolbar
@@ -73,7 +71,7 @@ class ProfileScreenFragment : Fragment() {
                         return when (menuItem.itemId) {
                             R.id.action_edit_profile -> {
                                 navListener = requireActivity() as FragmentNavigationListener
-                                navListener.navigateTo()
+                                navListener.navigateTo("profileEditing")
                                 true
                             }
 

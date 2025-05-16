@@ -1,0 +1,7 @@
+/home/igor/WannaHelpApplication/WannaHelp/features/search/src/main/java/com/example/search/SearchResultItemDiffCallback.kt
+/home/igor/WannaHelpApplication/WannaHelp/features/search/src/main/java/com/example/search/ViewPagerAdapter.kt
+/home/igor/WannaHelpApplication/WannaHelp/features/search/src/main/java/com/example/search/SearchRecyclerViewAdapter.kt
+/home/igor/WannaHelpApplication/WannaHelp/features/search/src/main/java/com/example/search/searchByEvent/SearchByEventFragment.kt
+/home/igor/WannaHelpApplication/WannaHelp/features/search/src/main/java/com/example/search/SearchScreenFragment.kt
+/home/igor/WannaHelpApplication/WannaHelp/features/search/src/main/java/com/example/search/SearchScreenViewModel.kt
+/home/igor/WannaHelpApplication/WannaHelp/features/search/src/main/java/com/example/search/searchByNKO/SearchByNKOFragment.kt

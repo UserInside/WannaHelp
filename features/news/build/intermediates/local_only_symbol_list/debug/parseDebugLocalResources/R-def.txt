@@ -1,0 +1,19 @@
+R_DEF: Internal format may change without notice
+local
+id news_card_bottomBar
+id news_card_decor
+id news_card_divider
+id news_card_title
+id news_image
+id news_progressBar
+id recycler_view_filter_categories
+id recycler_view_news
+id switch_choose_category
+id tv_categories_of_help
+id tv_category_name
+id tv_news_card_description
+id tv_news_card_remains
+layout fragment_news_filter
+layout fragment_news_screen
+layout recycler_view_card_filter_help_categories
+layout recycler_view_card_news
