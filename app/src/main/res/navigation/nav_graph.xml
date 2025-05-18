@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/authFragment">
+    app:startDestination="@id/authFragment"
+    tools:package="com.example.wannahelp">
 
     <fragment
         android:id="@+id/profileScreenFragment"
@@ -23,9 +24,9 @@
             app:destination="@id/profileScreenFragment" />
     </fragment>
     <fragment
-        android:id="@+id/wannaHelpScreenFragment"
+        android:id="@+id/categoriesScreenFragment"
         android:name="com.example.categories.CategoriesScreenFragment"
-        android:label="WannaHelpScreenFragment" />
+        android:label="CategoriesScreenFragment" />
     <fragment
         android:id="@+id/searchScreenFragment"
         android:name="com.example.search.SearchScreenFragment"
@@ -69,7 +70,7 @@
         android:name="com.example.authorization.AuthFragment"
         android:label="AuthFragment" >
         <action
-            android:id="@+id/navigateToWannaHelpScreenFragment"
-            app:destination="@id/wannaHelpScreenFragment" />
+            android:id="@+id/navigateToCategoriesScreen"
+            app:destination="@id/categoriesScreenFragment" />
     </fragment>
 </navigation>

@@ -9,24 +9,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.common.FragmentNavigationListener
 import com.example.data.db.AppDatabase
 import com.example.data.db.mapCategoryApiResponseItemToDbEntity
 import com.example.data.db.mapEventApiResponseItemToDbEntity
 import com.example.data.network.ApiService
 import com.example.wannahelp.MainApp
 import com.example.wannahelp.R
-//import com.example.wannahelp.presentation.newsScreen.NewsViewModel
+import com.example.news.NewsViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), FragmentNavigationListener {
+class MainActivity : AppCompatActivity() {
     private lateinit var badge: BadgeDrawable
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
-//    private val viewModel: NewsViewModel by viewModels() //todo тут убрал вм чтобы запустилось. чинить.
+    private val viewModel: NewsViewModel by viewModels()
 
     @Inject
     lateinit var apiService: ApiService
@@ -46,7 +45,13 @@ class MainActivity : AppCompatActivity(), FragmentNavigationListener {
 
         bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
 
-        checkFragment()
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.authFragment -> bottomNavView.visibility = View.GONE
+                else -> bottomNavView.visibility = View.VISIBLE
+            }
+
+        }
 
         bottomNavView.setupWithNavController(navController)
 
@@ -57,34 +62,8 @@ class MainActivity : AppCompatActivity(), FragmentNavigationListener {
             maxCharacterCount = 3
         }
         lifecycleScope.launch {
-//            viewModel.unreadMsgCountStateFlow.collect { count ->
-//                updateNewsBadge(count)
-
-        }
-    }
-
-    override fun navigateTo(screen: String) {
-        val dest = when (screen) {
-            "categories" -> R.id.navigateToWannaHelpScreenFragment
-            "profile" -> R.id.navigateToProfileScreen
-            "profileEditing" -> R.id.navigateToEditProfileScreen
-            "news" -> R.id.navigateToNewsScreen
-            "newsFilter" -> R.id.navigateToNewsFilterScreen
-            "event" -> R.id.navigateToEventDetailsScreen
-            else -> {}
-        }
-        navController.navigate(dest)
-        checkFragment()
-    }
-
-    private fun checkFragment() {
-        return when (navController.currentDestination?.label) {
-            "AuthFragment" -> {
-                bottomNavView.visibility = View.GONE
-            }
-
-            else -> {
-                bottomNavView.visibility = View.VISIBLE
+            viewModel.unreadMsgCountStateFlow.collect { count ->
+                updateNewsBadge(count)
             }
         }
     }

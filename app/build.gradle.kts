@@ -4,13 +4,17 @@ plugins {
     alias(libs.plugins.ktlint)
     kotlin("plugin.serialization") version "1.9.0"
     id("kotlin-parcelize")
-    id("androidx.navigation.safeargs.kotlin")
+    id("androidx.navigation.safeargs.kotlin") //удалить?
     id("com.google.devtools.ksp")
 }
 
 android {
     namespace = "com.example.wannahelp"
     compileSdk = 35
+
+    sourceSets {
+        getByName("main").java.srcDirs("build/generated/source/navigation-args")
+    }
 
     defaultConfig {
         applicationId = "com.example.wannahelp"

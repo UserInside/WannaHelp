@@ -9,7 +9,7 @@ import com.example.common.extensions.datastore
 import com.example.domain.entities.Category
 import com.example.domain.entities.NewsDomainModel
 import com.example.domain.interactors.NewsInteractor
-import com.example.wannahelp.MainApp
+import com.example.news.di.NewsComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -34,7 +34,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var interactor: NewsInteractor
 
     init {
-        MainApp.appComponent.inject(this)
+        NewsComponent.inject(this)
         viewModelScope.launch {
             loadNewsFromDB()
         }

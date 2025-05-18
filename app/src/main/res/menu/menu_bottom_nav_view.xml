@@ -9,7 +9,7 @@
         android:icon="@drawable/icon_search_24_black"
         android:title="@string/search" />
     <item
-        android:id="@+id/wannaHelpScreenFragment"
+        android:id="@+id/categoriesScreenFragment"
         android:icon="@drawable/nav_heart_24"
         android:title="@string/wanna_help" />
     <item

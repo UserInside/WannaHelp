@@ -1,6 +1,8 @@
 package com.example.authorization
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,18 +11,23 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.authorization.databinding.FragmentAuthBinding
-import com.example.common.FragmentNavigationListener
+import com.example.authorization.di.AuthComponentViewModel
 import com.example.common.ToolbarFragment
-import com.example.common.R as commonR
+import com.example.common.extensions.navigate
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import com.example.common.R as commonR
 
 class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = true) {
     private lateinit var binding: FragmentAuthBinding
-    private lateinit var bottomNavView: View
-    private lateinit var navListener: FragmentNavigationListener
-    private val viewModel: AuthViewModel by viewModels()
+
+    private val viewModel: AuthViewModel by viewModels ()
+
+    @Inject
+    lateinit var navigator: AuthorizationNavigator
 
     override fun setupToolbar(
         toolbar: Toolbar,
@@ -34,11 +41,17 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         }
     }
 
+    override fun onAttach(context: Context) {
+        ViewModelProvider(this)[AuthComponentViewModel::class].authComponent.inject(this)
+        super.onAttach(context)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+
         requireActivity().onBackPressedDispatcher.addCallback(
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -47,10 +60,6 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
             },
         )
 
-//        bottomNavView =
-//            requireActivity().findViewById<BottomNavigationView>(commonR.id.bottom_nav_view).also {
-//                it.visibility = View.GONE
-//            }
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -86,11 +95,8 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
                             )
                         )
                         setOnClickListener {
-                            navListener = requireActivity() as FragmentNavigationListener
-                            navListener.navigateTo("profileEditing")
-//                            NavHostFragment.findNavController(this@AuthFragment)
-//                                .navigate(R.id.navigateToWannaHelpScreenFragment)
-//                            bottomNavView.visibility = View.VISIBLE
+                            Log.e("VIV", "click")
+                            navigate(navigator.toCategories)
                         }
                     } else {
                         setBackgroundColor(

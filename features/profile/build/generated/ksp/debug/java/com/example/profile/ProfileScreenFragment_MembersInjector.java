@@ -25,24 +25,34 @@ import javax.annotation.processing.Generated;
 public final class ProfileScreenFragment_MembersInjector implements MembersInjector<ProfileScreenFragment> {
   private final Provider<ProfileViewModelFactory> vmFactoryProvider;
 
-  public ProfileScreenFragment_MembersInjector(
-      Provider<ProfileViewModelFactory> vmFactoryProvider) {
+  private final Provider<ProfileNavigator> navigatorProvider;
+
+  public ProfileScreenFragment_MembersInjector(Provider<ProfileViewModelFactory> vmFactoryProvider,
+      Provider<ProfileNavigator> navigatorProvider) {
     this.vmFactoryProvider = vmFactoryProvider;
+    this.navigatorProvider = navigatorProvider;
   }
 
   public static MembersInjector<ProfileScreenFragment> create(
-      Provider<ProfileViewModelFactory> vmFactoryProvider) {
-    return new ProfileScreenFragment_MembersInjector(vmFactoryProvider);
+      Provider<ProfileViewModelFactory> vmFactoryProvider,
+      Provider<ProfileNavigator> navigatorProvider) {
+    return new ProfileScreenFragment_MembersInjector(vmFactoryProvider, navigatorProvider);
   }
 
   @Override
   public void injectMembers(ProfileScreenFragment instance) {
     injectVmFactory(instance, vmFactoryProvider.get());
+    injectNavigator(instance, navigatorProvider.get());
   }
 
   @InjectedFieldSignature("com.example.profile.ProfileScreenFragment.vmFactory")
   public static void injectVmFactory(ProfileScreenFragment instance,
       ProfileViewModelFactory vmFactory) {
     instance.vmFactory = vmFactory;
+  }
+
+  @InjectedFieldSignature("com.example.profile.ProfileScreenFragment.navigator")
+  public static void injectNavigator(ProfileScreenFragment instance, ProfileNavigator navigator) {
+    instance.navigator = navigator;
   }
 }

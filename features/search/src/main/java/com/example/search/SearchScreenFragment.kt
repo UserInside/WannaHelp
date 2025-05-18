@@ -46,24 +46,24 @@ class SearchScreenFragment : ToolbarFragment(R.layout.fragment_search_screen) {
         binding = FragmentSearchScreenBinding.bind(content ?: view)
         viewModel = ViewModelProvider(requireActivity())[SearchScreenViewModel::class]
 
-        binding.searchView.apply {
-            SearchView.setOnQueryTextListener(
-                object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String?): Boolean = false
-
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        viewModel.updateSearchResult(newText.toString())
-                        return true
-                    }
-                },
-            )
-            SearchView.setOnCloseListener {
-                binding.searchToolbar.visibility = View.GONE
-//                requireView().findViewById<MaterialToolbar>(R.id.main_toolbar).visibility =
-//                    View.VISIBLE
-                true
-            }
-        }
+//        binding.searchView.apply {
+//            SearchView.setOnQueryTextListener(
+//                object : SearchView.OnQueryTextListener {
+//                    override fun onQueryTextSubmit(query: String?): Boolean = false
+//
+//                    override fun onQueryTextChange(newText: String?): Boolean {
+//                        viewModel.updateSearchResult(newText.toString())
+//                        return true
+//                    }
+//                },
+//            )
+//            SearchView.setOnCloseListener {
+//                binding.searchToolbar.visibility = View.GONE
+////                requireView().findViewById<MaterialToolbar>(R.id.main_toolbar).visibility =
+////                    View.VISIBLE
+//                true
+//            }
+//        }
 
         val viewPagerFragmentsList =
             listOf<Fragment>(

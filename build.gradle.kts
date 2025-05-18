@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp") version "2.1.10-1.0.30" apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.android.library) apply false
+    id("androidx.navigation.safeargs") version "2.8.9" apply false
 }
 
 buildscript {

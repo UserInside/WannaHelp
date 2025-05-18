@@ -7,23 +7,19 @@ import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.net.toUri
 import androidx.navigation.fragment.NavHostFragment
-import com.example.common.FragmentNavigationListener
 import com.example.common.ToolbarFragment
 import com.example.profileediting.databinding.FragmentEditProfileScreenBinding
 import com.example.common.R as commonR
 import java.io.File
 
 class EditProfileScreenFragment : ToolbarFragment(R.layout.fragment_edit_profile_screen) {
-    private lateinit var navListener: FragmentNavigationListener
     override fun setupToolbar(
         toolbar: Toolbar,
         actionButton: ImageButton,
     ) {
-        navListener = requireActivity() as FragmentNavigationListener
         toolbar.apply {
             title = getString(commonR.string.tv_title_edit_profile)
             setNavigationOnClickListener {
-                navListener.navigateTo("profile")
 //                NavHostFragment.findNavController(this@EditProfileScreenFragment)
 //                    .popBackStack()
             }
@@ -34,7 +30,6 @@ class EditProfileScreenFragment : ToolbarFragment(R.layout.fragment_edit_profile
             setOnClickListener {
 //                NavHostFragment.findNavController(this@EditProfileScreenFragment)
 //                    .navigate(R.id.navigateToProfileScreen)
-                navListener.navigateTo("profile")
             }
         }
     }

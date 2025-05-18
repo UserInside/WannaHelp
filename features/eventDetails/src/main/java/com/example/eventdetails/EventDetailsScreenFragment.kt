@@ -12,7 +12,7 @@ import com.example.common.R as commonR
 
 class EventDetailsScreenFragment :
     ToolbarFragment(R.layout.fragment_event_details_screen, showBackButton = true) {
-    val args: EventDetailsScreenFragmentArgs by navArgs()
+//    val args: EventDetailsScreenFragmentArgs by navArgs()
 
     override fun setupToolbar(
         toolbar: Toolbar,
@@ -40,10 +40,10 @@ class EventDetailsScreenFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEventDetailsScreenBinding.bind(content ?: view)
-        val newsItem = args.clickedNewsItem
+//        val newsItem = args.clickedNewsItem
 
         binding.apply {
-            tvTitleEventDetails.text = newsItem.name
+//            tvTitleEventDetails.text = newsItem.name
         }
     }
 }

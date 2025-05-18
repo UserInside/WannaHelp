@@ -1,5 +1,6 @@
 package com.example.profile
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,11 +14,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.common.FragmentNavigationListener
+import com.example.common.extensions.navigate
 import com.example.data.di.DataModule
 import com.example.profile.databinding.FragmentProfileScreenBinding
 import com.example.profile.di.DaggerProfileComponent
 import com.example.profile.di.ProfileComponent
+import com.example.profile.di.ProfileComponentViewModel
 import com.example.profile.di.ProfileModule
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,17 +28,17 @@ import com.example.common.R as commonR
 class ProfileScreenFragment : Fragment() {
     private lateinit var binding: FragmentProfileScreenBinding
     private lateinit var viewModel: ProfileViewModel
-    private lateinit var navListener: FragmentNavigationListener
-
-    private val profileComponent: ProfileComponent by lazy {
-        DaggerProfileComponent.builder()
-            .profileModule(ProfileModule())
-            .dataModule(DataModule(requireContext()))
-            .build()
-    }
 
     @Inject
     lateinit var vmFactory: ProfileViewModelFactory
+
+    @Inject
+    lateinit var navigator: ProfileNavigator
+
+    override fun onAttach(context: Context) {
+        ViewModelProvider(this)[ProfileComponentViewModel::class.java].profileComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +54,6 @@ class ProfileScreenFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        profileComponent.inject(this)
         viewModel = ViewModelProvider(this, vmFactory)[ProfileViewModel::class]
 
         val customToolbar = binding.appBar.profileToolbar
@@ -70,8 +71,7 @@ class ProfileScreenFragment : Fragment() {
                     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                         return when (menuItem.itemId) {
                             R.id.action_edit_profile -> {
-                                navListener = requireActivity() as FragmentNavigationListener
-                                navListener.navigateTo("profileEditing")
+                  navigate(navigator.toProfileEditing)
                                 true
                             }
 

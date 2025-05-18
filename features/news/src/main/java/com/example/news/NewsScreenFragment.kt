@@ -1,18 +1,21 @@
 package com.example.news
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.ToolbarFragment
+import com.example.common.extensions.navigate
 import com.example.news.databinding.FragmentNewsScreenBinding
 import com.example.news.di.NewsComponent
+import com.example.news.di.NewsComponentViewModel
 import com.example.news.newsRecycler.NewsRecyclerViewAdapter
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -20,12 +23,13 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import javax.inject.Inject
+import kotlin.jvm.java
 import com.example.common.R as commonR
 
 class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
 
     @Inject
-    lateinit var component: NewsComponent
+    lateinit var navigator: NewsNavigator
 
     private val viewModel: NewsViewModel by activityViewModels()
     private lateinit var rvAdapter: NewsRecyclerViewAdapter
@@ -39,10 +43,14 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
             visibility = View.VISIBLE
             setImageResource(commonR.drawable.icon_filter)
             setOnClickListener {
-                NavHostFragment.findNavController(this@NewsScreenFragment)
-                    .navigate(R.id.navigateToNewsFilterScreen)
+//                   navigate(navigator.toSomeWhere)
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        ViewModelProvider(this)[NewsComponentViewModel::class.java].newsComponent.inject(this)
+        super.onAttach(context)
     }
 
     @SuppressLint("CheckResult")
@@ -55,14 +63,14 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
 
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
         lifecycleScope.launch {
-            viewModel.loadNewsFromDB()
+//            viewModel.loadNewsFromDB()
         }
 
         rvAdapter =
             NewsRecyclerViewAdapter { newsItem ->
-                viewModel.markNewsItemAsRead(newsItem.id)
-                val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(newsItem)
-                NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
+//                viewModel.markNewsItemAsRead(newsItem.id)
+//                val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(newsItem)
+//                NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
             }
 
         binding.recyclerViewNews.apply {

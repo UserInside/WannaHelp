@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -34,6 +35,9 @@ android {
 
 dependencies {
     implementation(project(":common"))
+
+    ksp(libs.dagger.compiler)
+    implementation(libs.dagger)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)

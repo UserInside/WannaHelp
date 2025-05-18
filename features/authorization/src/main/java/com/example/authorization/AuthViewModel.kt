@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
-class AuthViewModel : ViewModel() {
+internal class AuthViewModel: ViewModel() {
     var emailTextValue: MutableStateFlow<String> = MutableStateFlow<String>("")
     var passwordTextValue: MutableStateFlow<String> = MutableStateFlow<String>("")
 
