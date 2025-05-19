@@ -15,6 +15,8 @@ import com.example.data.di.DataModule
 import com.example.domain.di.DomainModule
 import com.example.categories.di.DaggerCategoriesComponent
 import com.example.categories.di.CategoriesComponent
+import com.example.categories.recycler.CategoriesRecyclerViewAdapter
+import com.example.categories.recycler.GridSpacingItemDecoration
 import kotlinx.coroutines.launch
 
 class CategoriesScreenFragment : ToolbarFragment(R.layout.fragment_categories_screen) {

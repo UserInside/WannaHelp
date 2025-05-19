@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         badge = bottomNavView.getOrCreateBadge(R.id.newsScreenFragment)
         badge.apply {
-            backgroundColor = resources.getColor(R.color.leaf, null)
+            backgroundColor = resources.getColor(R.color.leaf, theme)
             badgeTextColor = resources.getColor(R.color.white, null)
             maxCharacterCount = 3
         }

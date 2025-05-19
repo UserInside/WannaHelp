@@ -12,6 +12,7 @@ import com.example.common.ToolbarFragment
 import com.example.search.databinding.FragmentSearchScreenBinding
 import com.example.search.searchByEvent.SearchByEventFragment
 import com.example.search.searchByNKO.SearchByNKOFragment
+import com.example.search.viewpager.ViewPagerAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.example.common.R as commonR

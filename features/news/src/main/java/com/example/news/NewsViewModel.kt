@@ -9,7 +9,6 @@ import com.example.common.extensions.datastore
 import com.example.domain.entities.Category
 import com.example.domain.interactors.NewsInteractor
 import com.example.news.di.NewsComponent
-import com.example.common.models.Mapper
 import com.example.common.models.NewsUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
@@ -56,7 +55,7 @@ class NewsViewModel(
 
         val eventsList = interactor.getNewsByCategories(setOfChosenCategories)
 
-        listToShowStateFlow.value = eventsList.map { Mapper.mapNewsDomainModelToUi(it)}
+        listToShowStateFlow.value = eventsList.map { NewsMapper.mapNewsDomainModelToUi(it)}
         unreadMsgCountStateFlow.value = eventsList.count { !it.isRead }
 
         screenStateFlow.value = NewsState.Done

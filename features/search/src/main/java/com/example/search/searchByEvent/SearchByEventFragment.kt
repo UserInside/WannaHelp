@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.search.SearchRecyclerViewAdapter
+import com.example.search.recycler.SearchRecyclerViewAdapter
 import com.example.search.SearchResult
 import com.example.search.SearchScreenViewModel
 import com.example.search.databinding.FragmentSearchByEventBinding
