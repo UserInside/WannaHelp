@@ -43,8 +43,11 @@ dependencies {
     implementation(project(":features:news")) //todo         убрать
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.fragment.ktx)
 
+    implementation(libs.androidx.activity.ktx)
+
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.legacy.support.v4)
 
     implementation(libs.androidx.core.ktx)
