@@ -3,19 +3,15 @@ package com.example.wannahelp.presentation
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.data.db.AppDatabase
-import com.example.data.db.mapCategoryApiResponseItemToDbEntity
-import com.example.data.db.mapEventApiResponseItemToDbEntity
 import com.example.data.network.ApiService
 import com.example.wannahelp.MainApp
 import com.example.wannahelp.R
-import com.example.news.NewsViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
@@ -25,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var badge: BadgeDrawable
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
-    private val viewModel: NewsViewModel by viewModels()
 
     @Inject
     lateinit var apiService: ApiService
@@ -50,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.authFragment -> bottomNavView.visibility = View.GONE
                 else -> bottomNavView.visibility = View.VISIBLE
             }
-
         }
 
         bottomNavView.setupWithNavController(navController)
@@ -62,9 +56,9 @@ class MainActivity : AppCompatActivity() {
             maxCharacterCount = 3
         }
         lifecycleScope.launch {
-            viewModel.unreadMsgCountStateFlow.collect { count ->
-                updateNewsBadge(count)
-            }
+//            viewModel.unreadMsgCountStateFlow.collect { count ->
+//                updateNewsBadge(count)
+//            }
         }
     }
 
@@ -83,11 +77,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("DEMO", "eventsResponse received $eventsResponse") // для демонстрации
 
             eventsResponse.forEach {
-                db.getEventsDao().addEvent(
-                    mapEventApiResponseItemToDbEntity(
-                        it,
-                    ),
-                )
+                db.getEventsDao().addEvent(it)
             }
         }
         lifecycleScope.launch {
@@ -96,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
             categoriesResponse.forEach {
                 db.getCategoriesDao()
-                    .addCategory(mapCategoryApiResponseItemToDbEntity(it))
+                    .addCategory(it)
             }
         }
     }

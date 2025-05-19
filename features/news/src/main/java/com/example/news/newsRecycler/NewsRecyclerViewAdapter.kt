@@ -8,14 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.domain.entities.NewsDomainModel
 import com.example.news.R
+import com.example.common.models.NewsUiModel
 import com.example.news.newsRecycler.NewsRecyclerViewAdapter.ViewHolder
 
 class NewsRecyclerViewAdapter(
-    private val onItemClicked: (NewsDomainModel) -> Unit,
+    private val onItemClicked: (NewsUiModel) -> Unit,
 ) :
-    ListAdapter<NewsDomainModel, ViewHolder>(NewsItemDiffCallback()) {
+    ListAdapter<NewsUiModel, ViewHolder>(NewsItemDiffCallback()) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.news_image)
         val title: TextView = itemView.findViewById(R.id.news_card_title)

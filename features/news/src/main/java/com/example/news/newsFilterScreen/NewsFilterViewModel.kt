@@ -9,7 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.common.extensions.datastore
 import com.example.news.NewsViewModel
-import com.example.news.newsFilterRecycler.FilterCategoryCard
+import com.example.news.newsFilterScreen.newsFilterRecycler.FilterCategoryCard
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map

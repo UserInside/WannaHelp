@@ -4,5 +4,5 @@ import android.os.Bundle
 
 data class NavigationCommand(
     val action: Int,
-    var args: Bundle?  = null,
+    var args: Bundle? = null,
 )

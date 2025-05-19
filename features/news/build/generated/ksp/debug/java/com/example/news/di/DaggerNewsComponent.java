@@ -1,5 +1,6 @@
 package com.example.news.di;
 
+import android.app.Activity;
 import android.content.Context;
 import com.example.data.db.AppDatabase;
 import com.example.data.di.DataModule;
@@ -119,6 +120,10 @@ public final class DaggerNewsComponent {
       injectNewsScreenFragment(fragment);
     }
 
+    @Override
+    public void inject(Activity activity) {
+    }
+
     private NewsViewModel injectNewsViewModel(NewsViewModel instance) {
       NewsViewModel_MembersInjector.injectInteractor(instance, newsInteractor());
       return instance;
@@ -126,6 +131,7 @@ public final class DaggerNewsComponent {
 
     private NewsScreenFragment injectNewsScreenFragment(NewsScreenFragment instance2) {
       NewsScreenFragment_MembersInjector.injectNavigator(instance2, Preconditions.checkNotNullFromComponent(newsDeps.getNewsNavigator()));
+      NewsScreenFragment_MembersInjector.injectNewsComponent(instance2, this);
       return instance2;
     }
   }

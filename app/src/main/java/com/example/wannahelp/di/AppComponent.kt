@@ -2,9 +2,7 @@ package com.example.wannahelp.di
 
 import com.example.authorization.di.AuthDeps
 import com.example.data.di.DataModule
-import com.example.domain.interactors.NewsInteractor
 import com.example.news.di.NewsDeps
-import com.example.profile.ProfileNavigator
 import com.example.profile.di.ProfileDeps
 import com.example.wannahelp.MainApp
 import com.example.wannahelp.navigation.AuthorizationNavigatorImpl
@@ -24,8 +22,8 @@ interface AppComponent : AuthDeps, NewsDeps, ProfileDeps {
     override val profileNavigator: ProfileNavigatorImpl
 
     fun inject(app: MainApp)
-    fun inject(activity: MainActivity)
 
+    fun inject(activity: MainActivity)
 }
 
 @Scope

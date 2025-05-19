@@ -46,6 +46,8 @@ dependencies {
     ksp(libs.dagger.compiler)
     implementation(libs.dagger)
 
+    implementation(libs.androidx.navigation.fragment.ktx)
+
     implementation(libs.glide)
 
     implementation(libs.androidx.datastore.preferences)

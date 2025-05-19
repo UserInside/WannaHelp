@@ -1,13 +1,11 @@
 package com.example.news.di
 
+import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.application
 import com.example.common.Feature
 import com.example.data.di.DataModule
 import com.example.domain.di.DomainModule
-import com.example.domain.interactors.NewsInteractor
 import com.example.news.NewsNavigator
 import com.example.news.NewsScreenFragment
 import com.example.news.NewsViewModel
@@ -21,6 +19,7 @@ import kotlin.properties.Delegates.notNull
 interface NewsComponent {
     fun inject(vm: NewsViewModel)
     fun inject(fragment: NewsScreenFragment)
+    fun inject(activity: Activity)
 
     @Component.Builder
     interface Builder {
@@ -45,7 +44,7 @@ object NewsDepsStore : NewsDepsProvider {
     override var deps: NewsDeps by notNull()
 }
 
-internal class NewsComponentViewModel(application: Application): AndroidViewModel(application) {
+class NewsComponentViewModel(application: Application): AndroidViewModel(application) {
     val newsComponent = DaggerNewsComponent.builder()
         .dataModule(DataModule(application.applicationContext))
         .domainModule(DomainModule())

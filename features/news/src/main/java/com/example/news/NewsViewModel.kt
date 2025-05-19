@@ -1,31 +1,41 @@
 package com.example.news
 
-import android.annotation.SuppressLint
-import android.app.Application
+import android.content.Context
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.common.extensions.datastore
 import com.example.domain.entities.Category
-import com.example.domain.entities.NewsDomainModel
 import com.example.domain.interactors.NewsInteractor
 import com.example.news.di.NewsComponent
+import com.example.common.models.Mapper
+import com.example.common.models.NewsUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NewsViewModel(application: Application) : AndroidViewModel(application) {
-    @SuppressLint("StaticFieldLeak")
-    val ctx = application.applicationContext
+class NewsViewModelFactory(
+    private val newsComponent: NewsComponent,
+    private val context: Context,
+): ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return NewsViewModel(newsComponent, context) as T
+    }
+}
 
+class NewsViewModel(
+    newsComponent: NewsComponent,
+    private val context: Context,
+) : ViewModel() {
     private val initialListToShow = getFullCatList()
 
     val screenStateFlow = MutableStateFlow<NewsState>(NewsState.Progress)
 
-    val listToShowStateFlow: MutableStateFlow<List<NewsDomainModel>> =
-        MutableStateFlow<List<NewsDomainModel>>(emptyList())
+    val listToShowStateFlow: MutableStateFlow<List<NewsUiModel>> =
+        MutableStateFlow<List<NewsUiModel>>(emptyList())
 
     val unreadMsgCountStateFlow =
         MutableStateFlow<Int>(listToShowStateFlow.value.count { it.isRead == false })
@@ -34,7 +44,7 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var interactor: NewsInteractor
 
     init {
-        NewsComponent.inject(this)
+        newsComponent.inject(this)
         viewModelScope.launch {
             loadNewsFromDB()
         }
@@ -46,14 +56,14 @@ class NewsViewModel(application: Application) : AndroidViewModel(application) {
 
         val eventsList = interactor.getNewsByCategories(setOfChosenCategories)
 
-        listToShowStateFlow.value = eventsList
+        listToShowStateFlow.value = eventsList.map { Mapper.mapNewsDomainModelToUi(it)}
         unreadMsgCountStateFlow.value = eventsList.count { !it.isRead }
 
         screenStateFlow.value = NewsState.Done
     }
 
     private suspend fun getChosenCategoriesFromDS(): Set<String> {
-        return ctx.datastore.data.map { preference ->
+        return context.datastore.data.map { preference ->
             preference[stringSetPreferencesKey(CHOSEN_CATEGORIES)] ?: initialListToShow
         }.first()
     }

@@ -5,14 +5,13 @@ import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.navArgs
 import com.example.common.ToolbarFragment
 import com.example.eventdetails.databinding.FragmentEventDetailsScreenBinding
+import com.example.common.models.NewsUiModel
 import com.example.common.R as commonR
 
 class EventDetailsScreenFragment :
     ToolbarFragment(R.layout.fragment_event_details_screen, showBackButton = true) {
-//    val args: EventDetailsScreenFragmentArgs by navArgs()
 
     override fun setupToolbar(
         toolbar: Toolbar,
@@ -40,10 +39,10 @@ class EventDetailsScreenFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEventDetailsScreenBinding.bind(content ?: view)
-//        val newsItem = args.clickedNewsItem
+        val newsItem = arguments?.getSerializable("event") as NewsUiModel
 
         binding.apply {
-//            tvTitleEventDetails.text = newsItem.name
+            tvTitleEventDetails.text = newsItem.name
         }
     }
 }

@@ -31,7 +31,12 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
     @Inject
     lateinit var navigator: NewsNavigator
 
-    private val viewModel: NewsViewModel by activityViewModels()
+    @Inject
+    lateinit var newsComponent: NewsComponent
+
+    private val viewModel: NewsViewModel by activityViewModels{
+        NewsViewModelFactory(newsComponent, requireContext())
+    }
     private lateinit var rvAdapter: NewsRecyclerViewAdapter
 
     override fun setupToolbar(
@@ -43,7 +48,7 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
             visibility = View.VISIBLE
             setImageResource(commonR.drawable.icon_filter)
             setOnClickListener {
-//                   navigate(navigator.toSomeWhere)
+                   navigate(navigator.toNewsFilter)
             }
         }
     }
@@ -59,18 +64,19 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-//        component =
 
         val binding = FragmentNewsScreenBinding.bind(content ?: view)
         lifecycleScope.launch {
-//            viewModel.loadNewsFromDB()
+            viewModel.loadNewsFromDB()
         }
 
         rvAdapter =
             NewsRecyclerViewAdapter { newsItem ->
-//                viewModel.markNewsItemAsRead(newsItem.id)
-//                val action = NewsScreenFragmentDirections.navigateToEventDetailsScreen(newsItem)
-//                NavHostFragment.findNavController(this@NewsScreenFragment).navigate(action)
+                viewModel.markNewsItemAsRead(newsItem.id)
+                navigator.toEvent.args = Bundle().apply {
+                    putSerializable(OPEN_EVENT_KEY, newsItem)
+                }
+                navigate(navigator.toEvent)
             }
 
         binding.recyclerViewNews.apply {
@@ -105,5 +111,6 @@ class NewsScreenFragment : ToolbarFragment(R.layout.fragment_news_screen) {
 
     companion object {
         private const val TAG = "NewsScreenFragment"
+        private const val OPEN_EVENT_KEY = "event"
     }
 }

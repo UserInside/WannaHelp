@@ -5,6 +5,8 @@ import com.example.profile.ProfileNavigator
 import com.example.wannahelp.R
 import javax.inject.Inject
 
-class ProfileNavigatorImpl @Inject constructor() : ProfileNavigator {
-    override val toProfileEditing = NavigationCommand(R.id.navigateToEditProfileScreen)
-}
+class ProfileNavigatorImpl
+    @Inject
+    constructor() : ProfileNavigator {
+        override val toProfileEditing = NavigationCommand(R.id.navigateToEditProfileScreen)
+    }

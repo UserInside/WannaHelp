@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 android {
@@ -34,18 +35,16 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:domain"))
 
     implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.androidx.core.splashscreen)
-
     implementation(libs.androidx.navigation.fragment.ktx)
 
     ksp(libs.dagger.compiler)
     implementation(libs.dagger)
-
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

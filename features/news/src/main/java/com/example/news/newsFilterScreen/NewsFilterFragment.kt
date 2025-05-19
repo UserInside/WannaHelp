@@ -7,12 +7,12 @@ import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-//import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.ToolbarFragment
 import com.example.news.R
 import com.example.news.databinding.FragmentNewsFilterBinding
-import com.example.news.newsFilterRecycler.NewsFilterRecyclerViewAdapter
+import com.example.news.newsFilterScreen.newsFilterRecycler.NewsFilterRecyclerViewAdapter
 import com.example.common.R as commonR
 import kotlinx.coroutines.launch
 
@@ -27,8 +27,8 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
         toolbar.apply {
             title = getString(commonR.string.filter)
             setNavigationOnClickListener {
-//                NavHostFragment.findNavController(this@NewsFilterFragment)
-//                    .popBackStack()
+                NavHostFragment.findNavController(this@NewsFilterFragment)
+                    .popBackStack()
             }
         }
         actionButton.apply {
@@ -37,8 +37,8 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
             setOnClickListener {
                 lifecycleScope.launch {
                     viewModel.saveChosenCategories()
-//                    NavHostFragment.findNavController(this@NewsFilterFragment)
-//                        .popBackStack()
+                    NavHostFragment.findNavController(this@NewsFilterFragment)
+                        .popBackStack()
                 }
             }
         }

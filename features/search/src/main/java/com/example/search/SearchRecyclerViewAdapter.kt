@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.entities.NewsDomainModel
+import com.example.common.models.NewsUiModel
 import com.example.news.newsRecycler.NewsItemDiffCallback
 import com.example.search.SearchRecyclerViewAdapter.ViewHolder
 
 class SearchRecyclerViewAdapter(
 //    private val onItemClicked: (Int) -> Unit
 ) :
-    ListAdapter<NewsDomainModel, ViewHolder>(NewsItemDiffCallback()) {
+    ListAdapter<NewsUiModel, ViewHolder>(NewsItemDiffCallback()) {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.tv_nko_title)
     }

@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":core:domain"))
 
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)

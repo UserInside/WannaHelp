@@ -1,16 +1,16 @@
 package com.example.news.newsRecycler
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.domain.entities.NewsDomainModel
+import com.example.common.models.NewsUiModel
 
-class NewsItemDiffCallback : DiffUtil.ItemCallback<NewsDomainModel>() {
+class NewsItemDiffCallback : DiffUtil.ItemCallback<NewsUiModel>() {
     override fun areItemsTheSame(
-        oldItem: NewsDomainModel,
-        newItem: NewsDomainModel,
+        oldItem: NewsUiModel,
+        newItem: NewsUiModel,
     ): Boolean = oldItem.id == newItem.id
 
     override fun areContentsTheSame(
-        oldItem: NewsDomainModel,
-        newItem: NewsDomainModel,
+        oldItem: NewsUiModel,
+        newItem: NewsUiModel,
     ): Boolean = oldItem == newItem
 }
