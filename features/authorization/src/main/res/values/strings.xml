@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_title">Для участия в мероприятиях войдите \nв приложение через социальные сети</string>
+    <string name="auth_title2">Или авторизуйтесь через приложение</string>
+    <string name="authorization">Авторизация</string>
+
+</resources>

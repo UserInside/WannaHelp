@@ -2,18 +2,16 @@ package com.example.wannahelp.presentation
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.data.db.AppDatabase
+import com.example.data.network.ApiService
 import com.example.wannahelp.MainApp
 import com.example.wannahelp.R
-import com.example.wannahelp.data.db.AppDatabase
-import com.example.wannahelp.data.db.mapCategoryApiResponseItemToDbEntity
-import com.example.wannahelp.data.db.mapEventApiResponseItemToDbEntity
-import com.example.wannahelp.data.network.ApiService
-import com.example.wannahelp.presentation.newsScreen.NewsViewModel
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
@@ -21,7 +19,8 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var badge: BadgeDrawable
-    private val viewModel: NewsViewModel by viewModels()
+    private lateinit var bottomNavView: BottomNavigationView
+    private lateinit var navController: NavController
 
     @Inject
     lateinit var apiService: ApiService
@@ -37,22 +36,29 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+        bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
 
-        bottomNavigationView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.authFragment -> bottomNavView.visibility = View.GONE
+                else -> bottomNavView.visibility = View.VISIBLE
+            }
+        }
 
-        badge = bottomNavigationView.getOrCreateBadge(R.id.newsScreenFragment)
+        bottomNavView.setupWithNavController(navController)
+
+        badge = bottomNavView.getOrCreateBadge(R.id.newsScreenFragment)
         badge.apply {
-            backgroundColor = resources.getColor(R.color.leaf, null)
+            backgroundColor = resources.getColor(R.color.leaf, theme)
             badgeTextColor = resources.getColor(R.color.white, null)
             maxCharacterCount = 3
         }
         lifecycleScope.launch {
-            viewModel.unreadMsgCountStateFlow.collect { count ->
-                updateNewsBadge(count)
-            }
+//            viewModel.unreadMsgCountStateFlow.collect { count ->
+//                updateNewsBadge(count)
+//            }
         }
     }
 
@@ -71,11 +77,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("DEMO", "eventsResponse received $eventsResponse") // для демонстрации
 
             eventsResponse.forEach {
-                db.getEventsDao().addEvent(
-                    mapEventApiResponseItemToDbEntity(
-                        it,
-                    ),
-                )
+                db.getEventsDao().addEvent(it)
             }
         }
         lifecycleScope.launch {
@@ -84,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
             categoriesResponse.forEach {
                 db.getCategoriesDao()
-                    .addCategory(mapCategoryApiResponseItemToDbEntity(it))
+                    .addCategory(it)
             }
         }
     }

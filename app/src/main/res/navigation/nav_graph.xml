@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/authFragment">
+    app:startDestination="@id/authFragment"
+    tools:package="com.example.wannahelp">
 
     <fragment
         android:id="@+id/profileScreenFragment"
-        android:name="com.example.wannahelp.presentation.profileScreen.ProfileScreenFragment"
+        android:name="com.example.profile.ProfileScreenFragment"
         android:label="fragment_profile_screen"
         tools:layout="@layout/fragment_profile_screen" >
         <action
@@ -16,24 +17,24 @@
     </fragment>
     <fragment
         android:id="@+id/profileEditScreenFragment"
-        android:name="com.example.wannahelp.presentation.profileEditScreen.EditProfileScreenFragment"
+        android:name="com.example.profileediting.EditProfileScreenFragment"
         android:label="ProfileEditScreenFragment" >
         <action
             android:id="@+id/navigateToProfileScreen"
             app:destination="@id/profileScreenFragment" />
     </fragment>
     <fragment
-        android:id="@+id/wannaHelpScreenFragment"
-        android:name="com.example.wannahelp.presentation.wannaHelpScreen.WannaHelpScreenFragment"
-        android:label="WannaHelpScreenFragment" />
+        android:id="@+id/categoriesScreenFragment"
+        android:name="com.example.categories.CategoriesScreenFragment"
+        android:label="CategoriesScreenFragment" />
     <fragment
         android:id="@+id/searchScreenFragment"
-        android:name="com.example.wannahelp.presentation.searchScreen.SearchScreenFragment"
+        android:name="com.example.search.SearchScreenFragment"
         android:label="fragment_search_screen"
         tools:layout="@layout/fragment_search_screen" />
     <fragment
         android:id="@+id/newsScreenFragment"
-        android:name="com.example.wannahelp.presentation.newsScreen.NewsScreenFragment"
+        android:name="com.example.news.NewsScreenFragment"
         android:label="fragment_news_screen"
         tools:layout="@layout/fragment_news_screen" >
         <action
@@ -44,21 +45,21 @@
             app:destination="@id/eventDetailsScreenFragment" >
             <argument
                 android:name="clickedNewsItem"
-                app:argType="com.example.wannahelp.domain.entities.NewsItem"
+                app:argType="com.example.domain.entities.NewsDomainModel"
                 app:nullable="true" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/eventDetailsScreenFragment"
-        android:name="com.example.wannahelp.presentation.eventDetailsScreen.EventDetailsScreenFragment"
+        android:name="com.example.eventdetails.EventDetailsScreenFragment"
         android:label="EventDetailsScreenFragment" >
         <argument
             android:name="clickedNewsItem"
-            app:argType="com.example.wannahelp.domain.entities.NewsItem" />
+            app:argType="com.example.domain.entities.NewsDomainModel" />
     </fragment>
     <fragment
         android:id="@+id/newsFilterFragment"
-        android:name="com.example.wannahelp.presentation.newsScreen.newsFilterScreen.NewsFilterFragment"
+        android:name="com.example.news.newsFilterScreen.NewsFilterFragment"
         android:label="NewsFilterFragment" >
         <action
             android:id="@+id/navigateToNewsScreen"
@@ -66,10 +67,10 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.example.wannahelp.presentation.authScreen.AuthFragment"
+        android:name="com.example.authorization.AuthFragment"
         android:label="AuthFragment" >
         <action
-            android:id="@+id/navigateToWannaHelpScreenFragment"
-            app:destination="@id/wannaHelpScreenFragment" />
+            android:id="@+id/navigateToCategoriesScreen"
+            app:destination="@id/categoriesScreenFragment" />
     </fragment>
 </navigation>
