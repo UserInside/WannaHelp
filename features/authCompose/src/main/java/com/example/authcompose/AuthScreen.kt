@@ -26,12 +26,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.common.compose.Colors
 import com.example.common.R as commonR
 
 @Composable
-internal fun AuthScreen(
-    viewModel: AuthViewModel
+internal fun AuthScreen() {
+    val viewModel = viewModel<AuthViewModel>()
+    AuthView(
+        state = viewModel.state,
+        onEvent = viewModel::onEvent,
+    )
+}
+
+@Composable
+internal fun AuthView(
+    state: AuthScreenState = AuthScreenState(),
+    onEvent: (AuthScreenEvent) -> Unit = {},
 ) {
     Box(
         modifier = Modifier.fillMaxSize().padding(20.dp)
@@ -87,9 +98,9 @@ internal fun AuthScreen(
                 color = Colors.warm_grey
             )
             TextField(
-                value = " null ",
+                value = state.email,
                 onValueChange = {
-                    viewModel.setEmailValue(it)
+                    onEvent(AuthScreenEvent.SetEmailEvent(it))
                 },
             )
             Spacer(modifier = Modifier.size(20.dp))
@@ -104,16 +115,16 @@ internal fun AuthScreen(
                 color = Colors.warm_grey
             )
             TextField(
-                value = " null ",
+                value = state.password,
                 onValueChange = {
-                    viewModel.setPasswordValue(it)
+                    onEvent(AuthScreenEvent.SetPasswordEvent(it))
                 },
             )
             Spacer(modifier = Modifier.size(20.dp))
             Button(
                 modifier = Modifier.fillMaxWidth().background(Colors.leaf),
                 shape = RoundedCornerShape(2.dp),
-                onClick = {}, //todo
+                onClick = {}, //todo . сделать навигацию и изменение активности кнопки по вм.изФилд...
             ) {
                 Text(
                     fontSize = 16.sp,
@@ -143,5 +154,5 @@ internal fun AuthScreen(
 @Preview
 @Composable
 private fun AuthScreenPreview() {
-//    AuthScreen()
+    AuthView()
 }
