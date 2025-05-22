@@ -2,7 +2,7 @@ package com.example.data
 
 import android.content.Context
 import android.util.Log
-import com.example.common.extensions.parseToList
+import com.example.common.utils.extensions.parseToList
 import com.example.data.db.categories.CategoriesDao
 import com.example.data.db.mapCategoryDbEntityToCategoryItem
 import com.example.domain.entities.CategoryDomainModel

@@ -42,14 +42,14 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.authFragment -> bottomNavView.visibility = View.GONE
+                R.id.authComposeFragment -> bottomNavView.visibility = View.GONE
                 else -> bottomNavView.visibility = View.VISIBLE
             }
         }
 
         bottomNavView.setupWithNavController(navController)
 
-        badge = bottomNavView.getOrCreateBadge(R.id.newsScreenFragment)
+        badge = bottomNavView.getOrCreateBadge(R.id.newsComposeFragment)
         badge.apply {
             backgroundColor = resources.getColor(R.color.leaf, theme)
             badgeTextColor = resources.getColor(R.color.white, null)

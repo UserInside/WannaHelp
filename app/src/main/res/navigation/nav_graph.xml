@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/authFragment"
+    app:startDestination="@id/authComposeFragment"
     tools:package="com.example.wannahelp">
 
     <fragment
@@ -33,10 +33,9 @@
         android:label="fragment_search_screen"
         tools:layout="@layout/fragment_search_screen" />
     <fragment
-        android:id="@+id/newsScreenFragment"
-        android:name="com.example.news.NewsScreenFragment"
-        android:label="fragment_news_screen"
-        tools:layout="@layout/fragment_news_screen" >
+        android:id="@+id/newsComposeFragment"
+        android:name="com.example.newscompose.NewsComposeFragment"
+        android:label="NewsComposeFragment">
         <action
             android:id="@+id/navigateToNewsFilterScreen"
             app:destination="@id/newsFilterFragment" />
@@ -63,12 +62,12 @@
         android:label="NewsFilterFragment" >
         <action
             android:id="@+id/navigateToNewsScreen"
-            app:destination="@id/newsScreenFragment" />
+            app:destination="@id/newsComposeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/authFragment"
-        android:name="com.example.authorization.AuthFragment"
-        android:label="AuthFragment" >
+        android:id="@+id/authComposeFragment"
+        android:name="com.example.authcompose.AuthComposeFragment"
+        android:label="AuthComposeFragment" >
         <action
             android:id="@+id/navigateToCategoriesScreen"
             app:destination="@id/categoriesScreenFragment" />

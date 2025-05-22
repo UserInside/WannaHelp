@@ -1,5 +1,6 @@
 package com.example.authcompose
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,39 +13,33 @@ import kotlinx.coroutines.flow.stateIn
 
 internal class AuthViewModel : ViewModel() {
     var state by mutableStateOf(AuthScreenState())
-        private set
-
-//    private val _isFieldsLengthSufficient = combine(state.email, state.password) { email, pass ->
-//        email.length >= REQUIRED_FIELD_LENGTH && pass.length >= REQUIRED_FIELD_LENGTH
-//    }.stateIn(
-//        scope = viewModelScope,
-//        started = SharingStarted.Lazily,
-//        initialValue = false,
-//    )
-//    val isFieldsLengthSufficient: StateFlow<Boolean> = _isFieldsLengthSufficient
 
     fun onEvent(event: AuthScreenEvent) {
         when (event) {
             is AuthScreenEvent.SetEmailEvent -> {
-                this.state = state.copy(email = event.email)
+                state = state.copy(email = event.email)
+                Log.e("AUVM", "email - ${state.email}")
                 updateButtonStatus()
             }
 
             is AuthScreenEvent.SetPasswordEvent -> {
-                this.state = state.copy(password = event.password)
+                state = state.copy(password = event.password)
                 updateButtonStatus()
             }
         }
     }
 
     fun updateButtonStatus() {
+        Log.e("s", "stateE - ${state.email.length}")
+        Log.e("s", "stateP - ${state.password.length}")
+        Log.e("s", "button - ${state.isButtonActive}")
         this.state = state.copy(
             isButtonActive = state.email.length >= REQUIRED_FIELD_LENGTH && state.password.length >= REQUIRED_FIELD_LENGTH
         )
     }
 
     companion object {
-        private const val REQUIRED_FIELD_LENGTH = 0
+        private const val REQUIRED_FIELD_LENGTH = 3
     }
 }
 

@@ -34,7 +34,7 @@ class AuthFragment : ToolbarFragment(R.layout.fragment_auth, showBackButton = tr
         actionButton: ImageButton,
     ) {
         toolbar.apply {
-            title = getString(R.string.authorization)
+            title = getString(commonR.string.authorization)
             setNavigationOnClickListener {
                 requireActivity().finishAffinity()
             }

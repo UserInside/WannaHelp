@@ -1,40 +1,39 @@
 package com.example.authcompose.di
 
-import androidx.annotation.RestrictTo
 import androidx.lifecycle.ViewModel
-import com.example.authcompose.AuthorizationNavigator
 import com.example.authcompose.AuthComposeFragment
+import com.example.authcompose.navigation.AuthComposeNavigator
 import com.example.common.Feature
 import dagger.Component
 import kotlin.properties.Delegates.notNull
 
-@[Feature Component(dependencies = [AuthDeps::class])]
-internal interface AuthComponent {
+@[Feature Component(dependencies = [AuthComposeDeps::class])]
+internal interface AuthComposeComponent {
     fun inject(fragment: AuthComposeFragment)
 
     @Component.Builder
     interface Builder {
-        fun deps(authDeps: AuthDeps): Builder
-        fun build(): AuthComponent
+        fun deps(authComposeDeps: AuthComposeDeps): Builder
+        fun build(): AuthComposeComponent
     }
 }
 
-interface AuthDeps {
-    val authNavigator: AuthorizationNavigator
+interface AuthComposeDeps {
+    val authComposeNavigator: AuthComposeNavigator
 }
 
-interface AuthDepsProvider {
-    val deps: AuthDeps
-    companion object : AuthDepsProvider by AuthDepsStore
+interface AuthComposeDepsProvider {
+    val deps: AuthComposeDeps
+    companion object : AuthComposeDepsProvider by AuthComposeComposeDepsStore
 }
 
-object AuthDepsStore : AuthDepsProvider {
-    override var deps: AuthDeps by notNull()
+object AuthComposeComposeDepsStore : AuthComposeDepsProvider {
+    override var deps: AuthComposeDeps by notNull()
 }
 
-internal class AuthComponentViewModel: ViewModel() {
+internal class AuthComposeComponentViewModel: ViewModel() {
     val authComponent =
         DaggerAuthComposeComponent.builder()
-            .deps(AuthDepsStore.deps)
+            .deps(AuthComposeComposeDepsStore.deps)
             .build()
 }

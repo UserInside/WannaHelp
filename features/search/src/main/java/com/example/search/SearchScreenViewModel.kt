@@ -3,7 +3,7 @@ package com.example.search
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.common.extensions.parseToList
+import com.example.common.utils.extensions.parseToList
 import com.example.common.models.NewsUiModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview

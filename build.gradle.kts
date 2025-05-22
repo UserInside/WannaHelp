@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.android.library) apply false
     id("androidx.navigation.safeargs") version "2.8.9" apply false
+    alias(libs.plugins.kotlin.compose) apply false
+
 }
 
 buildscript {

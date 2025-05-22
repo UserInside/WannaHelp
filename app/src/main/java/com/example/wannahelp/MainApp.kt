@@ -1,10 +1,10 @@
 package com.example.wannahelp
 
 import android.app.Application
-import com.example.authorization.di.AuthDepsStore
+import com.example.authcompose.di.AuthComposeComposeDepsStore
 import com.example.data.db.AppDatabase
 import com.example.data.di.DataModule
-import com.example.news.di.NewsDepsStore
+import com.example.newscompose.di.NewsComposeDepsStore
 import com.example.profile.di.ProfileDepsStore
 import com.example.wannahelp.di.AppComponent
 import com.example.wannahelp.di.DaggerAppComponent
@@ -21,8 +21,8 @@ class MainApp : Application() {
                 .dataModule(DataModule(this))
                 .build()
         appComponent.inject(this)
-        AuthDepsStore.deps = appComponent
-        NewsDepsStore.deps = appComponent
+        AuthComposeComposeDepsStore.deps = appComponent
+        NewsComposeDepsStore.deps = appComponent
         ProfileDepsStore.deps = appComponent
     }
 

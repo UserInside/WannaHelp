@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.ToolbarFragment
-import com.example.common.extensions.navigate
+import com.example.common.utils.extensions.navigate
 import com.example.news.databinding.FragmentNewsScreenBinding
 import com.example.news.di.NewsComponent
 import com.example.news.di.NewsComponentViewModel

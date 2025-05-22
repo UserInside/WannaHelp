@@ -3,7 +3,7 @@ package com.example.news.newsRecycler
 import androidx.recyclerview.widget.DiffUtil
 import com.example.common.models.NewsUiModel
 
-class NewsItemDiffCallback : DiffUtil.ItemCallback<NewsUiModel>() {
+class SearchItemDiffCallback : DiffUtil.ItemCallback<NewsUiModel>() {
     override fun areItemsTheSame(
         oldItem: NewsUiModel,
         newItem: NewsUiModel,

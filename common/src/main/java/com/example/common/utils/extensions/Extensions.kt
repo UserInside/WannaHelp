@@ -1,9 +1,8 @@
-package com.example.common.extensions
+package com.example.common.utils.extensions
 
 import android.content.Context
 import android.content.res.AssetManager
 import androidx.fragment.app.Fragment
-import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.fragment.findNavController
 import com.example.common.navigation.NavigationCommand
 import kotlinx.serialization.json.Json

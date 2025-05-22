@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.common.extensions.datastore
+import com.example.common.utils.extensions.datastore
 import com.example.domain.entities.Category
 import com.example.domain.interactors.NewsInteractor
 import com.example.news.di.NewsComponent

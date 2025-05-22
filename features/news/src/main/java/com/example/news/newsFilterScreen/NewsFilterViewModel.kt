@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.common.extensions.datastore
+import com.example.common.utils.extensions.datastore
 import com.example.news.NewsViewModel
 import com.example.news.newsFilterScreen.newsFilterRecycler.FilterCategoryCard
 import kotlinx.coroutines.flow.MutableStateFlow
