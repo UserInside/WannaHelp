@@ -8,18 +8,18 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.common.extensions.datastore
+import com.example.common.utils.extensions.datastore
 import com.example.common.models.NewsUiModel
 import com.example.domain.entities.Category
 import com.example.domain.interactors.NewsInteractor
-import com.example.newscompose.di.NewsComponent
+import com.example.newscompose.di.NewsComposeComponent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewsViewModelFactory(
-    private val newsComponent: NewsComponent,
+    private val newsComponent: NewsComposeComponent,
     private val context: Context,
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -34,21 +34,13 @@ data class NewsScreenState(
 )
 
 class NewsViewModel(
-    newsComponent: NewsComponent,
+    newsComponent: NewsComposeComponent,
     private val context: Context,
 ) : ViewModel() {
-    private val initialListToShow = getFullCatList()
+    private val initialListToShow = getFullCategoriesList()
 
     var state by mutableStateOf(NewsScreenState())
     private set
-
-//    val screenStaeFlow = MutableStateFlow<NewsState>(NewsState.Progress)
-
-//    val listToShowStateFlow: MutableStateFlow<List<NewsUiModel>> =
-//        MutableStateFlow<List<NewsUiModel>>(emptyList())
-
-//    val unreadMsgCountStateFlow =
-//        MutableStateFlow<Int>(listToShowStateFlow.value.count { it.isRead == false })
 
     @Inject
     lateinit var interactor: NewsInteractor
@@ -80,7 +72,7 @@ class NewsViewModel(
 
     fun markNewsItemAsRead(newsItemId: Int) = viewModelScope.launch { interactor.markNewsItemAsRead(newsItemId) }
 
-    private fun getFullCatList() =
+    private fun getFullCategoriesList() =
         setOf(
             Category.KIDS.name,
             Category.ADULTS.name,
