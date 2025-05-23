@@ -1,5 +1,6 @@
 package com.example.newscompose
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,17 +15,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,37 +39,39 @@ import com.bumptech.glide.integration.compose.GlideImage
 import com.example.common.compose.Colors
 import com.example.common.models.NewsUiModel
 import com.example.common.utils.extensions.timestampFormatter
-import com.example.domain.entities.Category
 import com.example.common.R as commonR
 
 @Composable
 fun NewsScreen(
     factory: NewsViewModelFactory,
-    onEventClick: () -> Unit,
+    onEventClick: (newsItem: NewsUiModel) -> Unit,
     onNavigate: () -> Unit,
 ) {
     val viewModel: NewsViewModel = viewModel(factory = factory)
     NewsView(
-        state = viewModel.state
+        state = viewModel.state,
+        onEventClick = onEventClick,
+        onNavigate = onNavigate,
     )
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun NewsCard(
-    newsItem: NewsUiModel
+    newsItem: NewsUiModel,
+    onEventClick: (newsItem: NewsUiModel) -> Unit,
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Colors.white)
             .clip(RoundedCornerShape(2.dp))
-            .clickable {
-                // set as read
-                // navigation
-            },
-        verticalArrangement = Arrangement.spacedBy(0.dp)
+            .clickable(
+                onClick = {
+//                    viewModel.markNewsItemAsRead(newsItem.id)
+                    onEventClick(newsItem)
+                          },
+            ),
     ) {
         Box {
             GlideImage(
@@ -88,8 +96,7 @@ fun NewsCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .background(Colors.white),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .background(Colors.white), horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     modifier = Modifier
@@ -132,7 +139,8 @@ fun NewsCard(
                     )
                     Text(
                         text = timestampFormatter(newsItem.date.toLong()).toString(),
-                        color = Colors.white, fontSize = 12.sp
+                        color = Colors.white,
+                        fontSize = 12.sp
                     )
                 }
             }
@@ -141,35 +149,52 @@ fun NewsCard(
 }
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsView(
-    state: NewsScreenState
+    state: NewsScreenState,
+    onEventClick: (newsItem: NewsUiModel) -> Unit,
+    onNavigate: () -> Unit,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Colors.light_grey_two)
-            .padding(dimensionResource(commonR.dimen.spacing_xs)),
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(commonR.dimen.spacing_xs))
-    ) {
-        items(state.lts) { newsItem ->
-            NewsCard(newsItem = newsItem)
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewNewsCardView() {
-    NewsCard(
-        NewsUiModel(
-            id = 0,
-            imageRes = "",
-            name = "название события  название события",
-            description = "убовская школа-интернат для детей\n" + "\\nс ограниченными возможностями здоровья стала первой в области …",
-            date = "",
-            isRead = false,
-            category = Category.KIDS,
+    Scaffold(topBar = {
+        CenterAlignedTopAppBar(
+            title = {
+            Text(
+                text = stringResource(commonR.string.news),
+                textAlign = TextAlign.Center,
+                fontSize = 21.sp,
+                color = Colors.white,
+                fontWeight = FontWeight.ExtraBold,
+            )
+        }, actions = {
+            IconButton(
+                onClick = { onNavigate() }) {
+                Icon(
+                    painter = painterResource(commonR.drawable.icon_filter),
+                    contentDescription = null
+                )
+            }
+        }, colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Colors.leaf,
+            titleContentColor = Colors.white,
+            navigationIconContentColor = Colors.white,
         )
-    )
+        )
+    }, content = {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Colors.light_grey_two)
+                .padding(dimensionResource(commonR.dimen.spacing_xs)),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(commonR.dimen.spacing_xs))
+        ) {
+            items(state.lts) { newsItem ->
+                NewsCard(
+                    newsItem = newsItem, onEventClick = { onEventClick(newsItem) }
+                )
+            }
+        }
+    })
+
 }
