@@ -1,20 +1,15 @@
 package com.example.newscompose
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,9 +18,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -34,11 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.example.common.compose.Colors
 import com.example.common.models.NewsUiModel
-import com.example.common.utils.extensions.timestampFormatter
 import com.example.common.R as commonR
 
 @Composable
@@ -48,106 +39,15 @@ fun NewsScreen(
     onNavigate: () -> Unit,
 ) {
     val viewModel: NewsViewModel = viewModel(factory = factory)
+    LaunchedEffect(viewModel) {
+        viewModel.loadNewsFromDB()
+    }
     NewsView(
         state = viewModel.state,
         onEventClick = onEventClick,
         onNavigate = onNavigate,
     )
 }
-
-@OptIn(ExperimentalGlideComposeApi::class)
-@Composable
-fun NewsCard(
-    newsItem: NewsUiModel,
-    onEventClick: (newsItem: NewsUiModel) -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Colors.white)
-            .clip(RoundedCornerShape(2.dp))
-            .clickable(
-                onClick = {
-//                    viewModel.markNewsItemAsRead(newsItem.id)
-                    onEventClick(newsItem)
-                          },
-            ),
-    ) {
-        Box {
-            GlideImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = dimensionResource(commonR.dimen.spacing_xxs))
-                    .height(248.dp),
-                model = newsItem.imageRes,
-                contentDescription = null,
-            )
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(248.dp)
-                    .background(Colors.transparent),
-                painter = painterResource(R.drawable.news_card_image_fade),
-                contentDescription = null
-            )
-        }
-        Box {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .background(Colors.white), horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(horizontal = dimensionResource(commonR.dimen.spacing_s))
-                        .background(Colors.transparent),
-                    textAlign = TextAlign.Center,
-                    color = Colors.blue_grey,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 21.sp,
-                    text = newsItem.name,
-                )
-                Image(
-                    modifier = Modifier.padding(
-                        top = dimensionResource(commonR.dimen.spacing_xs),
-                        bottom = dimensionResource(commonR.dimen.spacing_s)
-                    ),
-                    painter = painterResource(R.drawable.news_card_divider_decor),
-                    contentDescription = null,
-                    alignment = Alignment.Center
-                )
-                Text(
-                    modifier = Modifier.padding(horizontal = 26.dp),
-                    textAlign = TextAlign.Center,
-                    color = Colors.black_70,
-                    fontSize = 14.sp,
-                    text = newsItem.description
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = dimensionResource(commonR.dimen.spacing_m))
-                        .background(Colors.leaf),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        painter = painterResource(commonR.drawable.icon_calendar),
-                        contentDescription = null,
-                        tint = Colors.white
-                    )
-                    Text(
-                        text = timestampFormatter(newsItem.date.toLong()).toString(),
-                        color = Colors.white,
-                        fontSize = 12.sp
-                    )
-                }
-            }
-        }
-    }
-}
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -160,41 +60,42 @@ fun NewsView(
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
             title = {
-            Text(
-                text = stringResource(commonR.string.news),
-                textAlign = TextAlign.Center,
-                fontSize = 21.sp,
-                color = Colors.white,
-                fontWeight = FontWeight.ExtraBold,
-            )
-        }, actions = {
-            IconButton(
-                onClick = { onNavigate() }) {
-                Icon(
-                    painter = painterResource(commonR.drawable.icon_filter),
-                    contentDescription = null
+                Text(
+                    text = stringResource(commonR.string.news),
+                    textAlign = TextAlign.Center,
+                    fontSize = 21.sp,
+                    color = Colors.white,
+                    fontWeight = FontWeight.ExtraBold,
                 )
-            }
-        }, colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Colors.leaf,
-            titleContentColor = Colors.white,
-            navigationIconContentColor = Colors.white,
+            }, actions = {
+                IconButton(
+                    onClick = { onNavigate() }) {
+                    Icon(
+                        painter = painterResource(commonR.drawable.icon_filter),
+                        tint = Colors.white,
+                        contentDescription = null
+                    )
+                }
+            }, colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Colors.leaf,
+                titleContentColor = Colors.white,
+                navigationIconContentColor = Colors.white,
+            )
         )
-        )
-    }, content = {
+    }, content = { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Colors.light_grey_two)
+                .padding(top = innerPadding.calculateTopPadding())
                 .padding(dimensionResource(commonR.dimen.spacing_xs)),
             verticalArrangement = Arrangement.spacedBy(dimensionResource(commonR.dimen.spacing_xs))
         ) {
-            items(state.lts) { newsItem ->
+            items(state.lts.value) { newsItem ->
                 NewsCard(
                     newsItem = newsItem, onEventClick = { onEventClick(newsItem) }
                 )
             }
         }
     })
-
 }

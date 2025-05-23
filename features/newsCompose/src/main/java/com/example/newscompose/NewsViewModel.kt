@@ -13,6 +13,7 @@ import com.example.common.models.NewsUiModel
 import com.example.domain.entities.Category
 import com.example.domain.interactors.NewsInteractor
 import com.example.newscompose.di.NewsComposeComponent
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -21,14 +22,14 @@ import javax.inject.Inject
 class NewsViewModelFactory(
     private val newsComponent: NewsComposeComponent,
     private val context: Context,
-): ViewModelProvider.Factory {
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return NewsViewModel(newsComponent, context) as T
     }
 }
 
 data class NewsScreenState(
-    val lts: List<NewsUiModel> = emptyList(),
+    val lts: MutableStateFlow<List<NewsUiModel>> = MutableStateFlow<List<NewsUiModel>>(emptyList()),
     val unReadMsgCount: Int = 0,
     val state: NewsState = NewsState.Done,
 )
@@ -40,7 +41,7 @@ class NewsViewModel(
     private val initialListToShow = getFullCategoriesList()
 
     var state by mutableStateOf(NewsScreenState())
-    private set
+        private set
 
     @Inject
     lateinit var interactor: NewsInteractor
@@ -58,7 +59,8 @@ class NewsViewModel(
 
         val eventsList = interactor.getNewsByCategories(setOfChosenCategories)
 
-        state = state.copy(lts = eventsList.map { NewsMapper.mapNewsDomainModelToUi(it)})
+        state = state.copy(lts = MutableStateFlow<List<NewsUiModel>>(eventsList.map {
+                NewsMapper.mapNewsDomainModelToUi(it)}))
         state = state.copy(unReadMsgCount = eventsList.count { !it.isRead })
 
         this.state = state.copy(state = NewsState.Done)
@@ -70,20 +72,32 @@ class NewsViewModel(
         }.first()
     }
 
-    fun markNewsItemAsRead(newsItemId: Int) = viewModelScope.launch { interactor.markNewsItemAsRead(newsItemId) }
+    fun onEvent(event: NewsScreenEvent) {
+        when (event) {
+            is NewsScreenEvent.OnEventClickedEvent -> {
+                markNewsItemAsRead(event.newsItem.id)
+            }
+        }
+    }
 
-    private fun getFullCategoriesList() =
-        setOf(
-            Category.KIDS.name,
-            Category.ADULTS.name,
-            Category.EVENTS.name,
-            Category.AGED.name,
-            Category.ANIMALS.name,
-        )
+    private fun markNewsItemAsRead(newsItemId: Int) =
+        viewModelScope.launch { interactor.markNewsItemAsRead(newsItemId) }
+
+    private fun getFullCategoriesList() = setOf(
+        Category.KIDS.name,
+        Category.ADULTS.name,
+        Category.EVENTS.name,
+        Category.AGED.name,
+        Category.ANIMALS.name,
+    )
 
     companion object {
         const val CHOSEN_CATEGORIES = "chosenCategories"
     }
+}
+
+sealed class NewsScreenEvent {
+    data class OnEventClickedEvent(val newsItem: NewsUiModel) : NewsScreenEvent()
 }
 
 sealed class NewsState {
