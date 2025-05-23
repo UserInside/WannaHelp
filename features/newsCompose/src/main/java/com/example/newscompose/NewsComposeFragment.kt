@@ -8,6 +8,8 @@ import com.example.common.compose.BaseComposeFragment
 import com.example.common.utils.extensions.navigate
 import com.example.newscompose.di.NewsComposeComponentViewModel
 import com.example.newscompose.di.NewsComposeComponent
+import com.example.newscompose.navigation.NewsComposeNavigator
+import com.example.newscompose.screen.NewsScreen
 import javax.inject.Inject
 
 class NewsComposeFragment : BaseComposeFragment() {

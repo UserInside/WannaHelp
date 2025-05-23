@@ -1,4 +1,4 @@
-package com.example.newscompose
+package com.example.newscompose.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,10 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.common.R as commonR
 import com.example.common.compose.Colors
 import com.example.common.models.NewsUiModel
 import com.example.common.utils.extensions.timestampFormatter
+import com.example.newscompose.R
+import com.example.common.R as commonR
 
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -45,7 +46,6 @@ fun NewsCard(
             .clip(RoundedCornerShape(2.dp))
             .clickable(
                 onClick = {
-//                    viewModel.markNewsItemAsRead(newsItem.id)
                     onEventClick(newsItem)
                 },
             ),

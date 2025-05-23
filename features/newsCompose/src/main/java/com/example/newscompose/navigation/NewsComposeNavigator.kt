@@ -1,4 +1,4 @@
-package com.example.newscompose
+package com.example.newscompose.navigation
 
 import com.example.common.navigation.NavigationCommand
 

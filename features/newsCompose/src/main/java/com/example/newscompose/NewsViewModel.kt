@@ -8,11 +8,12 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.common.utils.extensions.datastore
 import com.example.common.models.NewsUiModel
+import com.example.common.utils.extensions.datastore
 import com.example.domain.entities.Category
 import com.example.domain.interactors.NewsInteractor
 import com.example.newscompose.di.NewsComposeComponent
+import com.example.newscompose.mapper.NewsMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -60,7 +61,8 @@ class NewsViewModel(
         val eventsList = interactor.getNewsByCategories(setOfChosenCategories)
 
         state = state.copy(lts = MutableStateFlow<List<NewsUiModel>>(eventsList.map {
-                NewsMapper.mapNewsDomainModelToUi(it)}))
+            NewsMapper.mapNewsDomainModelToUi(it)
+        }))
         state = state.copy(unReadMsgCount = eventsList.count { !it.isRead })
 
         this.state = state.copy(state = NewsState.Done)

@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.example.common.Feature
 import com.example.data.di.DataModule
 import com.example.domain.di.DomainModule
-import com.example.newscompose.NewsComposeNavigator
+import com.example.newscompose.navigation.NewsComposeNavigator
 import com.example.newscompose.NewsComposeFragment
 import com.example.newscompose.NewsViewModel
 import dagger.Component
