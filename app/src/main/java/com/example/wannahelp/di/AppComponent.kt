@@ -18,7 +18,8 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class, DataModule::class])
 interface AppComponent :
     AuthComposeDeps,
-    NewsComposeDeps, ProfileDeps {
+    NewsComposeDeps,
+    ProfileDeps {
     override val authComposeNavigator: AuthComposeNavigatorImpl
     override val newsComposeNavigator: NewsComposeNavigatorImpl
     override val profileNavigator: ProfileNavigatorImpl
