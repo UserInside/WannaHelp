@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -35,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -90,19 +93,21 @@ internal fun AuthView(
                 )
             )
         },
-        content = {
+        content = { innerPadding ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Colors.white)
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState())
                     .padding(20.dp),
-                contentAlignment = Alignment.TopCenter
-            ) {
+                contentAlignment = Alignment.TopCenter,
+
+                ) {
                 Column {
                     Text(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 76.dp),
+                            .fillMaxWidth(),
                         fontSize = 14.sp,
                         color = Colors.black_70,
                         text = stringResource(commonR.string.auth_title),
@@ -124,7 +129,6 @@ internal fun AuthView(
                             modifier = Modifier
                                 .padding(horizontal = 40.dp)
                                 .size(40.dp),
-//                        .padding(40.dp),
                             painter = painterResource(R.drawable.icon_ok),
                             tint = Color.Unspecified,
                             contentDescription = null
@@ -161,7 +165,7 @@ internal fun AuthView(
                             )
                         },
                         onValueChange = {
-                            onEvent(AuthScreenEvent.SetEmailEvent(it))
+                            onEvent(AuthScreenEvent.UpdateEmailEvent(it))
                         },
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Colors.white,
@@ -188,7 +192,7 @@ internal fun AuthView(
                             )
                         },
                         onValueChange = {
-                            onEvent(AuthScreenEvent.SetPasswordEvent(it))
+                            onEvent(AuthScreenEvent.UpdatePasswordEvent(it))
                         },
                         colors = TextFieldDefaults.colors(
                             unfocusedContainerColor = Colors.white,
@@ -240,8 +244,14 @@ internal fun AuthView(
         }
     )
 }
-//@Preview
-//@Composable
-//fun authViewPreview() {
-//    AuthView { }
-//}
+
+@Preview(showBackground = true)
+@Composable
+fun AuthViewPreview(){
+    AuthView(
+        state = AuthScreenState(),
+        onEvent = {},
+        onNavigate = {},
+        onBackClicked = {},
+    )
+}

@@ -22,6 +22,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -31,7 +32,6 @@ import com.example.common.models.NewsUiModel
 import com.example.common.utils.extensions.timestampFormatter
 import com.example.newscompose.R
 import com.example.common.R as commonR
-
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -123,4 +123,13 @@ fun NewsCard(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NewsCardPreview() {
+    NewsCard(
+        newsItem = NewsUiModel(),
+        onEventClick = { NewsUiModel() },
+    )
 }
