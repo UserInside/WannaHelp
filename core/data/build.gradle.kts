@@ -8,10 +8,6 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-val localProperties = Properties().apply {
-    load(rootProject.file("local.properties").inputStream())
-}
-
 android {
     namespace = "com.example.data"
     compileSdk = 35
@@ -23,7 +19,7 @@ android {
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField(
-            "String", "BASE_URL", "${localProperties.getProperty("base_url")}"
+            "String", "BASE_URL", project.properties["BASE_URL"] as String
         )
     }
 

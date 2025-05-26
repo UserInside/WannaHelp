@@ -14,13 +14,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.common.extensions.navigate
-import com.example.data.di.DataModule
+import com.example.common.utils.extensions.navigate
 import com.example.profile.databinding.FragmentProfileScreenBinding
-import com.example.profile.di.DaggerProfileComponent
-import com.example.profile.di.ProfileComponent
 import com.example.profile.di.ProfileComponentViewModel
-import com.example.profile.di.ProfileModule
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.common.R as commonR

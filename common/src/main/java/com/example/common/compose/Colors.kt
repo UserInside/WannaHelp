@@ -1,0 +1,40 @@
+package com.example.common.compose
+
+import androidx.compose.ui.graphics.Color
+
+
+object Colors {
+    val black = Color(0xFF000000)
+    val white = Color(0xFFFFFFFF)
+    val macaroni_and_cheese = Color(0xfff2b630)
+    val cool_grey = Color(0xffaabbbb)
+    val warm_grey = Color(0xff979797)
+    val light_grey = Color(0xffeaede8)
+    val warm_grey_two = Color(0xff757575)
+    val coral = Color(0xfff65d49)
+    val off_white = Color(0xfffffffd)
+    val black_60 = Color(0x99000000)
+    val white_70 = Color(0xb3ffffff)
+    val light_olive_green = Color(0xff9ebf50)
+    val light_grey_two = Color(0xffe8eded)
+    val dark_gray_40 = Color(0x66979797)
+    val black_35 = Color(0x59000000)
+    val melon = Color(0xfffe7460)
+    val brown_grey = Color(0xffaaaaaa)
+    val black_87 = Color(0xde000000)
+    val black_70 = Color(0xb3000000)
+    val grey = Color(0xff94998a)
+    val black_20 = Color(0x33000000)
+    val turtle_green = Color(0xff7db354)
+    val black_12 = Color(0x1e000000)
+    val leaf = Color(0xFF66A636)
+    val blue_grey = Color(0xff627f8f)
+    val black_54 = Color(0x8a000000)
+    val black_40 = Color(0x66000000)
+    val black_38 = Color(0x61000000)
+    val white_two = Color(0xffd8d8d8)
+    val transparent = Color(0x00000000)
+    val splash_screen_background = Color(0xffeff3f6)
+    val leaf_opacity_50 = Color(0x8066a636)
+    val leaf_w_black_20 = Color(0xff51842B)
+}
