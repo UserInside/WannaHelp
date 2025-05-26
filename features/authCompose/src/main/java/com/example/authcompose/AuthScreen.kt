@@ -28,6 +28,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -168,6 +169,7 @@ internal fun AuthView(
                             onEvent(AuthScreenEvent.UpdateEmailEvent(it))
                         },
                         colors = TextFieldDefaults.colors(
+                            errorContainerColor = Colors.coral,
                             unfocusedContainerColor = Colors.white,
                             focusedContainerColor = Colors.white,
                             focusedTextColor = Colors.black_70,

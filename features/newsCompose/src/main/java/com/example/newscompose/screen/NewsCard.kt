@@ -115,7 +115,7 @@ fun NewsCard(
                         tint = Colors.white
                     )
                     Text(
-                        text = timestampFormatter(newsItem.date.toLong()).toString(),
+                        text = timestampFormatter(newsItem.date.toLong()),
                         color = Colors.white,
                         fontSize = 12.sp
                     )

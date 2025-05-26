@@ -22,9 +22,14 @@ internal class AuthViewModel : ViewModel() {
         }
     }
 
+    private fun isEmailValid(email: String) : Boolean {
+        val isValid = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$").containsMatchIn(email)
+        return isValid
+    }
+
     private fun updateButtonStatus() {
         this.state = state.copy(
-            isButtonActive = state.email.length >= REQUIRED_FIELD_LENGTH && state.password.length >= REQUIRED_FIELD_LENGTH
+            isButtonActive = state.password.length >= REQUIRED_FIELD_LENGTH && isEmailValid(state.email)
         )
     }
 
