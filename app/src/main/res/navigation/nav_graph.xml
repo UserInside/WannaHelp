@@ -52,9 +52,16 @@
         android:id="@+id/eventDetailsScreenFragment"
         android:name="com.example.eventdetails.EventDetailsScreenFragment"
         android:label="EventDetailsScreenFragment" >
+        <deepLink
+            app:uri="MainApp://event/details/{eventId}"
+            app:action="android.intent.action.MY_ACTION"
+            app:mimeType="type/subtype"/>
+
         <argument
             android:name="clickedNewsItem"
             app:argType="com.example.domain.entities.NewsDomainModel" />
+
+
     </fragment>
     <fragment
         android:id="@+id/newsFilterFragment"

@@ -22,18 +22,10 @@
         android:theme="@style/Base.Theme.WannaHelp"
         android:usesCleartextTraffic="true">
 
-        <!--
-            Adding this meta data is required as of Google Mobile Ads SDK version 17.0.0 as explained in
-            https://developers.google.com/ad-manager/mobile-ads-sdk/android/quick-start#update_your_androidmanifestxml
-        -->
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
 
-        <!--
-        This is the sample AdMob App ID. Insert your own AdMob App ID in quotes
-        https://googlemobileadssdk.page.link/admob-android-update-manifest
-        -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
@@ -41,7 +33,9 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="false"
-            android:theme="@style/Base.Theme.WannaHelp" />
+            android:theme="@style/Base.Theme.WannaHelp">
+            <nav-graph android:value="@navigation/nav_graph" />
+        </activity>
 
         <meta-data
             android:name="android.app.searchable"
@@ -67,6 +61,16 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
+        <receiver android:name="com.example.eventdetails.RemindLaterReceiver" />
+        <receiver
+            android:name="com.example.eventdetails.ChargingReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+            </intent-filter>
+        </receiver>
     </application>
+
 
 </manifest>
