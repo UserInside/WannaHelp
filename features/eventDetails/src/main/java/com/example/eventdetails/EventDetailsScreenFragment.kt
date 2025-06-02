@@ -13,6 +13,8 @@ import com.example.common.R as commonR
 class EventDetailsScreenFragment :
     ToolbarFragment(R.layout.fragment_event_details_screen, showBackButton = true) {
 
+    private lateinit var newsItem: NewsUiModel
+
     override fun setupToolbar(
         toolbar: Toolbar,
         actionBtn: ImageButton,
@@ -29,6 +31,7 @@ class EventDetailsScreenFragment :
             setImageResource(commonR.drawable.icon_share_24)
             setOnClickListener {
                 // переход на след экран "Поделиться"
+                showDonationDialog()
             }
         }
     }
@@ -39,10 +42,24 @@ class EventDetailsScreenFragment :
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEventDetailsScreenBinding.bind(content ?: view)
-        val newsItem = arguments?.getSerializable("event") as NewsUiModel
+        newsItem = arguments?.getSerializable("event") as NewsUiModel
 
         binding.apply {
             tvTitleEventDetails.text = newsItem.name
         }
+    }
+
+    private fun showDonationDialog() {
+        val dialog = DonationFragment.newInstance(
+            newsItem.id,
+            newsItem.name,
+        )
+        dialog.show(parentFragmentManager, DONATION_DIALOG)
+    }
+
+    companion object {
+        const val DONATION_DIALOG = "DonationDialogFragment"
+        const val EVENT_ID = "eventId"
+        const val EVENT_NAME = "eventName"
     }
 }

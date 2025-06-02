@@ -1,4 +1,15 @@
 <resources>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="thanks_for_help_decision">Спасибо за решение помочь!</string>
+    <string name="choose_donation_amount">Выберите размер пожертвования</string>
+    <string name="or_input_required_amount">или введите нужную сумму</string>
+    <string name="input_donation_amount">Введите сумму</string>
+    <string name="transfer">ПЕРЕВЕСТИ</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="one_hundred_rubles">100 P</string>
+    <string name="five_hundred_rubles">500 P</string>
+    <string name="thousand_rubles">1000 Р</string>
+    <string name="two_thousand_rubles">2000 Р</string>
+    <string name="thanks_for_donation_notification">Спасибо, что пожертвовали %1$s Р! Будем очень признательны, если сможете пожертвовать еще больше.</string>
+    <string name="thanks_for_donation_later_notification">Напоминаем, что мы будем очень признательны, если вы сможете пожертвовать еще больше.</string>
 </resources>
