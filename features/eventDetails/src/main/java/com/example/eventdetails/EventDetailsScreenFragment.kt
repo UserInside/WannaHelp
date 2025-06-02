@@ -2,16 +2,20 @@ package com.example.eventdetails
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.example.common.ToolbarFragment
 import com.example.eventdetails.databinding.FragmentEventDetailsScreenBinding
 import com.example.common.models.NewsUiModel
 import com.example.eventdetails.di.EventDetailsComponent
 import com.example.eventdetails.di.EventDetailsComponentViewModel
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import com.example.common.R as commonR
 
@@ -30,8 +34,7 @@ class EventDetailsScreenFragment :
         toolbar.apply {
             title = getString(commonR.string.event_details)
             setNavigationOnClickListener {
-                NavHostFragment.findNavController(this@EventDetailsScreenFragment)
-                    .popBackStack()
+                NavHostFragment.findNavController(this@EventDetailsScreenFragment).popBackStack()
             }
         }
         actionBtn.apply {
@@ -56,12 +59,21 @@ class EventDetailsScreenFragment :
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+
         val binding = FragmentEventDetailsScreenBinding.bind(content ?: view)
-        val eventId = arguments?.getInt("eventId") ?: 0
-        viewModel = ViewModelProvider(this, EventDetailsViewModelFactory(eventDetailsComponent, eventId))[EventDetailsViewModel::class]
+        val eventId =
+            arguments?.getInt(EVENT_ID) ?: throw IllegalStateException("Event ID required")
+
+        viewModel = ViewModelProvider(
+            this, EventDetailsViewModelFactory(eventDetailsComponent, eventId)
+        )[EventDetailsViewModel::class]
 
         binding.apply {
-            tvTitleEventDetails.text = viewModel.eventDetails.value.name
+            lifecycleScope.launch {
+                viewModel.eventDetails.collect {
+                    tvTitleEventDetails.text = viewModel.eventDetails.value.name
+                }
+            }
         }
     }
 

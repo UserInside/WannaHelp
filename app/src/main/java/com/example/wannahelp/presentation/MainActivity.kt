@@ -1,11 +1,13 @@
 package com.example.wannahelp.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.data.db.AppDatabase
@@ -15,6 +17,7 @@ import com.example.wannahelp.R
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -59,6 +62,43 @@ class MainActivity : AppCompatActivity() {
 //            viewModel.unreadMsgCountStateFlow.collect { count ->
 //                updateNewsBadge(count)
 //            }
+        }
+
+          if (intent?.action == Intent.ACTION_VIEW) {
+            val eventId = intent.data?.lastPathSegment?.toIntOrNull()
+            if (eventId != null) {
+                val navHostFragment = supportFragmentManager
+                    .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+                navHostFragment.navController.navigate(
+                    R.id.eventDetailsScreenFragment,
+                    Bundle().apply { putInt("eventId", eventId) }
+                )
+            }
+        }
+
+
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        // Обработка deep link при повторном открытии
+        handleDeepLink(intent)
+    }
+
+    private fun handleDeepLink(intent: Intent?) {
+        if (intent?.action == Intent.ACTION_VIEW) {
+            val navHostFragment = supportFragmentManager
+                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+
+            // Обработка deep link через Navigation Component
+            val deepLinkUri = intent.data
+            if (deepLinkUri != null) {
+                // Явная обработка deep link
+                val request = NavDeepLinkRequest.Builder.fromUri(deepLinkUri).build()
+                navController.handleDeepLink(request)
+            }
         }
     }
 

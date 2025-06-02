@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -22,9 +23,9 @@ import com.example.eventdetails.databinding.FragmentDonationBinding
 
 class DonationFragment : DialogFragment() {
     private lateinit var binding: FragmentDonationBinding
-    private val viewModel: DonationViewModel by lazy {
-        ViewModelProvider(this)[DonationViewModel::class]
-    }
+//    private val viewModel: DonationViewModel by lazy {
+//        ViewModelProvider(this)[DonationViewModel::class]
+//    }
 
     private var fixedAmountToPay: Int = 500
     private var customAmountToPay: Int = 0
@@ -58,7 +59,7 @@ class DonationFragment : DialogFragment() {
         val amountToPay = if (customAmountToPay == 0) fixedAmountToPay else customAmountToPay
         val inputData = workDataOf(
             EVENT_ID to arguments?.getInt(EventDetailsScreenFragment.EVENT_ID),
-            EVENT_NAME to arguments?.getInt(EventDetailsScreenFragment.EVENT_NAME),
+            EVENT_NAME to arguments?.getString(EventDetailsScreenFragment.EVENT_NAME),
             DONATION_AMOUNT to amountToPay.toString(),
         )
 

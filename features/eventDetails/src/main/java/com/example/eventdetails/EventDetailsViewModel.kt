@@ -1,5 +1,6 @@
 package com.example.eventdetails
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -45,5 +46,6 @@ class EventDetailsViewModel(eventDetailsComponent: EventDetailsComponent, val ev
 
     suspend fun loadEventDetailsFromDB() {
         _eventDetails.value = NewsMapper.mapNewsDomainModelToUi(interactor.getEventById(eventId))
+        Log.e("LOL VM", "vm name : ${eventDetails.value.name}")
     }
 }

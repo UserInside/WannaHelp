@@ -41,12 +41,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:host="yourdomain.com"
-                    android:pathPrefix="/details"
-                    android:scheme="https" />
-                <data
-                    android:host="details"
-                    android:scheme="yourapp" />
+                    android:scheme="myapp"
+                    android:host="example.com"
+                    android:pathPrefix="/events" />
             </intent-filter>
         </activity>
 

@@ -8,21 +8,26 @@ import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getString
 import androidx.core.net.toUri
+import androidx.navigation.NavDeepLink
+import androidx.navigation.NavDeepLinkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import com.example.eventdetails.DonationFragment.Companion.EVENT_ID
 import java.util.concurrent.TimeUnit
 
 class NotificationWorker(context: Context, workerParams: WorkerParameters) : Worker(
     context, workerParams
 ) {
     override fun doWork(): Result {
-        val showRemindLaterButton = inputData.getBoolean("SHOW_REMIND_LATER", true)
+        val showRemindLaterButton = inputData.getBoolean(KEY_SHOW_REMIND_LATER, true)
         showNotification(showRemindLaterButton)
         return Result.success()
     }
@@ -31,16 +36,20 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
         val notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val deepLink = Intent(applicationContext, EventDetailsScreenFragment::class.java).apply {
-            action = Intent.ACTION_VIEW
-            data = "MainApp://event/details/{eventId}".toUri()
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        val eventId = inputData.getInt(EVENT_ID, 0) // int
+        val deepLinkUri = "myapp://example.com/events/$eventId"
+
+        val deepLinkIntent = Intent(Intent.ACTION_VIEW, deepLinkUri.toUri()).apply {
             setPackage(applicationContext.packageName)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-
         val pendingIntent = PendingIntent.getActivity(
-            applicationContext, REQUEST_CODE, deepLink, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+            applicationContext,
+            0,
+            deepLinkIntent,
+            FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
 
         val notificationChannel = NotificationChannel(
@@ -49,7 +58,6 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
 
         notificationManager.createNotificationChannel(notificationChannel)
 
-        //todo      сделать диплинки
         //todo      regex for sum
         //todo      перенести кнопку для доната на нужное метсо. сейчас в "поделиться"
 
@@ -68,8 +76,12 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
         //todo
 
         if (showRemindLaterButton) {
-
             val remindLaterIntent = Intent(applicationContext, RemindLaterReceiver::class.java)
+                .apply {
+                    Bundle().apply {
+                        putInt(EVENT_ID, eventId)
+                    }
+            }
 
             val remindLaterPendingIntent = PendingIntent.getBroadcast(
                 applicationContext,
@@ -95,7 +107,6 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
                     inputData.getString(DonationFragment.DONATION_AMOUNT)
                 )
             )
-
         }
 
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
@@ -116,7 +127,12 @@ class RemindLaterReceiver : BroadcastReceiver() {
 
         notificationManager.cancel(NotificationWorker.NOTIFICATION_ID)
 
-        val inputData = workDataOf(NotificationWorker.KEY_SHOW_REMIND_LATER to false)
+        val eventId = intent?.getIntExtra(EVENT_ID, 1) //todo вот тут должен быть правильный инт
+
+        val inputData = workDataOf(
+            NotificationWorker.KEY_SHOW_REMIND_LATER to false,
+            EVENT_ID to eventId
+        )
 
         val laterRequest = OneTimeWorkRequestBuilder<NotificationWorker>().setInputData(inputData)
             .setInitialDelay(4, TimeUnit.SECONDS) // секунды для демонстрации. Должны быть 30 минут.
