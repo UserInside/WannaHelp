@@ -1,4 +1,4 @@
-package com.example.newscompose.mapper
+package com.example.common.models.mapper
 
 import com.example.common.models.NewsUiModel
 import com.example.domain.entities.NewsDomainModel

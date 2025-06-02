@@ -33,16 +33,16 @@ class NewsComposeFragment : BaseComposeFragment() {
         NewsScreen(
             factory = factory,
             onEventClick = { newsItem ->
-                navigator.toEvent.args = Bundle().apply {
-                    putSerializable(OPEN_EVENT_KEY, newsItem)
+                navigator.toEventDetails.args = Bundle().apply {
+                    putInt(OPEN_EVENT_ID, newsItem.id)
                 }
-                navigate(navigator.toEvent)
+                navigate(navigator.toEventDetails)
             },
             onNavigate = { navigate(navigator.toNewsFilter) }
         )
     }
 
     companion object {
-        private const val OPEN_EVENT_KEY = "event"
+        private const val OPEN_EVENT_ID = "eventId"
     }
 }

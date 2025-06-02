@@ -51,17 +51,20 @@
     <fragment
         android:id="@+id/eventDetailsScreenFragment"
         android:name="com.example.eventdetails.EventDetailsScreenFragment"
-        android:label="EventDetailsScreenFragment" >
-        <deepLink
-            app:uri="MainApp://event/details/{eventId}"
-            app:action="android.intent.action.MY_ACTION"
-            app:mimeType="type/subtype"/>
+        android:label="EventDetailsScreenFragment">
+
 
         <argument
             android:name="clickedNewsItem"
             app:argType="com.example.domain.entities.NewsDomainModel" />
+<!--        <deepLink-->
+<!--            android:id="@+id/deepLink"-->
+<!--            app:uri="MainApp://com.example.eventDetailsFragment/{id}" />-->
 
-
+<!--        <deepLink-->
+<!--            app:uri="MainApp://event/details/{eventId}"-->
+<!--            app:action="android.intent.action.MY_ACTION"-->
+<!--            app:mimeType="type/subtype"/>-->
     </fragment>
     <fragment
         android:id="@+id/newsFilterFragment"

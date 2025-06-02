@@ -1,19 +1,27 @@
 package com.example.eventdetails
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.common.ToolbarFragment
 import com.example.eventdetails.databinding.FragmentEventDetailsScreenBinding
 import com.example.common.models.NewsUiModel
+import com.example.eventdetails.di.EventDetailsComponent
+import com.example.eventdetails.di.EventDetailsComponentViewModel
+import javax.inject.Inject
 import com.example.common.R as commonR
 
 class EventDetailsScreenFragment :
     ToolbarFragment(R.layout.fragment_event_details_screen, showBackButton = true) {
 
-    private lateinit var newsItem: NewsUiModel
+    private lateinit var viewModel: EventDetailsViewModel
+
+    @Inject
+    lateinit var eventDetailsComponent: EventDetailsComponent
 
     override fun setupToolbar(
         toolbar: Toolbar,
@@ -36,23 +44,31 @@ class EventDetailsScreenFragment :
         }
     }
 
+    override fun onAttach(context: Context) {
+        ViewModelProvider(this)[EventDetailsComponentViewModel::class].eventDetailsComponent.inject(
+            this
+        )
+        super.onAttach(context)
+    }
+
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEventDetailsScreenBinding.bind(content ?: view)
-        newsItem = arguments?.getSerializable("event") as NewsUiModel
+        val eventId = arguments?.getInt("eventId") ?: 0
+        viewModel = ViewModelProvider(this, EventDetailsViewModelFactory(eventDetailsComponent, eventId))[EventDetailsViewModel::class]
 
         binding.apply {
-            tvTitleEventDetails.text = newsItem.name
+            tvTitleEventDetails.text = viewModel.eventDetails.value.name
         }
     }
 
     private fun showDonationDialog() {
         val dialog = DonationFragment.newInstance(
-            newsItem.id,
-            newsItem.name,
+            viewModel.eventDetails.value.id,
+            viewModel.eventDetails.value.name,
         )
         dialog.show(parentFragmentManager, DONATION_DIALOG)
     }

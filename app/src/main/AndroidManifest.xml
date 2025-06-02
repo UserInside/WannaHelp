@@ -33,9 +33,21 @@
 
         <activity
             android:name=".presentation.MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/Base.Theme.WannaHelp">
             <nav-graph android:value="@navigation/nav_graph" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="yourdomain.com"
+                    android:pathPrefix="/details"
+                    android:scheme="https" />
+                <data
+                    android:host="details"
+                    android:scheme="yourapp" />
+            </intent-filter>
         </activity>
 
         <activity

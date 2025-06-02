@@ -5,6 +5,7 @@ plugins {
 
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -42,6 +43,11 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+
+    // Dagger
+    ksp(libs.dagger.compiler)
+    implementation(libs.dagger)
 
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)

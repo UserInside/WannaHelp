@@ -34,7 +34,8 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
         val deepLink = Intent(applicationContext, EventDetailsScreenFragment::class.java).apply {
             action = Intent.ACTION_VIEW
             data = "MainApp://event/details/{eventId}".toUri()
-            //todo flaggs ?
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            setPackage(applicationContext.packageName)
         }
 
 
@@ -48,11 +49,9 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
 
         notificationManager.createNotificationChannel(notificationChannel)
 
-
-        //todo      исправить нажатие открытия диалога доната. сейчас сразу вылетает уведомление.
         //todo      сделать диплинки
         //todo      regex for sum
-
+        //todo      перенести кнопку для доната на нужное метсо. сейчас в "поделиться"
 
         val notificationBuilder =
             NotificationCompat.Builder(applicationContext, "notification_channel")
@@ -63,7 +62,8 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
                 .setSmallIcon(com.example.common.R.drawable.placeholder_24)
                 .setContentTitle(inputData.getString(DonationFragment.EVENT_NAME))
                 .setContentText(applicationContext.getString(R.string.thanks_for_donation_later_notification))
-                .setContentIntent(pendingIntent).setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
         //todo
 
@@ -89,10 +89,12 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
                         inputData.getString(DonationFragment.DONATION_AMOUNT)
                     )
                 )
-            ).setContentText(applicationContext.getString(
-                R.string.thanks_for_donation_notification,
-                inputData.getString(DonationFragment.DONATION_AMOUNT)
-            ))
+            ).setContentText(
+                applicationContext.getString(
+                    R.string.thanks_for_donation_notification,
+                    inputData.getString(DonationFragment.DONATION_AMOUNT)
+                )
+            )
 
         }
 
