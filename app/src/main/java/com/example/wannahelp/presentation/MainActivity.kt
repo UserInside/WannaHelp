@@ -2,7 +2,6 @@ package com.example.wannahelp.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +16,7 @@ import com.example.wannahelp.R
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -70,10 +70,9 @@ class MainActivity : AppCompatActivity() {
                 val navHostFragment =
                     supportFragmentManager
                         .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-
                 navHostFragment.navController.navigate(
                     R.id.eventDetailsScreenFragment,
-                    Bundle().apply { putInt("eventId", eventId) },
+                    Bundle().apply { putInt(EVENT_ID, eventId) },
                 )
             }
         }
@@ -107,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     private fun fetchDataToDB() {
         lifecycleScope.launch {
             val eventsResponse = apiService.getEvents()
-            Log.i("DEMO", "eventsResponse received $eventsResponse") // для демонстрации
+            Timber.i("eventsResponse received $eventsResponse") // для демонстрации
 
             eventsResponse.forEach {
                 db.getEventsDao().addEvent(it)
@@ -115,12 +114,16 @@ class MainActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             val categoriesResponse = apiService.getCategories()
-            Log.i("DEMO", "categoriesResponse received $categoriesResponse") // для демонстрации
+            Timber.i("categoriesResponse received $categoriesResponse") // для демонстрации
 
             categoriesResponse.forEach {
                 db.getCategoriesDao()
                     .addCategory(it)
             }
         }
+    }
+
+    private companion object {
+        const val EVENT_ID = "event_id"
     }
 }

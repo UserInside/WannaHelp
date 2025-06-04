@@ -54,10 +54,10 @@
         android:label="EventDetailsScreenFragment">
 
         <argument
-            android:name="eventId"
+            android:name="event_id"
             app:argType="integer" />
         <deepLink
-            app:uri="myapp://example.com/events/{eventId}"
+            app:uri="myapp://example.com/events/{event_id}"
             app:action="android.intent.action.VIEW" />
 
     </fragment>

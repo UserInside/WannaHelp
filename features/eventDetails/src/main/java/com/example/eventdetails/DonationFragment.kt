@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,7 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.eventdetails.databinding.FragmentDonationBinding
 import com.example.eventdetails.notification.NotificationWorker
+import timber.log.Timber
 
 class DonationFragment : DialogFragment() {
     private lateinit var binding: FragmentDonationBinding
@@ -45,7 +45,7 @@ class DonationFragment : DialogFragment() {
             }
 
             shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS) -> {
-                Log.e("HS", "1 РАШАНАЛЬ")
+                Timber.e("WOW RATIONALE")
                 notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
             }
 

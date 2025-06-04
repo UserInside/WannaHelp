@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import com.example.common.compose.BaseComposeFragment
 import com.example.common.utils.extensions.navigate
-import com.example.newscompose.di.NewsComposeComponentViewModel
 import com.example.newscompose.di.NewsComposeComponent
+import com.example.newscompose.di.NewsComposeComponentViewModel
 import com.example.newscompose.navigation.NewsComposeNavigator
 import com.example.newscompose.screen.NewsScreen
 import javax.inject.Inject
@@ -34,7 +34,7 @@ class NewsComposeFragment : BaseComposeFragment() {
             factory = factory,
             onEventClick = { newsItem ->
                 navigator.toEventDetails.args = Bundle().apply {
-                    putInt(OPEN_EVENT_ID, newsItem.id)
+                    putInt(EVENT_ID, newsItem.id)
                 }
                 navigate(navigator.toEventDetails)
             },
@@ -43,6 +43,6 @@ class NewsComposeFragment : BaseComposeFragment() {
     }
 
     companion object {
-        private const val OPEN_EVENT_ID = "eventId"
+        private const val EVENT_ID = "event_id"
     }
 }

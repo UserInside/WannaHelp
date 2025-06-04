@@ -1,6 +1,5 @@
 package com.example.eventdetails
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -12,6 +11,7 @@ import com.example.eventdetails.di.EventDetailsComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class EventDetailsViewModelFactory(
@@ -45,7 +45,7 @@ class EventDetailsViewModel(eventDetailsComponent: EventDetailsComponent, val ev
     }
 
     suspend fun loadEventDetailsFromDB() {
+        Timber.e("eventId : ${eventId}")
         _eventDetails.value = NewsMapper.mapNewsDomainModelToUi(interactor.getEventById(eventId))
-        Log.e("LOL VM", "vm name : ${eventDetails.value.name}")
     }
 }

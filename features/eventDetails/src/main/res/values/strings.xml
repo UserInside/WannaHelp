@@ -13,6 +13,7 @@
     <string name="two_thousand_rubles">2000 Р</string>
     <string name="remind_later">Напомнить позже</string>
     <string name="thanks_for_donation_notification">Спасибо, что пожертвовали %1$s Р! Будем очень признательны, если сможете пожертвовать еще больше.</string>
+    <string name="deep_link_uri">myapp://example.com/events/%1$s</string>
     <string name="thanks_for_donation_later_notification">Напоминаем, что мы будем очень признательны, если вы сможете пожертвовать еще больше.</string>
     <string name="help_things">Помочь \nвещами</string>
     <string name="become_volunteer">Стать \nволонтером</string>

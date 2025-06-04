@@ -16,6 +16,7 @@ import com.example.eventdetails.DonationFragment
 import com.example.eventdetails.DonationFragment.Companion.EVENT_ID
 import com.example.eventdetails.R
 import com.example.eventdetails.receivers.RemindLaterReceiver
+import timber.log.Timber
 
 class NotificationWorker(context: Context, workerParams: WorkerParameters) : Worker(
     context, workerParams
@@ -30,12 +31,13 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
         val notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val eventId = inputData.getInt(EVENT_ID, 0) // int
-        val deepLinkUri = "myapp://example.com/events/$eventId"
-
-        val deepLinkIntent = Intent(Intent.ACTION_VIEW, deepLinkUri.toUri()).apply {
+        val eventId = inputData.getInt(EVENT_ID, 0)
+        val deepLinkEventUri =
+            applicationContext.getString(R.string.deep_link_uri, eventId.toString())
+        Timber.e("deplinkURI ---> $deepLinkEventUri")
+        val deepLinkIntent = Intent(Intent.ACTION_VIEW, deepLinkEventUri.toUri()).apply {
             setPackage(applicationContext.packageName)
-            Intent.setFlags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
         val pendingIntent = PendingIntent.getActivity(
