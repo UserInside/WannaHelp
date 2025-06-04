@@ -8,5 +8,6 @@ import javax.inject.Inject
 class AuthComposeNavigatorImpl
     @Inject
     constructor() : AuthComposeNavigator {
-        override val toCategories: NavigationCommand = NavigationCommand(R.id.navigateToCategoriesScreen)
+        override val toCategories: NavigationCommand =
+            NavigationCommand(R.id.navigateToCategoriesScreen)
     }

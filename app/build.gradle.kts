@@ -62,7 +62,6 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":common"))
     implementation(project(":features:authCompose"))
-//    implementation(project(":features:authorization"))
     implementation(project(":features:profile"))
     implementation(project(":features:categories"))
     implementation(project(":features:eventDetails"))
@@ -73,6 +72,8 @@ dependencies {
 
     ksp(libs.dagger.compiler)
     implementation(libs.dagger)
+
+    implementation(libs.timber)
 
     implementation(libs.glide)
     implementation(libs.converter.kotlinx.serialization)

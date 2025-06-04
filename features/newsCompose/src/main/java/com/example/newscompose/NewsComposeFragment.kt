@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import com.example.common.compose.BaseComposeFragment
 import com.example.common.utils.extensions.navigate
-import com.example.newscompose.di.NewsComposeComponentViewModel
 import com.example.newscompose.di.NewsComposeComponent
+import com.example.newscompose.di.NewsComposeComponentViewModel
 import com.example.newscompose.navigation.NewsComposeNavigator
 import com.example.newscompose.screen.NewsScreen
 import javax.inject.Inject
@@ -33,16 +33,16 @@ class NewsComposeFragment : BaseComposeFragment() {
         NewsScreen(
             factory = factory,
             onEventClick = { newsItem ->
-                navigator.toEvent.args = Bundle().apply {
-                    putSerializable(OPEN_EVENT_KEY, newsItem)
+                navigator.toEventDetails.args = Bundle().apply {
+                    putInt(EVENT_ID, newsItem.id)
                 }
-                navigate(navigator.toEvent)
+                navigate(navigator.toEventDetails)
             },
             onNavigate = { navigate(navigator.toNewsFilter) }
         )
     }
 
     companion object {
-        private const val OPEN_EVENT_KEY = "event"
+        private const val EVENT_ID = "event_id"
     }
 }

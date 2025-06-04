@@ -41,8 +41,8 @@ internal class AuthViewModel : ViewModel() {
 data class AuthScreenState(
     val email: String = "",
     val password: String = "",
-    val isButtonActive: Boolean = false,
-)
+    val isButtonActive: Boolean = true, //todo to false
+    )
 
 sealed class AuthScreenEvent() {
     data class UpdateEmailEvent(val email: String) : AuthScreenEvent()
