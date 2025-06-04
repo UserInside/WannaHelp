@@ -1,5 +1,6 @@
-package com.example.eventdetails
+package com.example.eventdetails.notification
 
+import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,7 +14,7 @@ class NotificationPermissionActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            restartChargingWorker() // todo ?
+            restartChargingWorker()
         }
         finish()
     }
@@ -21,7 +22,7 @@ class NotificationPermissionActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
     private fun restartChargingWorker() {

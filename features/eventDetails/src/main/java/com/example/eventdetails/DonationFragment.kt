@@ -4,28 +4,28 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.eventdetails.databinding.FragmentDonationBinding
+import com.example.eventdetails.notification.NotificationWorker
 
 class DonationFragment : DialogFragment() {
     private lateinit var binding: FragmentDonationBinding
-//    private val viewModel: DonationViewModel by lazy {
-//        ViewModelProvider(this)[DonationViewModel::class]
-//    }
 
     private var fixedAmountToPay: Int = 500
     private var customAmountToPay: Int = 0
@@ -90,12 +90,10 @@ class DonationFragment : DialogFragment() {
             donationBtnAmount2.setOnClickListener { fixedAmountToPay = 500 }
             donationBtnAmount3.setOnClickListener { fixedAmountToPay = 1000 }
             donationBtnAmount4.setOnClickListener { fixedAmountToPay = 2000 }
+            etDonationInput.inputType = InputType.TYPE_CLASS_NUMBER
+//            etDonationInput.addTextChangedListener(SimpleNumberWatcher(etDonationInput))
             etDonationInput.doOnTextChanged { newText, _, _, _ ->
-                customAmountToPay = if (newText?.isEmpty() == true) {
-                    0
-                } else {
-                    newText.toString().toInt()
-                }
+                customAmountToPay = newText.toString().toIntOrNull() ?: 0
             }
 
             donationBtnTransfer.setOnClickListener {
@@ -119,6 +117,38 @@ class DonationFragment : DialogFragment() {
                     putString(EventDetailsScreenFragment.EVENT_NAME, eventName)
                 }
             }
-
     }
+}
+
+class SimpleNumberWatcher(private val editText: EditText) : TextWatcher {
+
+        private var isFormatting = false
+        private var lastText = ""
+
+        override fun afterTextChanged(s: Editable) {
+            if (isFormatting) return
+
+            val current = s.toString()
+            if (current == lastText) return
+
+            isFormatting = true
+
+            val clean = current.replace("\\s".toRegex(), "")
+            val formatted = if (clean.isEmpty()) "" else {
+                clean.replace(Regex("(\\d)(?=(\\d{3})+$)"), "$1 ")
+            }
+
+            if (current != formatted) {
+                editText.setText(formatted)
+                editText.setSelection(formatted.length)
+                lastText = formatted
+            } else {
+                lastText = current
+            }
+
+            isFormatting = false
+        }
+
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 }

@@ -9,7 +9,13 @@
     <string name="one_hundred_rubles">100 P</string>
     <string name="five_hundred_rubles">500 P</string>
     <string name="thousand_rubles">1000 Р</string>
+    <string name="channel_name">Уведомление</string>
     <string name="two_thousand_rubles">2000 Р</string>
+    <string name="remind_later">Напомнить позже</string>
     <string name="thanks_for_donation_notification">Спасибо, что пожертвовали %1$s Р! Будем очень признательны, если сможете пожертвовать еще больше.</string>
     <string name="thanks_for_donation_later_notification">Напоминаем, что мы будем очень признательны, если вы сможете пожертвовать еще больше.</string>
+    <string name="help_things">Помочь \nвещами</string>
+    <string name="become_volunteer">Стать \nволонтером</string>
+    <string name="help_professional">Проф. \nпомощь</string>
+    <string name="help_money">Помочь \nденьгами</string>
 </resources>

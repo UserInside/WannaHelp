@@ -2,7 +2,6 @@ package com.example.eventdetails
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
@@ -11,11 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.example.common.ToolbarFragment
 import com.example.eventdetails.databinding.FragmentEventDetailsScreenBinding
-import com.example.common.models.NewsUiModel
 import com.example.eventdetails.di.EventDetailsComponent
 import com.example.eventdetails.di.EventDetailsComponentViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 import com.example.common.R as commonR
 
@@ -42,7 +39,6 @@ class EventDetailsScreenFragment :
             setImageResource(commonR.drawable.icon_share_24)
             setOnClickListener {
                 // переход на след экран "Поделиться"
-                showDonationDialog()
             }
         }
     }
@@ -74,6 +70,9 @@ class EventDetailsScreenFragment :
                     tvTitleEventDetails.text = viewModel.eventDetails.value.name
                 }
             }
+            buttonCoins.setOnClickListener {
+                showDonationDialog()
+            }
         }
     }
 
@@ -86,8 +85,8 @@ class EventDetailsScreenFragment :
     }
 
     companion object {
-        const val DONATION_DIALOG = "DonationDialogFragment"
-        const val EVENT_ID = "eventId"
-        const val EVENT_NAME = "eventName"
+        const val DONATION_DIALOG = "donation_dialog_fragment"
+        const val EVENT_ID = "event_id"
+        const val EVENT_NAME = "event_name"
     }
 }
