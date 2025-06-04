@@ -1,5 +1,6 @@
 package com.example.eventdetails
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
@@ -14,7 +15,6 @@ import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.work.Constraints
 import androidx.work.OneTimeWorkRequestBuilder
@@ -40,17 +40,17 @@ class DonationFragment : DialogFragment() {
         when {
             ContextCompat.checkSelfPermission(
                 requireContext(),
-                android.Manifest.permission.POST_NOTIFICATIONS
+                Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED -> {
             }
 
-            shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS) -> {
+            shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
                 Timber.e("WOW RATIONALE")
-                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
 
             else -> {
-                notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
     }
@@ -91,10 +91,10 @@ class DonationFragment : DialogFragment() {
             donationBtnAmount3.setOnClickListener { fixedAmountToPay = 1000 }
             donationBtnAmount4.setOnClickListener { fixedAmountToPay = 2000 }
             etDonationInput.inputType = InputType.TYPE_CLASS_NUMBER
-//            etDonationInput.addTextChangedListener(SimpleNumberWatcher(etDonationInput))
-            etDonationInput.doOnTextChanged { newText, _, _, _ ->
-                customAmountToPay = newText.toString().toIntOrNull() ?: 0
-            }
+            etDonationInput.addTextChangedListener(
+                SimpleNumberWatcher(etDonationInput) { newAmount ->
+                    customAmountToPay = newAmount
+                })
 
             donationBtnTransfer.setOnClickListener {
                 setupDonationNotification()
@@ -120,34 +120,40 @@ class DonationFragment : DialogFragment() {
     }
 }
 
-class SimpleNumberWatcher(private val editText: EditText) : TextWatcher {
+class SimpleNumberWatcher(
+    private val editText: EditText,
+    private val onAmountChanged: (Int) -> Unit
+) : TextWatcher {
 
-        private var isFormatting = false
-        private var lastText = ""
+    private var isFormatting = false
+    private var lastText = ""
 
-        override fun afterTextChanged(s: Editable) {
-            if (isFormatting) return
+    override fun afterTextChanged(s: Editable) {
+        if (isFormatting) return
 
-            val current = s.toString()
-            if (current == lastText) return
+        val current = s.toString()
+        if (current == lastText) return
 
-            isFormatting = true
+        isFormatting = true
 
-            val clean = current.replace("\\s".toRegex(), "")
-            val formatted = if (clean.isEmpty()) "" else {
-                clean.replace(Regex("(\\d)(?=(\\d{3})+$)"), "$1 ")
-            }
-
-            if (current != formatted) {
-                editText.setText(formatted)
-                editText.setSelection(formatted.length)
-                lastText = formatted
-            } else {
-                lastText = current
-            }
-
-            isFormatting = false
+        val clean = current.replace("\\s".toRegex(), "")
+        val formatted = if (clean.isEmpty()) "" else {
+            clean.replace(Regex("(\\d)(?=(\\d{3})+$)"), "$1 ")
         }
+
+        if (current != formatted) {
+            editText.setText(formatted)
+            editText.setSelection(formatted.length)
+            lastText = formatted
+        } else {
+            lastText = current
+        }
+
+        val amount = clean.toIntOrNull() ?: 0
+        onAmountChanged(amount)
+
+        isFormatting = false
+    }
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
