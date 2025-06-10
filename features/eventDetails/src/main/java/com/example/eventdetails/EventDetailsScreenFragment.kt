@@ -70,7 +70,7 @@ class EventDetailsScreenFragment :
                     tvTitleEventDetails.text = viewModel.eventDetails.value.name
                 }
             }
-            buttonCoins.setOnClickListener {
+            coins.setOnClickListener {
                 showDonationDialog()
             }
         }

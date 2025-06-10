@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HelpCustomButtonView">
+        <attr name="customImage" format="reference" />
+        <attr name="customText" format="string" />
+        <attr name="showDivider" format="boolean" />
+    </declare-styleable>
+</resources>
