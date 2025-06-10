@@ -50,6 +50,8 @@ android {
 
 dependencies {
 
+    debugImplementation(libs.leakcanary.android)
+
     // Room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
