@@ -1,8 +1,11 @@
+import de.mannodermaus.gradle.plugins.junit5.junitPlatform
+
 plugins {
     id("java-library")
     alias(libs.plugins.jetbrains.kotlin.jvm)
     kotlin("plugin.serialization") version "1.9.0"
     id("com.google.devtools.ksp")
+
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -24,4 +27,7 @@ dependencies {
     implementation(libs.converter.kotlinx.serialization)
 
     implementation(libs.retrofit)
+
+    testImplementation(libs.junit.jupiter)
+
 }

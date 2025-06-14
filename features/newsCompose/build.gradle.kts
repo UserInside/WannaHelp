@@ -11,9 +11,8 @@ android {
 
     defaultConfig {
         minSdk = 31
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+                consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -34,6 +33,10 @@ android {
     }
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 dependencies {
     implementation(project(":common"))
     implementation(project(":core:domain"))
@@ -45,7 +48,7 @@ dependencies {
 
     implementation(libs.androidx.navigation.fragment.ktx)
 
-    implementation (libs.compose)
+    implementation(libs.compose)
 
     implementation(libs.kotlinx.datetime)
 
@@ -63,5 +66,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     debugImplementation(libs.ui.tooling)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(kotlin("test"))
 
 }
