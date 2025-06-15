@@ -36,6 +36,11 @@ android {
     }
 }
 
+tasks.withType<Test> {
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
+    useJUnitPlatform()
+}
+
 dependencies {
 
     implementation(project(":common"))
@@ -54,4 +59,14 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(kotlin("test"))
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockk.android)
+
+    testRuntimeOnly(libs.junit.jupiter.engine)
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }
