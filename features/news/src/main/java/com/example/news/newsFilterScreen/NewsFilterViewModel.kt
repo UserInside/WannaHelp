@@ -21,12 +21,12 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
 
     private val initialFilterList = FilterCategoryCard.Companion.getFilterCategoryCardsList(application)
 
-    private var setOfChosenCategories: Set<String>? = emptySet()
+    var setOfChosenCategories: Set<String>? = emptySet()
 
     val listOfCategoryFiltersToShow =
         MutableStateFlow<List<FilterCategoryCard>>(emptyList())
 
-    private var tmpSetOfFilteredCategoriesToSave = mutableSetOf<String>()
+    var tmpSetOfFilteredCategoriesToSave = mutableSetOf<String>()
 
     init {
         viewModelScope.launch {
@@ -43,7 +43,7 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
 
     private var cachedSetOfCategories: Set<String>? = emptySet<String>()
 
-    private fun updateLTS() {
+    fun updateLTS() {
         listOfCategoryFiltersToShow.value =
             initialFilterList
                 .map { item ->

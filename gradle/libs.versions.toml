@@ -2,6 +2,7 @@
 agp = "8.10.1"
 androidJunit5 = "1.8.2.1"
 compose = "1.0.0-beta01"
+coreKtxVersion = "1.6.1"
 coreSplashscreen = "1.0.1"
 dagger = "2.56.2"
 datastorePreferences = "1.1.4"
@@ -63,6 +64,7 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRunt
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 compose = { module = "com.github.bumptech.glide:compose", version.ref = "compose" }
 converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
+core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtxVersion" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
