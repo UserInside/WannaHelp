@@ -1,11 +1,12 @@
 package com.example.wannahelp.presentation
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.data.db.AppDatabase
@@ -15,6 +16,7 @@ import com.example.wannahelp.R
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        MainApp.Companion.appComponent.inject(this) // todo потестить. с инжектом, без него, с аннотацией и без и т.п.
+        MainApp.Companion.appComponent.inject(this)
         fetchDataToDB()
 
         val navHostFragment =
@@ -43,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.authComposeFragment -> bottomNavView.visibility = View.GONE
+                R.id.eventDetailsScreenFragment -> bottomNavView.visibility = View.GONE
                 else -> bottomNavView.visibility = View.VISIBLE
             }
         }
@@ -60,6 +63,35 @@ class MainActivity : AppCompatActivity() {
 //                updateNewsBadge(count)
 //            }
         }
+
+        if (intent?.action == Intent.ACTION_VIEW) {
+            val eventId = intent.data?.lastPathSegment?.toIntOrNull()
+            if (eventId != null) {
+                val navHostFragment =
+                    supportFragmentManager
+                        .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+                navHostFragment.navController.navigate(
+                    R.id.eventDetailsScreenFragment,
+                    Bundle().apply { putInt(EVENT_ID, eventId) },
+                )
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent.action == Intent.ACTION_VIEW) {
+            val navHostFragment =
+                supportFragmentManager
+                    .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            val navController = navHostFragment.navController
+
+            val deepLinkUri = intent.data
+            if (deepLinkUri != null) {
+                val request = NavDeepLinkRequest.Builder.fromUri(deepLinkUri).build()
+                navController.handleDeepLink(request)
+            }
+        }
     }
 
     private fun updateNewsBadge(count: Int) {
@@ -74,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     private fun fetchDataToDB() {
         lifecycleScope.launch {
             val eventsResponse = apiService.getEvents()
-            Log.i("DEMO", "eventsResponse received $eventsResponse") // для демонстрации
+            Timber.i("eventsResponse received $eventsResponse") // для демонстрации
 
             eventsResponse.forEach {
                 db.getEventsDao().addEvent(it)
@@ -82,12 +114,16 @@ class MainActivity : AppCompatActivity() {
         }
         lifecycleScope.launch {
             val categoriesResponse = apiService.getCategories()
-            Log.i("DEMO", "categoriesResponse received $categoriesResponse") // для демонстрации
+            Timber.i("categoriesResponse received $categoriesResponse") // для демонстрации
 
             categoriesResponse.forEach {
                 db.getCategoriesDao()
                     .addCategory(it)
             }
         }
+    }
+
+    private companion object {
+        const val EVENT_ID = "event_id"
     }
 }

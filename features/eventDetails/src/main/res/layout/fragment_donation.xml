@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:clipToOutline="true"
+    tools:context=".DonationFragment">
+
+    <TextView
+        android:id="@+id/donation_title_tv1"
+        style="@style/TextStylePopupHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        android:gravity="center"
+        android:lines="1"
+        android:paddingTop="21dp"
+        android:text="@string/thanks_for_help_decision"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/donation_title_tv2"
+        style="@style/TextStylePopupFieldTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_s"
+        android:text="@string/choose_donation_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/donation_title_tv1" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/donation_btns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="29dp"
+
+        android:layout_marginTop="10dp"
+        app:checkedButton="@id/donation_btn_amount2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/donation_title_tv2"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/donation_btn_amount1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/donation_btn_background"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="9dp"
+            android:text="@string/one_hundred_rubles"
+            android:textColor="@color/donation_btn_textcolor"
+            android:textSize="14sp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraSmall"
+            app:strokeColor="@color/leaf"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/donation_btn_amount2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/donation_btn_background"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="9dp"
+            android:text="@string/five_hundred_rubles"
+            android:textColor="@color/donation_btn_textcolor"
+            app:strokeColor="@color/leaf"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/donation_btn_amount3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/donation_btn_background"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="9dp"
+            android:text="@string/thousand_rubles"
+            android:textColor="@color/donation_btn_textcolor"
+            app:strokeColor="@color/leaf"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/donation_btn_amount4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/donation_btn_background"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="9dp"
+            android:text="@string/two_thousand_rubles"
+            android:textColor="@color/donation_btn_textcolor"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraSmall"
+            app:strokeColor="@color/leaf"
+            app:strokeWidth="1dp" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+    <TextView
+        android:id="@+id/donation_title_tv3"
+        style="@style/TextStylePopupFieldTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_l"
+        android:text="@string/or_input_required_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/donation_btns" />
+
+    <EditText
+        android:id="@+id/et_donation_input"
+        style="@style/TextStylePopupPlaceholder"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:hint="@string/input_donation_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/donation_title_tv3" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/donation_btn_transfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_xs"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="@dimen/spacing_xs"
+        android:paddingTop="11dp"
+        android:paddingBottom="9dp"
+        android:text="@string/transfer"
+        android:textColor="@color/leaf"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_donation_input"
+        app:strokeWidth="0dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/donation_btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_xs"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="@dimen/spacing_xs"
+        android:paddingTop="11dp"
+        android:paddingBottom="9dp"
+        android:text="@string/cancel"
+        android:textColor="@color/leaf"
+        app:layout_constraintBottom_toBottomOf="@id/donation_btn_transfer"
+        app:layout_constraintEnd_toStartOf="@id/donation_btn_transfer"
+        app:layout_constraintTop_toTopOf="@id/donation_btn_transfer"
+        app:strokeWidth="0dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

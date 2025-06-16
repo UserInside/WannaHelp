@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Singleton
 @AppScope
-@Component(modules = [AppModule::class, DataModule::class])
+@Component(modules = [DataModule::class])
 interface AppComponent :
     AuthComposeDeps,
     NewsComposeDeps,

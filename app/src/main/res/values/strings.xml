@@ -46,9 +46,6 @@
     <string name="by_events">По мероприятиям</string>
     <string name="by_organization">По НКО</string>
     <string name="error_file_not_created">Ошибка создания файла</string>
-<!--    <string name="auth_title">Для участия в мероприятиях войдите \nв приложение через социальные сети</string>-->
-<!--    <string name="auth_title2">Или авторизуйтесь через приложение</string>-->
-<!--    <string name="authorization">Авторизация</string>-->
     <string name="input_email">Введите e-mail</string>
     <string name="input_password">Введите пароль</string>
     <string name="enter">ВОЙТИ</string>
@@ -62,9 +59,6 @@
     <string name="start_level">Level 1</string>
     <string name="next_level">Next Level</string>
     <string name="level_text">Level %1$d</string>
-    <!-- -
-    This is an ad unit ID for an interstitial test ad. Replace with your own interstitial ad unit id.
-    For more information, see https://support.google.com/admob/answer/3052638
-<!- -->
+
     <string name="interstitial_ad_unit_id">YOUR_INTERSTITIAL_AD_UNIT_ID</string>
 </resources>

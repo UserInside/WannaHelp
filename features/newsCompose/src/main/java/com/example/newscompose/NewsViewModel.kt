@@ -13,7 +13,7 @@ import com.example.common.utils.extensions.datastore
 import com.example.domain.entities.Category
 import com.example.domain.interactors.NewsInteractor
 import com.example.newscompose.di.NewsComposeComponent
-import com.example.newscompose.mapper.NewsMapper
+import com.example.common.models.mapper.NewsMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map

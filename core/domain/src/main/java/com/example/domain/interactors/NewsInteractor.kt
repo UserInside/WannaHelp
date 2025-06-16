@@ -10,6 +10,10 @@ class NewsInteractor(
         return repository.getNewsByCategories(categories)
     }
 
+    suspend fun getEventById(id: Int): NewsDomainModel {
+        return repository.getEventById(id)
+    }
+
     suspend fun markNewsItemAsRead(newsItemId: Int) {
         repository.markNewsItemAsRead(newsItemId)
     }

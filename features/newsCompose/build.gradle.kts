@@ -51,6 +51,8 @@ dependencies {
 
     implementation(libs.compose)
 
+    implementation (libs.timber)
+
     implementation(libs.kotlinx.datetime)
 
     implementation(libs.androidx.datastore.preferences)

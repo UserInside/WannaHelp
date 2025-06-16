@@ -8,6 +8,7 @@ import com.example.newscompose.di.NewsComposeDepsStore
 import com.example.profile.di.ProfileDepsStore
 import com.example.wannahelp.di.AppComponent
 import com.example.wannahelp.di.DaggerAppComponent
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainApp : Application() {
@@ -16,6 +17,8 @@ class MainApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Timber.plant(Timber.DebugTree())
+
         appComponent =
             DaggerAppComponent.builder()
                 .dataModule(DataModule(this))

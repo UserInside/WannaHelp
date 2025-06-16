@@ -10,7 +10,7 @@
         android:id="@+id/profileScreenFragment"
         android:name="com.example.profile.ProfileScreenFragment"
         android:label="fragment_profile_screen"
-        tools:layout="@layout/fragment_profile_screen" >
+        tools:layout="@layout/fragment_profile_screen">
         <action
             android:id="@+id/navigateToEditProfileScreen"
             app:destination="@id/profileEditScreenFragment" />
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/profileEditScreenFragment"
         android:name="com.example.profileediting.EditProfileScreenFragment"
-        android:label="ProfileEditScreenFragment" >
+        android:label="ProfileEditScreenFragment">
         <action
             android:id="@+id/navigateToProfileScreen"
             app:destination="@id/profileScreenFragment" />
@@ -41,7 +41,7 @@
             app:destination="@id/newsFilterFragment" />
         <action
             android:id="@+id/navigateToEventDetailsScreen"
-            app:destination="@id/eventDetailsScreenFragment" >
+            app:destination="@id/eventDetailsScreenFragment">
             <argument
                 android:name="clickedNewsItem"
                 app:argType="com.example.domain.entities.NewsDomainModel"
@@ -51,15 +51,20 @@
     <fragment
         android:id="@+id/eventDetailsScreenFragment"
         android:name="com.example.eventdetails.EventDetailsScreenFragment"
-        android:label="EventDetailsScreenFragment" >
+        android:label="EventDetailsScreenFragment">
+
         <argument
-            android:name="clickedNewsItem"
-            app:argType="com.example.domain.entities.NewsDomainModel" />
+            android:name="event_id"
+            app:argType="integer" />
+        <deepLink
+            app:uri="myapp://example.com/events/{event_id}"
+            app:action="android.intent.action.VIEW" />
+
     </fragment>
     <fragment
         android:id="@+id/newsFilterFragment"
         android:name="com.example.news.newsFilterScreen.NewsFilterFragment"
-        android:label="NewsFilterFragment" >
+        android:label="NewsFilterFragment">
         <action
             android:id="@+id/navigateToNewsScreen"
             app:destination="@id/newsComposeFragment" />
@@ -67,7 +72,7 @@
     <fragment
         android:id="@+id/authComposeFragment"
         android:name="com.example.authcompose.AuthComposeFragment"
-        android:label="AuthComposeFragment" >
+        android:label="AuthComposeFragment">
         <action
             android:id="@+id/navigateToCategoriesScreen"
             app:destination="@id/categoriesScreenFragment" />

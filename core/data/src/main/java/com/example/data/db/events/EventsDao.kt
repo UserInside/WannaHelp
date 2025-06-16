@@ -13,6 +13,9 @@ interface EventsDao {
     @Query("SELECT * FROM events WHERE category IN (:categories)")
     suspend fun getEvents(categories: Set<String>): List<EventsEntity>
 
+    @Query("SELECT * FROM events WHERE id = :id")
+    suspend fun getEventById(id: Int): EventsEntity
+
     @Query("UPDATE events SET isRead = true WHERE id = :id")
     suspend fun markEventAsRead(id: Int)
 }

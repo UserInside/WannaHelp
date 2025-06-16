@@ -8,6 +8,6 @@ import javax.inject.Inject
 class NewsComposeNavigatorImpl
     @Inject
     constructor() : NewsComposeNavigator {
-        override val toEvent = NavigationCommand(R.id.navigateToEventDetailsScreen)
+        override val toEventDetails = NavigationCommand(R.id.navigateToEventDetailsScreen)
         override val toNewsFilter = NavigationCommand(R.id.navigateToNewsFilterScreen)
     }

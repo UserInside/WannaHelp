@@ -12,6 +12,10 @@ class NewsRepositoryImpl @Inject constructor(val db: AppDatabase) : NewsReposito
             .map { mapEventDbEntityToNewsItem(it) }
     }
 
+    override suspend fun getEventById(id: Int): NewsDomainModel {
+        return mapEventDbEntityToNewsItem(db.getEventsDao().getEventById(id))
+    }
+
     override suspend fun markNewsItemAsRead(newsItemId: Int) {
         db.getEventsDao().markEventAsRead(newsItemId)
     }
