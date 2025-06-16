@@ -53,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:contentDescription="@null"
                 android:src="@drawable/icon_nav"
                 app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
                 app:layout_constraintTop_toBottomOf="@id/tv_event_details_fond_name" />
@@ -72,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:contentDescription="@null"
                 android:src="@drawable/icon_phone"
                 app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
                 app:layout_constraintTop_toBottomOf="@id/tv_event_details_address" />
@@ -91,6 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:contentDescription="@null"
                 android:src="@drawable/icon_mail"
                 app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
                 app:layout_constraintTop_toBottomOf="@id/tv_event_details_phone" />
@@ -119,6 +122,7 @@
                 android:layout_width="205dp"
                 android:layout_height="158dp"
                 android:layout_marginTop="@dimen/spacing_l"
+                android:contentDescription="@null"
                 android:src="@drawable/cardimage_1"
                 app:layout_constraintStart_toStartOf="@id/tv_title_event_details"
                 app:layout_constraintTop_toBottomOf="@id/img_event_details_mail" />
@@ -128,6 +132,7 @@
                 android:layout_width="105dp"
                 android:layout_height="74dp"
                 android:layout_marginStart="10dp"
+                android:contentDescription="@null"
                 android:src="@drawable/cardimage_2"
                 app:layout_constraintStart_toEndOf="@id/img_primary"
                 app:layout_constraintTop_toTopOf="@id/img_primary" />
@@ -138,6 +143,7 @@
                 android:layout_height="74dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:contentDescription="@null"
                 android:src="@drawable/cardimage_3"
                 app:layout_constraintBottom_toBottomOf="@id/img_primary"
                 app:layout_constraintStart_toEndOf="@id/img_primary" />
@@ -230,142 +236,53 @@
                     android:text="+102" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/buttonsLayout"
-                android:layout_width="match_parent"
+
+            <com.example.eventdetails.HelpCustomButton
+                android:id="@+id/shirt"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/contributors">
+                app:customImage="@drawable/ic_shirt"
+                app:customText="@string/help_things"
+                app:layout_constraintEnd_toStartOf="@+id/volunteer"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contributors"
+                app:showDivider="true" />
 
-                <LinearLayout
-                    android:id="@+id/buttonThings"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="vertical"
-                    android:paddingTop="9dp">
+            <com.example.eventdetails.HelpCustomButton
+                android:id="@+id/volunteer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:customImage="@drawable/ic_hands"
+                app:customText="@string/become_volunteer"
+                app:layout_constraintEnd_toStartOf="@+id/tools"
+                app:layout_constraintStart_toEndOf="@+id/shirt"
+                app:layout_constraintTop_toBottomOf="@id/contributors"
+                app:showDivider="true" />
 
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@null"
-                        android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:src="@drawable/ic_shirt" />
+            <com.example.eventdetails.HelpCustomButton
+                android:id="@+id/tools"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:customImage="@drawable/ic_tools"
+                app:customText="@string/help_professional"
+                app:layout_constraintEnd_toStartOf="@+id/coins"
+                app:layout_constraintStart_toEndOf="@+id/volunteer"
+                app:layout_constraintTop_toBottomOf="@id/contributors"
+                app:showDivider="true" />
 
-                    <TextView
-                        style="@style/TextStyle11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/help_things" />
-                </LinearLayout>
+            <com.example.eventdetails.HelpCustomButton
+                android:id="@+id/coins"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:customImage="@drawable/ic_coins"
+                app:customText="@string/help_money"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tools"
+                app:layout_constraintTop_toBottomOf="@id/contributors"
+                app:showDivider="false" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="70dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/separator_1" />
 
-                <LinearLayout
-                    android:id="@+id/buttonVolunteer"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="vertical"
-                    android:paddingTop="9dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:contentDescription="@null"
-                        android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:src="@drawable/ic_hands" />
-
-                    <TextView
-                        style="@style/TextStyle11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/become_volunteer" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="70dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/separator_1" />
-
-                <LinearLayout
-                    android:id="@+id/buttonTools"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="vertical"
-                    android:paddingTop="9dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@null"
-                        android:background="@color/white"
-                        android:src="@drawable/ic_tools" />
-
-                    <TextView
-                        style="@style/TextStyle11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/help_professional" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="70dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/separator_1" />
-
-                <LinearLayout
-                    android:id="@+id/buttonCoins"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="vertical"
-                    android:paddingTop="9dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_coins" />
-
-                    <TextView
-                        style="@style/TextStyle11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/help_money" />
-                </LinearLayout>
-
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
