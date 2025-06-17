@@ -1,10 +1,11 @@
 package com.example.wannahelp.di
 
+import android.app.Application
 import dagger.Module
+import dagger.Provides
 
 @Module
-interface AppModule {
-    //    @AppScope
-//    @Binds
-//    fun bindAuthNavigator(impl: AuthorizationNavigatorImpl): AuthorizationNavigator
+class AppModule(private val application: Application) {
+    @Provides
+    fun provideApplication(): Application = application
 }

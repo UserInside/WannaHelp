@@ -1,8 +1,9 @@
 package com.example.news.newsFilterScreen
 
-import android.app.Application
+import com.example.data.storage.StorageProvider
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -18,10 +19,11 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(MockKExtension::class)
 class NewsFilterViewModelTest {
 
-    @RelaxedMockK
-    private lateinit var mockApplication: Application
-
     private lateinit var viewModel: NewsFilterViewModel
+
+    @RelaxedMockK
+    val storageProvider : StorageProvider = mockk()
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @BeforeEach
@@ -37,7 +39,7 @@ class NewsFilterViewModelTest {
 
     @Test
     fun `addNewsItemToFilter adds category to tmpSet`() {
-        viewModel = NewsFilterViewModel(mockApplication)
+        viewModel = NewsFilterViewModel(storageProvider)
         val fakeCategory = "Adults"
 
         viewModel.addNewsItemToFilter(fakeCategory)
@@ -47,7 +49,7 @@ class NewsFilterViewModelTest {
 
     @Test
     fun `removeNewsItemFromFilter removes category from tmpSet`() {
-        viewModel = NewsFilterViewModel(mockApplication)
+        viewModel = NewsFilterViewModel(storageProvider)
         val fakeCategory = "Aged"
         assertFalse(viewModel.tmpSetOfFilteredCategoriesToSave.contains(fakeCategory))
 
@@ -60,7 +62,7 @@ class NewsFilterViewModelTest {
 
     @Test
     fun `updateLTS updates list with chosen categories`() {
-        viewModel = NewsFilterViewModel(mockApplication)
+        viewModel = NewsFilterViewModel(storageProvider)
         val fakeCategories = setOf("Kids", "Animals")
         viewModel.setOfChosenCategories = fakeCategories
 

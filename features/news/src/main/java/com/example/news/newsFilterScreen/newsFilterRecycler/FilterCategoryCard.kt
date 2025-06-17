@@ -1,8 +1,6 @@
 package com.example.news.newsFilterScreen.newsFilterRecycler
 
-import android.app.Application
 import com.example.domain.entities.Category
-import com.example.common.R as commonR
 
 data class FilterCategoryCard(
     val title: String,
@@ -10,28 +8,35 @@ data class FilterCategoryCard(
     var isChecked: Boolean = true,
 ) {
     companion object {
-        fun getFilterCategoryCardsList(application: Application) =
-            listOf(
+        fun getFilterCategoryCardsList(): List<FilterCategoryCard> {
+
+            return listOf(
                 FilterCategoryCard(
-                    application.resources.getString(commonR.string.tv_cat_kids),
+//                    application.resources.getString(commonR.string.tv_cat_kids),
+                    "Дети",
                     Category.KIDS,
                 ),
                 FilterCategoryCard(
-                    application.resources.getString(commonR.string.tv_cat_adults),
+//                    application.resources.getString(commonR.string.tv_cat_adults),
+                    "Взрослые",
                     Category.ADULTS,
                 ),
                 FilterCategoryCard(
-                    application.resources.getString(commonR.string.tv_cat_aged),
+//                    application.resources.getString(commonR.string.tv_cat_aged),
+                    "Старые",
                     Category.AGED,
                 ),
                 FilterCategoryCard(
-                    application.resources.getString(commonR.string.tv_cat_events),
+//                    application.resources.getString(commonR.string.tv_cat_events),
+                    "Мероприятия",
                     Category.EVENTS,
                 ),
                 FilterCategoryCard(
-                    application.resources.getString(commonR.string.tv_cat_animals),
+//                    application.resources.getString(commonR.string.tv_cat_animals),
+                    "Животные",
                     Category.ANIMALS,
                 ),
             )
+        }
     }
 }
