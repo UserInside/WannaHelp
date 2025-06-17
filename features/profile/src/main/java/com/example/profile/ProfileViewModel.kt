@@ -29,7 +29,7 @@ class ProfileViewModel(private val apiService: ApiService) : ViewModel() {
     private fun loadFriendsList() {
         viewModelScope.launch {
             val friendsList = apiService.getFriends().map {
-                Mapper.mapFriendsFromDomainToUi(it)
+                FriendCardMapper.mapFriendsFromDomainToUi(it)
             }
             _friendsList.value = friendsList
         }

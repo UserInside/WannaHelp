@@ -1,10 +1,12 @@
 package com.example.news.newsFilterScreen
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -12,13 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.common.ToolbarFragment
 import com.example.news.R
 import com.example.news.databinding.FragmentNewsFilterBinding
+import com.example.news.di.NewsComponent
+import com.example.news.di.NewsComponentViewModel
 import com.example.news.newsFilterScreen.newsFilterRecycler.NewsFilterRecyclerViewAdapter
-import com.example.common.R as commonR
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import com.example.common.R as commonR
 
 class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBackButton = true) {
     private lateinit var binding: FragmentNewsFilterBinding
-    private lateinit var viewModel: NewsFilterViewModel
+    private val viewModel: NewsFilterViewModel by activityViewModels {
+        NewsFilterViewModelFactory(newsComponent)
+    }
+
+    @Inject
+    lateinit var newsComponent: NewsComponent
 
     override fun setupToolbar(
         toolbar: Toolbar,
@@ -44,6 +54,11 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
         }
     }
 
+    override fun onAttach(context: Context) {
+        ViewModelProvider(this)[NewsComponentViewModel::class.java].newsComponent.inject(this)
+        super.onAttach(context)
+    }
+
     @SuppressLint("CheckResult")
     override fun onViewCreated(
         view: View,
@@ -51,7 +66,6 @@ class NewsFilterFragment : ToolbarFragment(R.layout.fragment_news_filter, showBa
     ) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNewsFilterBinding.bind(content ?: view)
-        viewModel = ViewModelProvider(this@NewsFilterFragment)[NewsFilterViewModel::class]
 
         val rvAdapter =
             NewsFilterRecyclerViewAdapter { category, isChecked ->

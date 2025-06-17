@@ -1,32 +1,51 @@
 package com.example.news.newsFilterScreen
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.util.Log
-import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.common.utils.extensions.datastore
+import com.example.data.storage.StorageProvider
 import com.example.news.NewsViewModel
+import com.example.news.di.NewsComponent
 import com.example.news.newsFilterScreen.newsFilterRecycler.FilterCategoryCard
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsFilterViewModel(application: Application) : AndroidViewModel(application) {
+class NewsFilterViewModelFactory(
+    newsComponent: NewsComponent
+) : ViewModelProvider.Factory {
+
+    @Inject
+    lateinit var storageProvider: StorageProvider
+
+    init {
+        newsComponent.inject(this)
+    }
+
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return NewsFilterViewModel(storageProvider) as T
+    }
+}
+
+class NewsFilterViewModel @Inject constructor(
+    private val storageProvider: StorageProvider
+) : ViewModel() {
     @SuppressLint("StaticFieldLeak")
-    private val ctx = application.applicationContext
 
-    private val initialFilterList = FilterCategoryCard.Companion.getFilterCategoryCardsList(application)
+    private val initialFilterList =
+        FilterCategoryCard.Companion.getFilterCategoryCardsList()
 
-    private var setOfChosenCategories: Set<String>? = emptySet()
+    var setOfChosenCategories: Set<String>? = emptySet()
 
     val listOfCategoryFiltersToShow =
         MutableStateFlow<List<FilterCategoryCard>>(emptyList())
 
-    private var tmpSetOfFilteredCategoriesToSave = mutableSetOf<String>()
+    var tmpSetOfFilteredCategoriesToSave = mutableSetOf<String>()
 
     init {
         viewModelScope.launch {
@@ -43,7 +62,7 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
 
     private var cachedSetOfCategories: Set<String>? = emptySet<String>()
 
-    private fun updateLTS() {
+    fun updateLTS() {
         listOfCategoryFiltersToShow.value =
             initialFilterList
                 .map { item ->
@@ -56,16 +75,20 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     private suspend fun getChosenCategoriesFromDS(): Set<String>? {
-        return cachedSetOfCategories ?: ctx.datastore.data.map { preference ->
+        return cachedSetOfCategories ?: storageProvider.data.map { preference ->
             preference[stringSetPreferencesKey(NewsViewModel.Companion.CHOSEN_CATEGORIES)]
                 ?: initialFilterList.map { it.category.name }.toSet()
-        }.first().also { cachedSetOfCategories = it }
+        }.first().also {
+            Log.e("VMV", "$it") //tyyt
+            cachedSetOfCategories = it
+        }
     }
 
     suspend fun saveChosenCategories() {
         try {
-            ctx.datastore.edit { prefs ->
-                prefs[stringSetPreferencesKey(NewsViewModel.Companion.CHOSEN_CATEGORIES)] = tmpSetOfFilteredCategoriesToSave
+            storageProvider.updateData { prefs ->
+                prefs[stringSetPreferencesKey(NewsViewModel.Companion.CHOSEN_CATEGORIES)] =
+                    tmpSetOfFilteredCategoriesToSave
             }
         } catch (e: Exception) {
             Log.e("DSTORE", "Save failed", e)
@@ -74,5 +97,6 @@ class NewsFilterViewModel(application: Application) : AndroidViewModel(applicati
 
     fun addNewsItemToFilter(category: String) = tmpSetOfFilteredCategoriesToSave.add(category)
 
-    fun removeNewsItemFromFilter(category: String) = tmpSetOfFilteredCategoriesToSave.remove(category)
+    fun removeNewsItemFromFilter(category: String) =
+        tmpSetOfFilteredCategoriesToSave.remove(category)
 }

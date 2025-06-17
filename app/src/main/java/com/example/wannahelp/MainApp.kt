@@ -4,9 +4,11 @@ import android.app.Application
 import com.example.authcompose.di.AuthComposeComposeDepsStore
 import com.example.data.db.AppDatabase
 import com.example.data.di.DataModule
+import com.example.news.di.NewsDepsStore
 import com.example.newscompose.di.NewsComposeDepsStore
 import com.example.profile.di.ProfileDepsStore
 import com.example.wannahelp.di.AppComponent
+import com.example.wannahelp.di.AppModule
 import com.example.wannahelp.di.DaggerAppComponent
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,11 +23,13 @@ class MainApp : Application() {
 
         appComponent =
             DaggerAppComponent.builder()
+                .appModule(AppModule(this))
                 .dataModule(DataModule(this))
                 .build()
         appComponent.inject(this)
         AuthComposeComposeDepsStore.deps = appComponent
         NewsComposeDepsStore.deps = appComponent
+        NewsDepsStore.deps = appComponent
         ProfileDepsStore.deps = appComponent
     }
 

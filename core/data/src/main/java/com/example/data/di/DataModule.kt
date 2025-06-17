@@ -9,6 +9,8 @@ import com.example.data.db.AppDatabase
 import com.example.data.db.categories.CategoriesDao
 import com.example.data.db.events.EventsDao
 import com.example.data.network.ApiService
+import com.example.data.storage.DatastoreStorageProvider
+import com.example.data.storage.StorageProvider
 import com.example.domain.interactors.CategoriesInteractor
 import com.example.domain.interactors.NewsInteractor
 import com.example.domain.repository.CategoriesRepository
@@ -29,6 +31,12 @@ class DataModule(val appContext: Context) {
 
     @Provides
     fun provideContext() = appContext
+
+    @Provides
+    @Singleton
+    fun provideStorageProvider() : StorageProvider {
+        return DatastoreStorageProvider(appContext)
+    }
 
     @Provides
     @Singleton

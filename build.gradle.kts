@@ -17,5 +17,10 @@ buildscript {
     dependencies {
         val safeArgs = "2.8.9"
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$safeArgs")
+
+        classpath(libs.android.junit5)
+
     }
 }
+
+

@@ -11,7 +11,6 @@ android {
     defaultConfig {
         minSdk = 31
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -36,6 +35,11 @@ android {
     }
 }
 
+tasks.withType<Test> {
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
+    useJUnitPlatform()
+}
+
 dependencies {
 
     implementation(project(":core:domain"))
@@ -58,7 +62,16 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+    testImplementation(libs.core.ktx)
+
+    testImplementation(libs.junit.jupiter)
+    testImplementation(kotlin("test"))
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockk.android)
+
+    testRuntimeOnly(libs.junit.jupiter.engine)
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }

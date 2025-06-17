@@ -2,7 +2,7 @@ package com.example.profile
 
 import com.example.domain.entities.FriendCardDomainModel
 
-object Mapper {
+object FriendCardMapper {
     fun mapFriendsFromDomainToUi(friendCardDomainModel: FriendCardDomainModel): FriendCardItem{
         return FriendCardItem(
             id = friendCardDomainModel.id,
